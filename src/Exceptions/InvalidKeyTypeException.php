@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DruiD628\Exceptions;
+namespace PHPAlchemist\Exceptions;
 
 
 class InvalidKeyTypeException extends \Exception

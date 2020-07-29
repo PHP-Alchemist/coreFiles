@@ -1,12 +1,12 @@
 <?php
 
-namespace DruiD628\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use DruiD628\Exceptions\InvalidKeyTypeException;
-use DruiD628\Type\{String628};
-use DruiD628\Type\Base\Contracts\HashTableInterface;
-use DruiD628\Type\Base\Contracts\StringInterface;
-use \Exception;
+use Exception;
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Type\{ProperString};
+use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
+use PHPAlchemist\Type\Base\Contracts\StringInterface;
 
 class AbstractHashTable implements HashTableInterface
 {
@@ -93,7 +93,7 @@ class AbstractHashTable implements HashTableInterface
      */
     public function implode($glue = ' '): StringInterface
     {
-        return new String628(join($glue, $this->data));
+        return new ProperString(join($glue, $this->data));
     }
 
     // region Contractual Obligations

@@ -1,9 +1,9 @@
 <?php
 
-namespace DruiD628\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use DruiD628\Type\Array628;
-use DruiD628\Type\Base\Contracts\{ ArrayInterface, StringInterface };
+use PHPAlchemist\Type\ProperArray;
+use PHPAlchemist\Type\Base\Contracts\{ArrayInterface, StringInterface};
 
 class AbstractString implements StringInterface
 {
@@ -47,7 +47,7 @@ class AbstractString implements StringInterface
      */
     public function explode($delimiter = '', $limit = PHP_INT_MAX): ArrayInterface
     {
-        return new Array628(explode($delimiter, $this->getValue(), $limit));
+        return new ProperArray(explode($delimiter, $this->getValue(), $limit));
     }
 
     /**

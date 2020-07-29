@@ -1,6 +1,6 @@
 <?php
 
-namespace DruiD628\Traits;
+namespace PHPAlchemist\Traits;
 
 
 trait GetSetTrait

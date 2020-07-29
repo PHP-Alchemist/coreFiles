@@ -1,8 +1,8 @@
 <?php
 
-namespace DruiD628\Traits;
+namespace PHPAlchemist\Traits;
 
-use \Exception;
+use Exception;
 
 trait MagicGetSetTrait
 {

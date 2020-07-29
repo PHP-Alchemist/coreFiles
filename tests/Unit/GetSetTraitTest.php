@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Traits\GetSetTrait;
 use PHPUnit\Framework\TestCase;
-use DruiD628\Traits\GetSetTrait;
 
 class MockGetSetTraitClass
 {

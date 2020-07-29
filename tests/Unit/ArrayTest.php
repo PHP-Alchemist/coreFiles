@@ -2,90 +2,90 @@
 
 namespace tests\Unit;
 
-use DruiD628\Type\Array628;
+use PHPAlchemist\Type\ProperArray;
 use PHPUnit\Framework\TestCase;
 
 class ArrayTest extends TestCase
 {
     public function testCount()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('4', $array628->count());
+        $this->assertEquals('4', $arrayTest->count());
     }
 
     public function testImplode()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertInstanceOf('\DruiD628\Type\String628', $array628->implode(" "));
+        $this->assertInstanceOf('\PHPAlchemist\Type\ProperString', $arrayTest->implode(" "));
     }
 
     public function testNext()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $array628->current());
-        $array628->next();
-        $this->assertEquals('bcd', $array628->current());
+        $this->assertEquals('abc', $arrayTest->current());
+        $arrayTest->next();
+        $this->assertEquals('bcd', $arrayTest->current());
     }
 
     public function testPrev()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $array628->current());
-        $array628->next();
-        $array628->next();
-        $this->assertEquals('cde', $array628->current());
-        $array628->prev();
-        $this->assertEquals('bcd', $array628->current());
+        $this->assertEquals('abc', $arrayTest->current());
+        $arrayTest->next();
+        $arrayTest->next();
+        $this->assertEquals('cde', $arrayTest->current());
+        $arrayTest->prev();
+        $this->assertEquals('bcd', $arrayTest->current());
 
     }
 
     public function testCurrent()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $array628->current());
+        $this->assertEquals('abc', $arrayTest->current());
     }
 
     public function testKey()
     {
-        $array628 = new Array628([
+        $testArray = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $array628->next();
-        $this->assertEquals(1, $array628->key());
+        $testArray->next();
+        $this->assertEquals(1, $testArray->key());
     }
 
     public function testsetData()
@@ -97,100 +97,100 @@ class ArrayTest extends TestCase
             'def',
         ];
 
-        $array628 = new Array628();
-        $array628->setData($arrayData);
+        $arrayTest = new ProperArray();
+        $arrayTest->setData($arrayData);
 
-        $this->assertEquals($arrayData, $array628->getData());
+        $this->assertEquals($arrayData, $arrayTest->getData());
     }
 
     public function testRewind()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $array628->next();
-        $array628->next();
-        $array628->next();
-        $this->assertEquals(3, $array628->key());
-        $array628->rewind();
-        $this->assertEquals(0, $array628->key());
+        $arrayTest->next();
+        $arrayTest->next();
+        $arrayTest->next();
+        $this->assertEquals(3, $arrayTest->key());
+        $arrayTest->rewind();
+        $this->assertEquals(0, $arrayTest->key());
 
     }
 
     public function testOffsets()
     {
-        $array628       = new Array628([
+        $arrayTest       = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
         $stuffAndThangs = 'stuff and thangs';
-        $this->assertTrue($array628->offsetExists(0));
-        $this->assertFalse($array628->offsetExists(25));
-        $this->assertEquals('abc', $array628->offsetGet(0));
-        $array628->offsetSet(25, $stuffAndThangs);
-        $this->assertTrue($array628->offsetExists(25));
-        $this->assertEquals($stuffAndThangs, $array628->offsetGet(25));
-        $array628->offsetUnset(25);
-        $this->assertFalse($array628->offsetExists(25));
+        $this->assertTrue($arrayTest->offsetExists(0));
+        $this->assertFalse($arrayTest->offsetExists(25));
+        $this->assertEquals('abc', $arrayTest->offsetGet(0));
+        $arrayTest->offsetSet(25, $stuffAndThangs);
+        $this->assertTrue($arrayTest->offsetExists(25));
+        $this->assertEquals($stuffAndThangs, $arrayTest->offsetGet(25));
+        $arrayTest->offsetUnset(25);
+        $this->assertFalse($arrayTest->offsetExists(25));
 
 
         try {
-            $array628['doc'] = 'McStuffAndThangs';
+            $arrayTest['doc'] = 'McStuffAndThangs';
         }catch(\Exception $e) {
 
-            $this->assertInstanceOf('\DruiD628\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }
     }
 
     public function testInterfaces()
     {
-        $array628 = new Array628();
-        $this->assertInstanceOf('\ArrayAccess', $array628);
-        $this->assertInstanceOf('\Iterator', $array628);
-        $this->assertInstanceOf('\DruiD628\Type\Base\Contracts\ArrayInterface', $array628);
+        $arrayTest = new ProperArray();
+        $this->assertInstanceOf('\ArrayAccess', $arrayTest);
+        $this->assertInstanceOf('\Iterator', $arrayTest);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\ArrayInterface', $arrayTest);
     }
 
     public function testPositiveStrictness()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('4', $array628->count());
-        $this->assertTrue($array628->isStrict());
+        $this->assertEquals('4', $arrayTest->count());
+        $this->assertTrue($arrayTest->isStrict());
         try {
-            $x = new Array628([
+            $x = new ProperArray([
                 'a' => 'abc',
                 'b' => 'bcd',
                 'c' => 'cde'
             ]);
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('DruiD628\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
         }
     }
 
     public function testNegativeStrictness()
     {
-        $array628 = new Array628([
+        $arrayTest = new ProperArray([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ], false);
 
-        $this->assertEquals('4', $array628->count());
-        $this->assertFalse($array628->isStrict());
+        $this->assertEquals('4', $arrayTest->count());
+        $this->assertFalse($arrayTest->isStrict());
     }
 
     public function testArrayAccess()
@@ -201,9 +201,9 @@ class ArrayTest extends TestCase
             'cde',
             'def',
         ];
-        $array628 = new Array628($data);
+        $arrayTest = new ProperArray($data);
 
-        $this->assertEquals($data[2], $array628[2]);
+        $this->assertEquals($data[2], $arrayTest[2]);
     }
 
     public function testTraversable()
@@ -214,8 +214,8 @@ class ArrayTest extends TestCase
             'cde',
             'def',
         ];
-        $array628 = new Array628($data);
+        $arrayTest = new ProperArray($data);
 
-        $this->assertInstanceOf('\Traversable', $array628);
+        $this->assertInstanceOf('\Traversable', $arrayTest);
     }
 }

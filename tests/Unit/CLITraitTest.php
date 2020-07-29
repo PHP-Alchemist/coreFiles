@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Traits\CLITrait;
 use PHPUnit\Framework\TestCase;
-use DruiD628\Traits\CLITrait;
 
 class MockCLITraitClass
 {

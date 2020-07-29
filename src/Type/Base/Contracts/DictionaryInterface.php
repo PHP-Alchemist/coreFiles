@@ -1,6 +1,6 @@
 <?php
 
-namespace DruiD628\Type\Base\Contracts;
+namespace PHPAlchemist\Type\Base\Contracts;
 
 interface DictionaryInterface extends ArrayInterface
 {

@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use DruiD628\Traits\MagicGetSetTrait;
+use PHPAlchemist\Traits\MagicGetSetTrait;
 use PHPUnit\Framework\TestCase;
 
 /**

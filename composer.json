@@ -1,13 +1,13 @@
 {
-    "name": "druid628/core-files",
-    "description": "Collection of convenience classes I use",
+    "name": "php-alchemist/core-files",
+    "description": "Collection of classes adding functionality to the language",
     "type": "library",
     "require": {
         "php": "^7.1"
     },
     "autoload": {
         "psr-4": {
-           "DruiD628\\": "src"
+           "PHPAlchemist\\": "src"
         }
     },
     "authors": [

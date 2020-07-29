@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Traits\PerformanceTrait;
 use PHPUnit\Framework\TestCase;
-use DruiD628\Traits\PerformanceTrait;
 
 class MockPerfTraitClass
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace DruiD628\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use DruiD628\Exceptions\InvalidKeyTypeException;
-use DruiD628\Type\Base\Contracts\ArrayInterface;
-use DruiD628\Type\Base\Contracts\StringInterface;
-use DruiD628\Type\String628;
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Type\Base\Contracts\ArrayInterface;
+use PHPAlchemist\Type\Base\Contracts\StringInterface;
+use PHPAlchemist\Type\ProperString;
 
 class AbstractArray implements ArrayInterface
 {
@@ -53,7 +53,7 @@ class AbstractArray implements ArrayInterface
      */
     public function implode($glue = ' '): StringInterface
     {
-        return new String628(join($glue, $this->data));
+        return new ProperString(join($glue, $this->data));
     }
 
     // region Contractual Obligations

@@ -1,6 +1,6 @@
 <?PHP
 
-namespace DruiD628\Utilities;
+namespace PHPAlchemist\Utilities;
 
 class CSVUtil
 {

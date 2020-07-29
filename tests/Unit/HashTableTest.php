@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use DruiD628\Type\HashTable628;
+use PHPAlchemist\Type\HashTable;
 use PHPUnit\Framework\TestCase;
 
 class HashTableTest extends TestCase
@@ -10,83 +10,83 @@ class HashTableTest extends TestCase
 
     public function testCount()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals('4', $hashtable628->count());
+        $this->assertEquals('4', $hashtable->count());
     }
 
     public function testImplode()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable= new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertInstanceOf('\DruiD628\Type\String628', $hashtable628->implode(" "));
+        $this->assertInstanceOf('\PHPAlchemist\Type\ProperString', $hashtable->implode(" "));
     }
 
     public function testNext()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals('abc', $hashtable628->current());
-        $hashtable628->next();
-        $this->assertEquals('bcd', $hashtable628->current());
+        $this->assertEquals('abc', $hashtable->current());
+        $hashtable->next();
+        $this->assertEquals('bcd', $hashtable->current());
     }
 
     public function testPrev()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals('abc', $hashtable628->current());
-        $hashtable628->next();
-        $hashtable628->next();
-        $this->assertEquals('cde', $hashtable628->current());
-        $hashtable628->prev();
-        $this->assertEquals('bcd', $hashtable628->current());
+        $this->assertEquals('abc', $hashtable->current());
+        $hashtable->next();
+        $hashtable->next();
+        $this->assertEquals('cde', $hashtable->current());
+        $hashtable->prev();
+        $this->assertEquals('bcd', $hashtable->current());
 
     }
 
     public function testCurrent()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals('abc', $hashtable628->current());
+        $this->assertEquals('abc', $hashtable->current());
     }
 
     public function testKey()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $hashtable628->next();
-        $this->assertEquals('b', $hashtable628->key());
+        $hashtable->next();
+        $this->assertEquals('b', $hashtable->key());
     }
 
     public function testsetData()
@@ -98,84 +98,84 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashtable628 = new HashTable628();
-        $hashtable628->setData($arrayData);
+        $hashtable = new HashTable();
+        $hashtable->setData($arrayData);
 
-        $this->assertEquals($arrayData, $hashtable628->getData());
+        $this->assertEquals($arrayData, $hashtable->getData());
     }
 
     public function testRewind()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $hashtable628->next();
-        $hashtable628->next();
-        $hashtable628->next();
-        $this->assertEquals('d', $hashtable628->key());
-        $hashtable628->rewind();
-        $this->assertEquals('a', $hashtable628->key());
+        $hashtable->next();
+        $hashtable->next();
+        $hashtable->next();
+        $this->assertEquals('d', $hashtable->key());
+        $hashtable->rewind();
+        $this->assertEquals('a', $hashtable->key());
 
     }
 
     public function testOffsets()
     {
-        $hashtable628   = new HashTable628([
+        $hashtable   = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
         $stuffAndThangs = 'stuff and thangs';
-        $this->assertTrue($hashtable628->offsetExists('a'));
-        $this->assertFalse($hashtable628->offsetExists('z'));
-        $this->assertEquals('abc', $hashtable628->offsetGet('a'));
-        $hashtable628->offsetSet('z', $stuffAndThangs);
-        $this->assertTrue($hashtable628->offsetExists('z'));
-        $this->assertEquals($stuffAndThangs, $hashtable628->offsetGet('z'));
-        $hashtable628->offsetUnset('z');
-        $this->assertFalse($hashtable628->offsetExists('z'));
+        $this->assertTrue($hashtable->offsetExists('a'));
+        $this->assertFalse($hashtable->offsetExists('z'));
+        $this->assertEquals('abc', $hashtable->offsetGet('a'));
+        $hashtable->offsetSet('z', $stuffAndThangs);
+        $this->assertTrue($hashtable->offsetExists('z'));
+        $this->assertEquals($stuffAndThangs, $hashtable->offsetGet('z'));
+        $hashtable->offsetUnset('z');
+        $this->assertFalse($hashtable->offsetExists('z'));
 
         try {
-           $hashtable628[529] = 'Doc McStuffAndThangs';
+           $hashtable[529] = 'Doc McStuffAndThangs';
         }catch(\Exception $e) {
 
-            $this->assertInstanceOf('\DruiD628\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
             $this->assertEquals('Invalid Key type (integer) for HashTable', $e->getMessage());
         }
     }
 
     public function testInterfaces()
     {
-        $hashtable628 = new HashTable628();
-        $this->assertInstanceOf('\ArrayAccess', $hashtable628);
-        $this->assertInstanceOf('\Iterator', $hashtable628);
-        $this->assertInstanceOf('\DruiD628\Type\Base\Contracts\HashTableInterface', $hashtable628);
+        $hashtable = new HashTable();
+        $this->assertInstanceOf('\ArrayAccess', $hashtable);
+        $this->assertInstanceOf('\Iterator', $hashtable);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\HashTableInterface', $hashtable);
     }
 
     public function testKeyValidation()
     {
         try {
 
-            $hashtable628 = new HashTable628([
+            $hashtable = new HashTable([
                 0 => 'abc',
                 1 => 'bcd',
                 2 => 'cde',
                 3 => 'def',
             ]);
         } catch (\Exception $e) {
-            $this->assertInstanceOf('\DruiD628\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
         }
 
     }
 
     public function testAddGet()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'one'   => 'abc',
             'two'   => 'bcd',
             'three' => 'cde',
@@ -184,16 +184,16 @@ class HashTableTest extends TestCase
 
         $key       = 'five';
         $value     = 'this Should Work';
-        $testValue = $hashtable628->add($key, $value);
+        $testValue = $hashtable->add($key, $value);
 
 
-        $this->assertEquals($value, $hashtable628->get($key));
-        $this->assertInstanceOf('DruiD628\Type\HashTable628', $testValue);
+        $this->assertEquals($value, $hashtable->get($key));
+        $this->assertInstanceOf('PHPAlchemist\Type\HashTable', $testValue);
     }
 
     public function testReadOnly()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'one'   => 'abc',
             'two'   => 'bcd',
             'three' => 'cde',
@@ -203,33 +203,33 @@ class HashTableTest extends TestCase
         $key   = 'five';
         $value = "this Shouldn't Work";
 
-        $this->assertFalse($hashtable628->add($key, $value));
-        $hashtable628['six'] = 'asdf';
-        $this->assertEquals('4', $hashtable628->count());
+        $this->assertFalse($hashtable->add($key, $value));
+        $hashtable['six'] = 'asdf';
+        $this->assertEquals('4', $hashtable->count());
     }
 
     public function testGetKeys()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals(['a', 'b', 'c', 'd'], $hashtable628->getKeys());
+        $this->assertEquals(['a', 'b', 'c', 'd'], $hashtable->getKeys());
     }
 
     public function testGetValues()
     {
-        $hashtable628 = new HashTable628([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
             'd' => 'def',
         ]);
 
-        $this->assertEquals(['abc', 'bcd', 'cde', 'def'], $hashtable628->getValues());
+        $this->assertEquals(['abc', 'bcd', 'cde', 'def'], $hashtable->getValues());
     }
 
     public function testArrayAccess()
@@ -240,7 +240,7 @@ class HashTableTest extends TestCase
             'c' => 'cde',
             'd' => 'def',
         ];
-        $hashTable = new HashTable628($data);
+        $hashTable = new HashTable($data);
 
         $this->assertEquals($data['b'], $hashTable['b']);
     }
@@ -254,8 +254,8 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashTable  = new HashTable628($data, false, 5);
-        $hashTable2 = new HashTable628($data, false, true);
+        $hashTable  = new HashTable($data, false, 5);
+        $hashTable2 = new HashTable($data, false, true);
 
         // hashtable
         $this->assertTrue($hashTable->isFixedSize());
@@ -284,7 +284,7 @@ class HashTableTest extends TestCase
 
         try {
 
-            $hashTable = new HashTable628($data, false, 2);
+            $hashTable = new HashTable($data, false, 2);
 
         } catch (\Exception $e) {
 
@@ -302,7 +302,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashTable = new HashTable628($data);
+        $hashTable = new HashTable($data);
         $hashTable->lockSize();
 
         $this->assertTrue($hashTable->isFixedSize());
@@ -321,8 +321,8 @@ class HashTableTest extends TestCase
             '2c' => 'cde',
             '2d' => 'def',
         ];
-        $array628 = new HashTable628($data);
+        $array = new HashTable($data);
 
-        $this->assertInstanceOf('\Traversable', $array628);
+        $this->assertInstanceOf('\Traversable', $array);
     }
 }

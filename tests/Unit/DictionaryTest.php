@@ -2,30 +2,30 @@
 
 namespace tests\Unit;
 
-use DruiD628\Type\Dictionary628;
+use PHPAlchemist\Type\Dictionary;
 use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
 {
     public function testCount()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('4', $dictionary628->count());
+        $this->assertEquals('4', $dictionary->count());
     }
 
     public function testValidationError()
     {
-        $dictionary628 = new Dictionary628();
+        $dictionary = new Dictionary();
         try {
-            $dictionary628->add(0.24, 'abc');
+            $dictionary->add(0.24, 'abc');
         }catch(\Exception $e) {
-            $this->assertInstanceOf("DruiD628\Exceptions\InvalidKeyTypeException", $e);
+            $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
             $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
         }
     }
@@ -39,78 +39,78 @@ class DictionaryTest extends TestCase
             'w' => 'def',
         ];
 
-        $dictionary628 = new Dictionary628($testData);
+        $dictionary = new Dictionary($testData);
 
-        $this->assertEquals(array_keys($testData), $dictionary628->getKeys());
-        $this->assertEquals(array_values($testData), $dictionary628->getValues());
+        $this->assertEquals(array_keys($testData), $dictionary->getKeys());
+        $this->assertEquals(array_values($testData), $dictionary->getValues());
 
-        $dictionary628->set('bye', 'adios');
-        $this->assertEquals('adios', $dictionary628->get('bye'));
+        $dictionary->set('bye', 'adios');
+        $this->assertEquals('adios', $dictionary->get('bye'));
 
-        $dictionary628->offsetSet('gloves', 'car');
-        $this->assertEquals('car', $dictionary628->offsetGet('gloves'));
+        $dictionary->offsetSet('gloves', 'car');
+        $this->assertEquals('car', $dictionary->offsetGet('gloves'));
 
-        $dictionary628->offsetSet('gloves', 'stuff');
-        $this->assertEquals('stuff', $dictionary628->offsetGet('gloves'));
+        $dictionary->offsetSet('gloves', 'stuff');
+        $this->assertEquals('stuff', $dictionary->offsetGet('gloves'));
 
-        $this->assertFalse( $dictionary628->offsetGet('thisKeyDoesntExist'));
+        $this->assertFalse( $dictionary->offsetGet('thisKeyDoesntExist'));
     }
 
     public function testNext()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $dictionary628->current());
-        $dictionary628->next();
-        $this->assertEquals('bcd', $dictionary628->current());
+        $this->assertEquals('abc', $dictionary->current());
+        $dictionary->next();
+        $this->assertEquals('bcd', $dictionary->current());
     }
 
     public function testPrev()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary= new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $dictionary628->current());
-        $dictionary628->next();
-        $dictionary628->next();
-        $this->assertEquals('cde', $dictionary628->current());
-        $dictionary628->prev();
-        $this->assertEquals('bcd', $dictionary628->current());
+        $this->assertEquals('abc', $dictionary->current());
+        $dictionary->next();
+        $dictionary->next();
+        $this->assertEquals('cde', $dictionary->current());
+        $dictionary->prev();
+        $this->assertEquals('bcd', $dictionary->current());
 
     }
 
     public function testCurrent()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertEquals('abc', $dictionary628->current());
+        $this->assertEquals('abc', $dictionary->current());
     }
 
     public function testKey()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary= new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $dictionary628->next();
-        $this->assertEquals(1, $dictionary628->key());
+        $dictionary->next();
+        $this->assertEquals(1, $dictionary->key());
     }
 
     public function testsetData()
@@ -122,65 +122,65 @@ class DictionaryTest extends TestCase
             'def',
         ];
 
-        $dictionary628 = new Dictionary628();
-        $dictionary628->setData($arrayData);
+        $dictionary= new Dictionary();
+        $dictionary->setData($arrayData);
 
-        $this->assertEquals($arrayData, $dictionary628->getData());
+        $this->assertEquals($arrayData, $dictionary->getData());
     }
 
     public function testRewind()
     {
-        $dictionary628 = new Dictionary628([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $dictionary628->next();
-        $dictionary628->next();
-        $dictionary628->next();
-        $this->assertEquals(3, $dictionary628->key());
-        $dictionary628->rewind();
-        $this->assertEquals(0, $dictionary628->key());
+        $dictionary->next();
+        $dictionary->next();
+        $dictionary->next();
+        $this->assertEquals(3, $dictionary->key());
+        $dictionary->rewind();
+        $this->assertEquals(0, $dictionary->key());
 
     }
 
     public function testOffsets()
     {
-        $dictionary628  = new Dictionary628([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
         $stuffAndThangs = 'stuff and thangs';
-        $this->assertTrue($dictionary628->offsetExists(0));
-        $this->assertFalse($dictionary628->offsetExists(25));
-        $this->assertEquals('abc', $dictionary628->offsetGet(0));
-        $dictionary628->offsetSet(25, $stuffAndThangs);
-        $this->assertTrue($dictionary628->offsetExists(25));
-        $this->assertEquals($stuffAndThangs, $dictionary628->offsetGet(25));
-        $dictionary628->offsetUnset(25);
-        $this->assertFalse($dictionary628->offsetExists(25));
+        $this->assertTrue($dictionary->offsetExists(0));
+        $this->assertFalse($dictionary->offsetExists(25));
+        $this->assertEquals('abc', $dictionary->offsetGet(0));
+        $dictionary->offsetSet(25, $stuffAndThangs);
+        $this->assertTrue($dictionary->offsetExists(25));
+        $this->assertEquals($stuffAndThangs, $dictionary->offsetGet(25));
+        $dictionary->offsetUnset(25);
+        $this->assertFalse($dictionary->offsetExists(25));
 
 
         try {
-            $dictionary628['doc'] = 'McStuffAndThangs';
+            $dictionary['doc'] = 'McStuffAndThangs';
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('\DruiD628\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }
     }
 
     public function testInterfaces()
     {
-        $dictionary628 = new Dictionary628();
-        $this->assertInstanceOf('\ArrayAccess', $dictionary628);
-        $this->assertInstanceOf('\Iterator', $dictionary628);
-        $this->assertInstanceOf('\DruiD628\Type\Base\Contracts\ArrayInterface', $dictionary628);
-        $this->assertInstanceOf('\DruiD628\Type\Base\Contracts\DictionaryInterface', $dictionary628);
+        $dictionary = new Dictionary();
+        $this->assertInstanceOf('\ArrayAccess', $dictionary);
+        $this->assertInstanceOf('\Iterator', $dictionary);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\ArrayInterface', $dictionary);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\DictionaryInterface', $dictionary);
     }
 
     public function testArrayAccess()
@@ -191,9 +191,9 @@ class DictionaryTest extends TestCase
             'cde',
             'def',
         ];
-        $dictionary628 = new Dictionary628($data);
+        $dictionary = new Dictionary($data);
 
-        $this->assertEquals($data[2], $dictionary628[2]);
+        $this->assertEquals($data[2], $dictionary[2]);
     }
 
     public function testTraversable()
@@ -204,8 +204,8 @@ class DictionaryTest extends TestCase
             'cde',
             'def',
         ];
-        $dictionary628 = new Dictionary628($data);
+        $dictionary= new Dictionary($data);
 
-        $this->assertInstanceOf('\Traversable', $dictionary628);
+        $this->assertInstanceOf('\Traversable', $dictionary);
     }
 }

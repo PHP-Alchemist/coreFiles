@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Traits\ArrayTrait;
 use PHPUnit\Framework\TestCase;
-use DruiD628\Traits\ArrayTrait;
 
 class MockArrayTraitClass
 {

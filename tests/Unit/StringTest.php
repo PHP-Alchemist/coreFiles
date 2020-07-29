@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use DruiD628\Type\String628;
+use PHPAlchemist\Type\ProperString;
 use PHPUnit\Framework\TestCase;
 
 class StringTest extends TestCase
@@ -10,64 +10,64 @@ class StringTest extends TestCase
 
     public function testStringlength()
     {
-        $string628 = new String628("stuff and thangs");
-        $this->assertEquals(16, $string628->length());
+        $string = new ProperString("stuff and thangs");
+        $this->assertEquals(16, $string->length());
     }
 
 
     public function testUpper()
     {
-        $string628 = new String628("stuff and thangs");
-        $this->assertEquals('STUFF AND THANGS', $string628->upper());
+        $string = new ProperString("stuff and thangs");
+        $this->assertEquals('STUFF AND THANGS', $string->upper());
     }
 
     public function testLower()
     {
-        $string628 = new String628("stuff and thangs");
-        $this->assertEquals('stuff and thangs', $string628->lower());
+        $string = new ProperString("stuff and thangs");
+        $this->assertEquals('stuff and thangs', $string->lower());
 
     }
 
     public function testExplosion()
     {
-        $string628 = new String628("stuff and thangs Coral");
-        $array628 = $string628->explode(" ");
-        $this->assertInstanceOf("\DruiD628\Type\Array628", $array628);
+        $stringTest = new ProperString("stuff and thangs Coral");
+        $arrayTest = $stringTest->explode(" ");
+        $this->assertInstanceOf("\PHPAlchemist\Type\ProperArray", $arrayTest);
     }
 
     public function testGetValue()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $string628 = new String628($stringValue);
-        $this->assertEquals($stringValue, $string628->getValue());
+        $stringTest = new ProperString($stringValue);
+        $this->assertEquals($stringValue, $stringTest->getValue());
 
     }
 
     public function testSetValue()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $string628 = new String628();
-        $string628->setValue($stringValue);
-        $this->assertEquals($stringValue, $string628->getValue());
+        $stringTest = new ProperString();
+        $stringTest->setValue($stringValue);
+        $this->assertEquals($stringValue, $stringTest->getValue());
 
     }
 
     public function testHasValue()
     {
         $stringValue = 'City';
-        $string628 = new String628();
-        $this->assertFalse($string628->hasValue());
-        $string628->setValue($stringValue);
-        $this->assertTrue($string628->hasValue());
-        $this->assertEquals($stringValue, $string628->getValue());
+        $stringTest = new ProperString();
+        $this->assertFalse($stringTest->hasValue());
+        $stringTest->setValue($stringValue);
+        $this->assertTrue($stringTest->hasValue());
+        $this->assertEquals($stringValue, $stringTest->getValue());
 
     }
 
     public function testToString()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $string628 = new String628($stringValue);
-        $this->assertEquals($stringValue, "${string628}");
+        $stringTest = new ProperString($stringValue);
+        $this->assertEquals($stringValue, "${stringTest}");
 
     }
 }
