@@ -16,7 +16,7 @@ class AbstractKeyValuePair
 
     public function getKey()
     {
-        return $this->key;
+        return $this->value;
     }
 
 
