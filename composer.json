@@ -3,7 +3,7 @@
     "description": "Collection of classes adding functionality to the language",
     "type": "library",
     "require": {
-        "php": "^7.1"
+        "php": ">=7.1"
     },
     "autoload": {
         "psr-4": {
@@ -18,6 +18,6 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "7.4.*"
+        "phpunit/phpunit": ">=8.5.23"
     }
 }

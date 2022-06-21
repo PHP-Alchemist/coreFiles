@@ -24,7 +24,7 @@ class PerformanceTraitTest extends TestCase
 
         $perfData = $mock->getPerformance();
 
-        $this->assertContains('bytes', $perfData);
+        $this->assertStringContainsString('bytes', $perfData);
     }
 
     public function testGetLargerPerformance()
@@ -37,7 +37,7 @@ class PerformanceTraitTest extends TestCase
 
         $perfData = $mock->getPerformance();
 
-        $this->assertContains('mega', $perfData);
+        $this->assertStringContainsString('mega', $perfData);
 
     }
 
