@@ -2,6 +2,7 @@
     "name": "php-alchemist/core-files",
     "description": "Collection of classes adding functionality to the language",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": ">=7.1"
     },
