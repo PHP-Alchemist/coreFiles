@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class HashTableTest extends TestCase
 {
+    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
 
     public function testCount()
     {
@@ -29,7 +30,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ]);
 
-        $this->assertInstanceOf('\PHPAlchemist\Type\ProperString', $hashtable->implode(" "));
+        $this->assertInstanceOf(self::TWINE_TYPE, $hashtable->implode(" "));
     }
 
     public function testNext()

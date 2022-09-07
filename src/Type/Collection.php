@@ -5,10 +5,12 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractArray;
 
 /**
- * Class ProperArray
+ * Class Collection
+ *
+ * Collection is a proper Array class
  *
  * @package PHPAlchemist\Type
  */
-final class ProperArray extends AbstractArray
+final class Collection extends AbstractArray
 {
 }

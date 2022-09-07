@@ -2,7 +2,7 @@
 
 namespace PHPAlchemist\Type\Base;
 
-use PHPAlchemist\Type\ProperArray;
+use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Base\Contracts\{ArrayInterface, StringInterface};
 
 class AbstractString implements StringInterface
@@ -47,7 +47,7 @@ class AbstractString implements StringInterface
      */
     public function explode($delimiter = '', $limit = PHP_INT_MAX): ArrayInterface
     {
-        return new ProperArray(explode($delimiter, $this->getValue(), $limit));
+        return new Collection(explode($delimiter, $this->getValue(), $limit));
     }
 
     /**

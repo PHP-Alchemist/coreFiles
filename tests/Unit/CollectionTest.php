@@ -2,14 +2,15 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Type\ProperArray;
+use PHPAlchemist\Type\Collection;
 use PHPUnit\Framework\TestCase;
 
-class ArrayTest extends TestCase
+class CollectionTest extends TestCase
 {
+    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
     public function testCount()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -21,19 +22,19 @@ class ArrayTest extends TestCase
 
     public function testImplode()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
             'def',
         ]);
 
-        $this->assertInstanceOf('\PHPAlchemist\Type\ProperString', $arrayTest->implode(" "));
+        $this->assertInstanceOf(self::TWINE_TYPE, $arrayTest->implode(" "));
     }
 
     public function testNext()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -47,7 +48,7 @@ class ArrayTest extends TestCase
 
     public function testPrev()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -65,7 +66,7 @@ class ArrayTest extends TestCase
 
     public function testCurrent()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -77,7 +78,7 @@ class ArrayTest extends TestCase
 
     public function testKey()
     {
-        $testArray = new ProperArray([
+        $testArray = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -97,7 +98,7 @@ class ArrayTest extends TestCase
             'def',
         ];
 
-        $arrayTest = new ProperArray();
+        $arrayTest = new Collection();
         $arrayTest->setData($arrayData);
 
         $this->assertEquals($arrayData, $arrayTest->getData());
@@ -105,7 +106,7 @@ class ArrayTest extends TestCase
 
     public function testRewind()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -123,7 +124,7 @@ class ArrayTest extends TestCase
 
     public function testOffsets()
     {
-        $arrayTest       = new ProperArray([
+        $arrayTest       = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -151,7 +152,7 @@ class ArrayTest extends TestCase
 
     public function testInterfaces()
     {
-        $arrayTest = new ProperArray();
+        $arrayTest = new Collection();
         $this->assertInstanceOf('\ArrayAccess', $arrayTest);
         $this->assertInstanceOf('\Iterator', $arrayTest);
         $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\ArrayInterface', $arrayTest);
@@ -159,7 +160,7 @@ class ArrayTest extends TestCase
 
     public function testPositiveStrictness()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -169,7 +170,7 @@ class ArrayTest extends TestCase
         $this->assertEquals('4', $arrayTest->count());
         $this->assertTrue($arrayTest->isStrict());
         try {
-            $x = new ProperArray([
+            $x = new Collection([
                 'a' => 'abc',
                 'b' => 'bcd',
                 'c' => 'cde'
@@ -182,7 +183,7 @@ class ArrayTest extends TestCase
 
     public function testNegativeStrictness()
     {
-        $arrayTest = new ProperArray([
+        $arrayTest = new Collection([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
@@ -201,7 +202,7 @@ class ArrayTest extends TestCase
             'cde',
             'def',
         ];
-        $arrayTest = new ProperArray($data);
+        $arrayTest = new Collection($data);
 
         $this->assertEquals($data[2], $arrayTest[2]);
     }
@@ -214,7 +215,7 @@ class ArrayTest extends TestCase
             'cde',
             'def',
         ];
-        $arrayTest = new ProperArray($data);
+        $arrayTest = new Collection($data);
 
         $this->assertInstanceOf('\Traversable', $arrayTest);
     }

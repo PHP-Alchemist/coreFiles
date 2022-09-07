@@ -2,43 +2,46 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Type\ProperString;
+use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
-class StringTest extends TestCase
+class TwineTest extends TestCase
 {
+
+    const COLLECTION_TYPE = "\PHPAlchemist\Type\Collection";
 
     public function testStringlength()
     {
-        $string = new ProperString("stuff and thangs");
-        $this->assertEquals(16, $string->length());
+        $expectedLength = 16;
+        $string = new Twine("stuff and thangs");
+        $this->assertEquals($expectedLength, $string->length());
     }
 
 
     public function testUpper()
     {
-        $string = new ProperString("stuff and thangs");
+        $string = new Twine("stuff and thangs");
         $this->assertEquals('STUFF AND THANGS', $string->upper());
     }
 
     public function testLower()
     {
-        $string = new ProperString("stuff and thangs");
+        $string = new Twine("stuff and thangs");
         $this->assertEquals('stuff and thangs', $string->lower());
 
     }
 
     public function testExplosion()
     {
-        $stringTest = new ProperString("stuff and thangs Coral");
+        $stringTest = new Twine("stuff and thangs Coral");
         $arrayTest = $stringTest->explode(" ");
-        $this->assertInstanceOf("\PHPAlchemist\Type\ProperArray", $arrayTest);
+        $this->assertInstanceOf(self::COLLECTION_TYPE, $arrayTest);
     }
 
     public function testGetValue()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $stringTest = new ProperString($stringValue);
+        $stringTest = new Twine($stringValue);
         $this->assertEquals($stringValue, $stringTest->getValue());
 
     }
@@ -46,7 +49,7 @@ class StringTest extends TestCase
     public function testSetValue()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $stringTest = new ProperString();
+        $stringTest = new Twine();
         $stringTest->setValue($stringValue);
         $this->assertEquals($stringValue, $stringTest->getValue());
 
@@ -55,7 +58,7 @@ class StringTest extends TestCase
     public function testHasValue()
     {
         $stringValue = 'City';
-        $stringTest = new ProperString();
+        $stringTest = new Twine();
         $this->assertFalse($stringTest->hasValue());
         $stringTest->setValue($stringValue);
         $this->assertTrue($stringTest->hasValue());
@@ -66,7 +69,7 @@ class StringTest extends TestCase
     public function testToString()
     {
         $stringValue = 'Stuff & Thangs Coral';
-        $stringTest = new ProperString($stringValue);
+        $stringTest = new Twine($stringValue);
         $this->assertEquals($stringValue, "${stringTest}");
 
     }

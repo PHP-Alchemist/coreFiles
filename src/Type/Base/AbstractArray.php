@@ -5,7 +5,7 @@ namespace PHPAlchemist\Type\Base;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Type\Base\Contracts\ArrayInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
-use PHPAlchemist\Type\ProperString;
+use PHPAlchemist\Type\Twine;
 
 class AbstractArray implements ArrayInterface
 {
@@ -53,7 +53,7 @@ class AbstractArray implements ArrayInterface
      */
     public function implode($glue = ' '): StringInterface
     {
-        return new ProperString(join($glue, $this->data));
+        return new Twine(join($glue, $this->data));
     }
 
     // region Contractual Obligations

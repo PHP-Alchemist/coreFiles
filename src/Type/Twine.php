@@ -5,11 +5,13 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractString;
 
 /**
- * Class ProperString
+ * Class Twine
+ *
+ * Twine is a proper String class
  *
  * @package PHPAlchemist\Type
  */
-final class ProperString extends AbstractString
+final class Twine extends AbstractString
 {
 
 }

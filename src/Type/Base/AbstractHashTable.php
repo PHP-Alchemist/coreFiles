@@ -4,7 +4,7 @@ namespace PHPAlchemist\Type\Base;
 
 use Exception;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Type\{ProperString};
+use PHPAlchemist\Type\Twine;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
 
@@ -93,7 +93,7 @@ class AbstractHashTable implements HashTableInterface
      */
     public function implode($glue = ' '): StringInterface
     {
-        return new ProperString(join($glue, $this->data));
+        return new Twine(join($glue, $this->data));
     }
 
     // region Contractual Obligations
