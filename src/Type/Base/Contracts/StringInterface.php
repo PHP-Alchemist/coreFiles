@@ -11,14 +11,14 @@ interface StringInterface
     public function length() : int;
 
     /**
-     * Explode to  ArrayInterface object
+     * Explode to  CollectionInterface object
      *
      * @param string $delimiter
      * @param int $limit
      *
-     * @return ArrayInterface
+     * @return CollectionInterface
      */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX) : ArrayInterface;
+    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface;
 
     /**
      * Determine if string has value

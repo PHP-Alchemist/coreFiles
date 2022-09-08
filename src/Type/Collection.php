@@ -2,7 +2,7 @@
 
 namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Type\Base\AbstractArray;
+use PHPAlchemist\Type\Base\AbstractCollection;
 
 /**
  * Class Collection
@@ -11,6 +11,6 @@ use PHPAlchemist\Type\Base\AbstractArray;
  *
  * @package PHPAlchemist\Type
  */
-final class Collection extends AbstractArray
+final class Collection extends AbstractCollection
 {
 }

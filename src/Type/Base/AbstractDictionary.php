@@ -33,9 +33,11 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function add($key, $value)
+    public function add($key, $value) : DictionaryInterface
     {
-        return $this->offsetSet($key, $value);
+        $this->offsetSet($key, $value);
+
+        return $this;
     }
 
     /**
@@ -45,22 +47,24 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function set($key, $value)
+    public function set($key, $value) : DictionaryInterface
     {
-        return $this->offsetSet($key, $value);
+        $this->offsetSet($key, $value);
+
+        return $this;
     }
 
-    public function get($key)
+    public function get($key) : mixed
     {
         return $this->offsetGet($key);
     }
 
-    public function getKeys()
+    public function getKeys() : array
     {
         return $this->keys;
     }
 
-    public function getValues()
+    public function getValues() : array
     {
         return $this->values;
     }
@@ -71,33 +75,33 @@ class AbstractDictionary implements DictionaryInterface
     }
 
     // Iterator
-    public function rewind()
+    public function rewind() : void
     {
         $this->position = 0;
     }
 
-    public function valid()
+    public function valid() : bool
     {
         return isset($this->keys[$this->position]);
     }
 
-    public function key()
+    public function key() : mixed
     {
         return array_keys($this->keys)[$this->position];
     }
 
-    public function next()
+    public function next() : void
     {
         ++$this->position;
     }
 
     // not part of Iterator
-    public function prev()
+    public function prev() : void
     {
         --$this->position;
     }
 
-    public function current()
+    public function current() : mixed
     {
         return ($this->valid()) ? array_values($this->values)[$this->position] : false;
     }
@@ -106,17 +110,14 @@ class AbstractDictionary implements DictionaryInterface
 
     /**
      * @param mixed $offset
-     * @return $this
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         $offsetPosition = $this->getOffsetPosition($offset);
 
         unset($this->keys[$offsetPosition],
             $this->values[$offsetPosition]
         );
-
-        return $this;
     }
 
 
@@ -133,7 +134,7 @@ class AbstractDictionary implements DictionaryInterface
      * @since 5.0.0
      * @throws InvalidKeyTypeException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         if (!$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Dictionary", gettype($offset)));
@@ -145,13 +146,14 @@ class AbstractDictionary implements DictionaryInterface
 
         $position                = $this->getOffsetPosition($offset);
         $this->values[$position] = $value;
-        return $this;
     }
 
     /**
+     * Get raw data in PHP Array
+     *
      * @return array
      */
-    public function getData()
+    public function getData() : array
     {
         return array_combine($this->keys, $this->values);
     }
@@ -162,7 +164,7 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function setData($data = [])
+    public function setData(array $data) : DictionaryInterface
     {
         $this->validateKeys($data);
         foreach ($data as $key => $value) {
@@ -176,7 +178,7 @@ class AbstractDictionary implements DictionaryInterface
      * @param mixed $offset
      * @return bool|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         if ($this->offsetExists($offset)) {
             $combined = $this->getData();
@@ -191,7 +193,7 @@ class AbstractDictionary implements DictionaryInterface
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         $flippedArray = array_flip($this->keys);
 

@@ -3,11 +3,11 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Type\Base\Contracts\ArrayInterface;
+use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
 use PHPAlchemist\Type\Twine;
 
-class AbstractArray implements ArrayInterface
+class AbstractCollection implements CollectionInterface
 {
     /** @var boolean $strict */
     protected $strict;
@@ -70,7 +70,7 @@ class AbstractArray implements ArrayInterface
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return (isset($this->data[$offset]));
     }
@@ -84,7 +84,7 @@ class AbstractArray implements ArrayInterface
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         return $this->data[$offset];
     }
@@ -92,22 +92,19 @@ class AbstractArray implements ArrayInterface
     /**
      * Offset to set
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value  The value to set.
+     *
      * @return void
      * @since 5.0.0
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         if ($this->isStrict() && !$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
         }
 
-        return $this->data[$offset] = $value;
+        $this->data[$offset] = $value;
     }
 
     /**
@@ -130,7 +127,7 @@ class AbstractArray implements ArrayInterface
      * @return mixed Can return any type.
      * @since 5.0.0
      */
-    public function current()
+    public function current() : mixed
     {
         return ($this->valid()) ? array_values($this->data)[$this->position] : false;
     }
@@ -141,7 +138,7 @@ class AbstractArray implements ArrayInterface
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function next()
+    public function next() : void
     {
         ++$this->position;
     }
@@ -152,7 +149,7 @@ class AbstractArray implements ArrayInterface
      * @return mixed scalar on success, or null on failure.
      * @since 5.0.0
      */
-    public function key()
+    public function key() : mixed
     {
         return array_keys($this->data)[$this->position];
     }
@@ -164,7 +161,7 @@ class AbstractArray implements ArrayInterface
      * Returns true on success or false on failure.
      * @since 5.0.0
      */
-    public function valid()
+    public function valid() : bool
     {
         return isset(array_values($this->data)[$this->position]);
     }
@@ -175,7 +172,7 @@ class AbstractArray implements ArrayInterface
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function rewind()
+    public function rewind() : void
     {
         $this->position = 0;
     }
@@ -191,18 +188,21 @@ class AbstractArray implements ArrayInterface
 
     /**
      * @param array $data
+     * @return CollectionInterface
      */
-    public function setData(array $data)
+    public function setData(array $data) : CollectionInterface
     {
         $this->data = $data;
+
+        return $this;
     }
 
-    public function isStrict()
+    public function isStrict() : bool
     {
         return $this->strict;
     }
 
-    protected function validateKeys(array $dataSet)
+    protected function validateKeys(array $dataSet) : bool
     {
         if ($this->isStrict()) {
             foreach (array_keys($dataSet) as $key) {
@@ -215,7 +215,7 @@ class AbstractArray implements ArrayInterface
         return true;
     }
 
-    protected function validateKey($key)
+    protected function validateKey($key) : bool
     {
         return is_int($key);
     }

@@ -3,7 +3,7 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Base\Contracts\{ArrayInterface, StringInterface};
+use PHPAlchemist\Type\Base\Contracts\{CollectionInterface, StringInterface};
 
 class AbstractString implements StringInterface
 {
@@ -45,7 +45,7 @@ class AbstractString implements StringInterface
     /**
      * @inheritDoc
      */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX): ArrayInterface
+    public function explode($delimiter = '', $limit = PHP_INT_MAX): CollectionInterface
     {
         return new Collection(explode($delimiter, $this->getValue(), $limit));
     }

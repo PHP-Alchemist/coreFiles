@@ -7,7 +7,21 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
+    // Core-Files Types
     const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
+    const COLLECTION_TYPE = 'PHPAlchemist\Type\Collection';
+
+    // Interfaces
+    const ARRAYACCESS_TYPE = '\ArrayAccess';
+    const ITERATOR_TYPE = '\Iterator';
+    const TRAVERSABLE_TYPE = '\Traversable';
+
+    // Exceptions
+    const EXCEPTION_TYPE = '\Exception';
+    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
+    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
+    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
+
     public function testCount()
     {
         $arrayTest = new Collection([
@@ -130,7 +144,9 @@ class CollectionTest extends TestCase
             'cde',
             'def',
         ]);
+
         $stuffAndThangs = 'stuff and thangs';
+
         $this->assertTrue($arrayTest->offsetExists(0));
         $this->assertFalse($arrayTest->offsetExists(25));
         $this->assertEquals('abc', $arrayTest->offsetGet(0));
@@ -155,7 +171,7 @@ class CollectionTest extends TestCase
         $arrayTest = new Collection();
         $this->assertInstanceOf('\ArrayAccess', $arrayTest);
         $this->assertInstanceOf('\Iterator', $arrayTest);
-        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\ArrayInterface', $arrayTest);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\CollectionInterface', $arrayTest);
     }
 
     public function testPositiveStrictness()

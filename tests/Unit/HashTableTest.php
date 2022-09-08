@@ -2,12 +2,26 @@
 
 namespace tests\Unit;
 
+use Exception;
 use PHPAlchemist\Type\HashTable;
 use PHPUnit\Framework\TestCase;
 
 class HashTableTest extends TestCase
 {
+    // Core-Files Types
     const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
+    const HASHTABLE_TYPE = 'PHPAlchemist\Type\HashTable';
+
+    // Interfaces
+    const ARRAYACCESS_TYPE = '\ArrayAccess';
+    const ITERATOR_TYPE = '\Iterator';
+    const TRAVERSABLE_TYPE = '\Traversable';
+
+    // Exceptions
+    const EXCEPTION_TYPE = '\Exception';
+    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
+    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
+    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
 
     public function testCount()
     {
@@ -143,9 +157,9 @@ class HashTableTest extends TestCase
 
         try {
            $hashtable[529] = 'Doc McStuffAndThangs';
-        }catch(\Exception $e) {
+        }catch(Exception $e) {
 
-            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf(self::INVALID_KEY_EXCEPTION, $e);
             $this->assertEquals('Invalid Key type (integer) for HashTable', $e->getMessage());
         }
     }
@@ -153,9 +167,9 @@ class HashTableTest extends TestCase
     public function testInterfaces()
     {
         $hashtable = new HashTable();
-        $this->assertInstanceOf('\ArrayAccess', $hashtable);
-        $this->assertInstanceOf('\Iterator', $hashtable);
-        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\HashTableInterface', $hashtable);
+        $this->assertInstanceOf(self::ARRAYACCESS_TYPE, $hashtable);
+        $this->assertInstanceOf(self::ITERATOR_TYPE, $hashtable);
+        $this->assertInstanceOf(self::HASHTABLE_TYPE, $hashtable);
     }
 
     public function testKeyValidation()
@@ -169,7 +183,7 @@ class HashTableTest extends TestCase
                 3 => 'def',
             ]);
         } catch (\Exception $e) {
-            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf(self::INVALID_KEY_EXCEPTION, $e);
         }
 
     }
@@ -189,7 +203,7 @@ class HashTableTest extends TestCase
 
 
         $this->assertEquals($value, $hashtable->get($key));
-        $this->assertInstanceOf('PHPAlchemist\Type\HashTable', $testValue);
+        $this->assertInstanceOf(self::HASHTABLE_TYPE, $testValue);
     }
 
     public function testReadOnly()
@@ -204,8 +218,18 @@ class HashTableTest extends TestCase
         $key   = 'five';
         $value = "this Shouldn't Work";
 
-        $this->assertFalse($hashtable->add($key, $value));
-        $hashtable['six'] = 'asdf';
+        try {
+            $hashtable->add($key, $value);
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(self::READONLY_EXCEPTION, $e);
+        }
+
+        try {
+            $hashtable['six'] = 'asdf';
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(self::READONLY_EXCEPTION, $e);
+        }
+
         $this->assertEquals('4', $hashtable->count());
     }
 
@@ -255,7 +279,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashTable  = new HashTable($data, false, 5);
+        $hashTable = new HashTable($data, false, 5);
         $hashTable2 = new HashTable($data, false, true);
 
         // hashtable
@@ -263,14 +287,24 @@ class HashTableTest extends TestCase
         $this->assertEquals(5, $hashTable->count());
         $this->assertEquals(0, $hashTable[4]);
 
-        $hashTable->add('seven', "YOU KEELING ME");
+        try {
+            $hashTable->add('seven', "YOU KEELING ME");
+        } catch (Exception $e) {
+            $this->assertInstanceOf(self::HTABLE_FULL_EXCEPTION, $e);
+        }
+
         $this->assertFalse($hashTable['seven']);
 
         // hashtable2
         $this->assertEquals(4, $hashTable2->count());
         $this->assertFalse($hashTable[4]);
 
-        $hashTable->add('seven', "YOU KEELING ME");
+        try {
+            $hashTable->add('seven', "YOU KEELING ME");
+        } catch (Exception $e) {
+            $this->assertInstanceOf(self::HTABLE_FULL_EXCEPTION, $e);
+        }
+
         $this->assertFalse($hashTable['seven']);
     }
 
@@ -289,7 +323,7 @@ class HashTableTest extends TestCase
 
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('\Exception', $e);
+            $this->assertInstanceOf(self::EXCEPTION_TYPE, $e);
             $this->assertEquals('HashTable data size is larger than defined size', $e->getMessage());
         }
     }
@@ -310,7 +344,13 @@ class HashTableTest extends TestCase
         $this->assertEquals(4, $hashTable->count());
         $this->assertEquals(0, $hashTable[4]);
 
-        $hashTable->add('seven', "YOU KEELING ME");
+        try {
+            $hashTable->add('seven', "YOU KEELING ME");
+        } catch (Exception $e) {
+            $this->assertInstanceOf(self::HTABLE_FULL_EXCEPTION, $e);
+        }
+
+
         $this->assertFalse($hashTable['seven']);
     }
 
@@ -324,6 +364,6 @@ class HashTableTest extends TestCase
         ];
         $array = new HashTable($data);
 
-        $this->assertInstanceOf('\Traversable', $array);
+        $this->assertInstanceOf(self::TRAVERSABLE_TYPE, $array);
     }
 }

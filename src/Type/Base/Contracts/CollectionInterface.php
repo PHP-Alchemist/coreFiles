@@ -1,38 +1,27 @@
 <?php
 
-
 namespace PHPAlchemist\Type\Base\Contracts;
 
 use ArrayAccess;
 use Iterator;
 
-interface HashTableInterface extends ArrayAccess, Iterator
+interface CollectionInterface extends ArrayAccess, Iterator
 {
-    function add($key, $value);
 
-    function get($key) : mixed;
-
-    function getKeys() : array;
-
-    function getValues() : array;
-
-    function count() : int;
-
-    function isReadOnly() : bool;
 
     // Iterator
-    function rewind() : void;
-
-    function valid() : bool;
+    function current() : mixed;
 
     function key() : mixed;
 
     function next() : void;
 
-    // not part of Iterator
+    // Not part of Iterator
     function prev() : void;
 
-    function current() : mixed;
+    function valid() : bool;
+
+    function rewind() : void;
     // END Iterator
 
     // ArrayAccess
@@ -45,4 +34,10 @@ interface HashTableInterface extends ArrayAccess, Iterator
     function offsetExists($offset) : bool;
     // END ArrayAccess
 
+    // Class Specific
+    function setData(array $data) : CollectionInterface;
+
+    function isStrict() : bool;
+
+    function count(): int;
 }

@@ -7,6 +7,21 @@ use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
 {
+    // Core-Files Types
+    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
+    const DICTIONARY_TYPE = 'PHPAlchemist\Type\Dictionary';
+
+    // Interfaces
+    const ARRAYACCESS_TYPE = '\ArrayAccess';
+    const ITERATOR_TYPE = '\Iterator';
+    const TRAVERSABLE_TYPE = '\Traversable';
+
+    // Exceptions
+    const EXCEPTION_TYPE = '\Exception';
+    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
+    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
+    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
+
     public function testCount()
     {
         $dictionary = new Dictionary([
@@ -154,7 +169,9 @@ class DictionaryTest extends TestCase
             'cde',
             'def',
         ]);
+
         $stuffAndThangs = 'stuff and thangs';
+
         $this->assertTrue($dictionary->offsetExists(0));
         $this->assertFalse($dictionary->offsetExists(25));
         $this->assertEquals('abc', $dictionary->offsetGet(0));
@@ -164,12 +181,11 @@ class DictionaryTest extends TestCase
         $dictionary->offsetUnset(25);
         $this->assertFalse($dictionary->offsetExists(25));
 
-
         try {
             $dictionary['doc'] = 'McStuffAndThangs';
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf(self::INVALID_KEY_EXCEPTION, $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }
     }
@@ -177,10 +193,9 @@ class DictionaryTest extends TestCase
     public function testInterfaces()
     {
         $dictionary = new Dictionary();
-        $this->assertInstanceOf('\ArrayAccess', $dictionary);
-        $this->assertInstanceOf('\Iterator', $dictionary);
-        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\ArrayInterface', $dictionary);
-        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\DictionaryInterface', $dictionary);
+        $this->assertInstanceOf(self::ARRAYACCESS_TYPE, $dictionary);
+        $this->assertInstanceOf(self::ITERATOR_TYPE, $dictionary);
+        $this->assertInstanceOf(self::DICTIONARY_TYPE, $dictionary);
     }
 
     public function testArrayAccess()

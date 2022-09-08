@@ -3,7 +3,9 @@
 namespace PHPAlchemist\Type\Base;
 
 use Exception;
+use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Type\Twine;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
@@ -53,7 +55,9 @@ class AbstractHashTable implements HashTableInterface
      */
     public function add($key, $value)
     {
-        return $this->offsetSet($key, $value);
+        $this->offsetSet($key, $value);
+
+        return $this;
     }
 
     /**
@@ -61,7 +65,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return mixed
      */
-    public function get($key)
+    public function get($key) : mixed
     {
         return $this->offsetGet($key);
     }
@@ -71,7 +75,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return int
      */
-    public function count(): int
+    public function count() : int
     {
         return count($this->data);
     }
@@ -81,7 +85,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return void Any returned value is ignored.
      */
-    public function prev(): void
+    public function prev() : void
     {
         --$this->position;
     }
@@ -110,7 +114,7 @@ class AbstractHashTable implements HashTableInterface
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return (isset($this->data[$offset]));
     }
@@ -124,7 +128,7 @@ class AbstractHashTable implements HashTableInterface
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         if ($this->offsetExists($offset)) {
             return $this->data[$offset];
@@ -136,20 +140,20 @@ class AbstractHashTable implements HashTableInterface
     /**
      * Offset to set
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return $this
+     *
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value The value to set.
+     *
+     * @return void
      * @since 5.0.0
+     * @throws HashTableFullException
      * @throws InvalidKeyTypeException
+     * @throws ReadOnlyDataException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         if ($this->isReadOnly()) {
-            return false;
+            throw new ReadOnlyDataException("Invalid call to offsetSet on read-only " . __CLASS__ . ".");
         }
 
         if (!$this->offsetExists($offset) &&
@@ -157,27 +161,24 @@ class AbstractHashTable implements HashTableInterface
             $this->count() == $this->fixedSize
            ) {
 
-            return false;
+            throw new HashTableFullException("Invalid call to offsetSet on " .  __CLASS__ . "where Size is Fixed and HashTable full.");
         }
         if (!$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for HashTable", gettype($offset)));
         }
 
         $this->data[$offset] = $value;
-
-        return $this;
     }
 
     /**
      * Offset to unset
      * @link https://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     * @param mixed $offset The offset to unset.
+     *
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset) : void
     {
         unset($this->data[$offset]);
     }
@@ -189,7 +190,7 @@ class AbstractHashTable implements HashTableInterface
      * @return mixed Can return any type.
      * @since 5.0.0
      */
-    public function current()
+    public function current() : mixed
     {
         return ($this->valid()) ? array_values($this->data)[$this->position] : false;
     }
@@ -201,7 +202,7 @@ class AbstractHashTable implements HashTableInterface
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function next()
+    public function next() : void
     {
         ++$this->position;
     }
@@ -212,7 +213,7 @@ class AbstractHashTable implements HashTableInterface
      * @return mixed scalar on success, or null on failure.
      * @since 5.0.0
      */
-    public function key()
+    public function key() : mixed
     {
         return array_keys($this->data)[$this->position];
     }
@@ -224,7 +225,7 @@ class AbstractHashTable implements HashTableInterface
      * Returns true on success or false on failure.
      * @since 5.0.0
      */
-    public function valid()
+    public function valid() : bool
     {
         return isset(array_values($this->data)[$this->position]);
     }
@@ -235,7 +236,7 @@ class AbstractHashTable implements HashTableInterface
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function rewind()
+    public function rewind() : void
     {
         $this->position = 0;
     }
@@ -262,7 +263,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return array
      */
-    public function getKeys()
+    public function getKeys() : array
     {
         return array_keys($this->data);
     }
@@ -272,7 +273,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return array
      */
-    public function getValues()
+    public function getValues() : array
     {
         return array_values($this->data);
     }
@@ -282,7 +283,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return bool
      */
-    public function isReadOnly()
+    public function isReadOnly() : bool
     {
         return $this->readOnly;
     }
@@ -299,7 +300,12 @@ class AbstractHashTable implements HashTableInterface
         return $this;
     }
 
-    public function isFixedSize()
+    /**
+     * Determine if HashTable is of a fixed size
+     *
+     * @return bool
+     */
+    public function isFixedSize() : bool
     {
         return !(is_null($this->fixedSize));
     }
@@ -309,7 +315,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return bool
      */
-    protected function validateKeys(array $dataSet)
+    protected function validateKeys(array $dataSet) : bool
     {
         foreach (array_keys($dataSet) as $key) {
             if (!($this->validateKey($key))) {
@@ -325,7 +331,7 @@ class AbstractHashTable implements HashTableInterface
      *
      * @return bool
      */
-    protected function validateKey($key)
+    protected function validateKey($key) : bool
     {
         return is_string($key);
     }
