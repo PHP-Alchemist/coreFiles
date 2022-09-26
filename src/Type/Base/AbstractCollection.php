@@ -3,20 +3,25 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
 use PHPAlchemist\Type\Twine;
 
 class AbstractCollection implements CollectionInterface
 {
+    use ArrayTrait;
+
     /** @var boolean $strict */
     protected $strict;
+
     /** @var int $position position sentinel variable */
     protected $position;
+
     /** @var array $data */
     protected $data;
 
-    public function __construct($data = [], $strict = true)
+    public function __construct(array $data = [], bool $strict = true)
     {
         $this->strict = $strict;
         if (!$this->validateKeys($data)) {
@@ -31,7 +36,7 @@ class AbstractCollection implements CollectionInterface
      *
      * @return int
      */
-    public function count(): int
+    public function count() : int
     {
         return count($this->data);
     }
@@ -41,7 +46,7 @@ class AbstractCollection implements CollectionInterface
      *
      * @return void Any returned value is ignored.
      */
-    public function prev(): void
+    public function prev() : void
     {
         --$this->position;
     }
@@ -51,7 +56,7 @@ class AbstractCollection implements CollectionInterface
      *
      * @return StringInterface
      */
-    public function implode($glue = ' '): StringInterface
+    public function implode($glue = ' ') : StringInterface
     {
         return new Twine(join($glue, $this->data));
     }
@@ -70,7 +75,7 @@ class AbstractCollection implements CollectionInterface
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset) : bool
+    public function offsetExists(mixed $offset) : bool
     {
         return (isset($this->data[$offset]));
     }
@@ -84,7 +89,7 @@ class AbstractCollection implements CollectionInterface
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet($offset) : mixed
+    public function offsetGet(mixed $offset) : mixed
     {
         return $this->data[$offset];
     }
@@ -98,7 +103,7 @@ class AbstractCollection implements CollectionInterface
      * @return void
      * @since 5.0.0
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isStrict() && !$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
@@ -116,7 +121,7 @@ class AbstractCollection implements CollectionInterface
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->data[$offset]);
     }

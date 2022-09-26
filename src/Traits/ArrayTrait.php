@@ -4,53 +4,28 @@ namespace PHPAlchemist\Traits;
 
 trait ArrayTrait
 {
-
     /**
-     * sum values in array by key
+     * sum values in data by key
      *
-     * @param array $arr
-     * @param string [optional]$index
+     * @param string $index
      * @return int result
      *
      * source: http://www.php.net/manual/en/function.array-sum.php#85548
      */
-    public function sumByKey($arr, $index = null)
+    public function sumByKey(mixed $index) : int
     {
-        if (!is_array($arr) || sizeof($arr) < 1) {
+        if (!is_array($this->data) || sizeof($this->data) < 1) {
             return 0;
         }
         $ret = 0;
-        foreach ($arr as $id => $data) {
+        foreach ($this->data as $key => $value) {
             if (isset($index)) {
-                $ret += (isset($data[$index])) ? $data[$index] : 0;
+                $ret += (isset($value[$index])) ? $value[$index] : 0;
             } else {
-                $ret += $data;
+                $ret += $value;
             }
         }
 
         return $ret;
-    }
-
-    /**
-     *
-     * Takes an array test to see if it is multi-dimensional.
-     * Great for use before using array_diff
-     * example:
-     * $x = arary(1, array(2,3,4), 5, 6);
-     * $y = arary(1, array(7,8), 5, 6);
-     * $z = arary(1, 'Array', 5, 6);
-     *
-     * empty(array_diff($x, $y)); // returns true
-     * empty(array_diff($y, $z)); // returns true
-     *
-     * array_diff() does a toString() on every entity in the array so multi-dim arrays return the string "Array"
-     * thanks to @epochblue for that find
-     *
-     * @param array $array
-     * @return boolean
-     */
-    public function isMulti($array)
-    {
-        return (bool)(count($array) != count($array, COUNT_RECURSIVE));
     }
 }

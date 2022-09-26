@@ -7,7 +7,7 @@
     </include>
     <report>
       <html outputDirectory="coverageHTML" lowUpperBound="50" highLowerBound="90" />
-      <xml outputDirectory="coverageXML" />
+      <!--   <xml outputDirectory="coverageXML" /> -->
     </report>
   </coverage>
   <php>

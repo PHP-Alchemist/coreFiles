@@ -25,13 +25,13 @@ interface CollectionInterface extends ArrayAccess, Iterator
     // END Iterator
 
     // ArrayAccess
-    function offsetUnset($offset) : void;
+    function offsetUnset(mixed $offset) : void;
 
-    function offsetSet($offset, $value) : void;
+    function offsetSet(mixed $offset, mixed $value) : void;
 
-    function offsetGet($offset) : mixed;
+    function offsetGet(mixed $offset) : mixed;
 
-    function offsetExists($offset) : bool;
+    function offsetExists(mixed $offset) : bool;
     // END ArrayAccess
 
     // Class Specific

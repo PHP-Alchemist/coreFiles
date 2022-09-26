@@ -6,12 +6,14 @@ use Exception;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
+use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Twine;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
 
 class AbstractHashTable implements HashTableInterface
 {
+    use ArrayTrait;
     /** @var bool $readOnly */
     protected $readOnly;
 
@@ -24,7 +26,7 @@ class AbstractHashTable implements HashTableInterface
     /** @var int $fixedSize locking a HashTable to a fixed size */
     protected $fixedSize;
 
-    public function __construct($data = [], $readOnly = false, $fixedSize = null)
+    public function __construct(array $data = [], $readOnly = false, $fixedSize = null)
     {
         if (!$this->validateKeys($data)) {
             throw new InvalidKeyTypeException("Invalid Key type for HashTable");
@@ -80,15 +82,13 @@ class AbstractHashTable implements HashTableInterface
         return count($this->data);
     }
 
-    /**
-     * Move forward to previous element
-     *
-     * @return void Any returned value is ignored.
-     */
-    public function prev() : void
+    public function delete(mixed $key) : void
     {
-        --$this->position;
+        if (array_key_exists($key, $this->data)) {
+             unset($this->data[$key]);
+        }
     }
+
 
     /**
      * @param string $glue default: ' '
@@ -98,6 +98,17 @@ class AbstractHashTable implements HashTableInterface
     public function implode($glue = ' '): StringInterface
     {
         return new Twine(join($glue, $this->data));
+    }
+
+    /**
+     * Move back to previous element
+     *
+     * @return void Any returned value is ignored.
+     *
+     */
+    public function prev() : void
+    {
+        --$this->position;
     }
 
     // region Contractual Obligations
@@ -114,7 +125,7 @@ class AbstractHashTable implements HashTableInterface
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset) : bool
+    public function offsetExists(mixed $offset) : bool
     {
         return (isset($this->data[$offset]));
     }
@@ -128,7 +139,7 @@ class AbstractHashTable implements HashTableInterface
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet($offset) : mixed
+    public function offsetGet(mixed $offset) : mixed
     {
         if ($this->offsetExists($offset)) {
             return $this->data[$offset];
@@ -150,7 +161,7 @@ class AbstractHashTable implements HashTableInterface
      * @throws InvalidKeyTypeException
      * @throws ReadOnlyDataException
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isReadOnly()) {
             throw new ReadOnlyDataException("Invalid call to offsetSet on read-only " . __CLASS__ . ".");
@@ -178,7 +189,7 @@ class AbstractHashTable implements HashTableInterface
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset($offset) : void
+    public function offsetUnset(mixed $offset) : void
     {
         unset($this->data[$offset]);
     }

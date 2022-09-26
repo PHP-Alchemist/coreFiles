@@ -2,25 +2,17 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
-    // Core-Files Types
-    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
-    const COLLECTION_TYPE = 'PHPAlchemist\Type\Collection';
-
-    // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE = '\Iterator';
+    const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
-
-    // Exceptions
-    const EXCEPTION_TYPE = '\Exception';
-    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
-    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
-    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
+    const EXCEPTION_TYPE        = '\Exception';
 
     public function testCount()
     {
@@ -43,7 +35,7 @@ class CollectionTest extends TestCase
             'def',
         ]);
 
-        $this->assertInstanceOf(self::TWINE_TYPE, $arrayTest->implode(" "));
+        $this->assertInstanceOf(Twine::class, $arrayTest->implode(" "));
     }
 
     public function testNext()
@@ -138,7 +130,7 @@ class CollectionTest extends TestCase
 
     public function testOffsets()
     {
-        $arrayTest       = new Collection([
+        $arrayTest = new Collection([
             'abc',
             'bcd',
             'cde',
@@ -159,9 +151,9 @@ class CollectionTest extends TestCase
 
         try {
             $arrayTest['doc'] = 'McStuffAndThangs';
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
 
-            $this->assertInstanceOf('\PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }
     }
@@ -212,7 +204,7 @@ class CollectionTest extends TestCase
 
     public function testArrayAccess()
     {
-        $data     = [
+        $data      = [
             'abc',
             'bcd',
             'cde',
@@ -225,7 +217,7 @@ class CollectionTest extends TestCase
 
     public function testTraversable()
     {
-        $data     = [
+        $data      = [
             'abc',
             'bcd',
             'cde',
@@ -234,5 +226,36 @@ class CollectionTest extends TestCase
         $arrayTest = new Collection($data);
 
         $this->assertInstanceOf('\Traversable', $arrayTest);
+    }
+
+
+    /**
+     * @throws InvalidKeyTypeException
+     */
+    public function testArraySumKey()
+    {
+        $testArray = [
+            [
+                'a' => 14,
+                'b' => 42,
+            ],
+            [
+                'a' => 4,
+                'b' => 2,
+            ],
+        ];
+
+        $collection      = new Collection($testArray);
+        $emptyCollection = new Collection([]);
+
+        $sum = $collection->sumByKey('a');
+        $this->assertEquals('18', $sum);
+
+        $sum2 = $collection->sumByKey('b');
+        $this->assertEquals('44', $sum2);
+
+        $sum3 = $emptyCollection->sumByKey('a');
+        $this->assertEquals('0', $sum3);
+
     }
 }
