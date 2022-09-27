@@ -361,4 +361,18 @@ class HashTableTest extends TestCase
 
         $this->assertInstanceOf(self::TRAVERSABLE_TYPE, $array);
     }
+
+    public function testAdd()
+    {
+        $ht = new HashTable([
+            'ALPHA' => 'a',
+            'BRAVO' => 'b'
+        ]);
+
+
+        $ht->add('CHARLIE', 'c');
+        $ht->add('DELTA', 'd');
+
+        $this->assertEquals('c', $ht->get('CHARLIE') );
+    }
 }

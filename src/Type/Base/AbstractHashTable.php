@@ -55,7 +55,7 @@ class AbstractHashTable implements HashTableInterface
      * @throws InvalidKeyTypeException
      *
      */
-    public function add($key, $value)
+    public function add($key, $value) : HashTableInterface
     {
         $this->offsetSet($key, $value);
 

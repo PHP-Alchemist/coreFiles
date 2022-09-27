@@ -7,6 +7,20 @@ use Iterator;
 
 interface CollectionInterface extends ArrayAccess, Iterator
 {
+    // Class Specific
+    function setData(array $data) : CollectionInterface;
+
+    function isStrict() : bool;
+
+    function count(): int;
+
+    function push(mixed $data) : CollectionInterface;
+
+    function add(mixed $data) : CollectionInterface;
+
+    function pop() : mixed;
+
+    function get(mixed $key) : mixed;
 
 
     // Iterator
@@ -34,10 +48,5 @@ interface CollectionInterface extends ArrayAccess, Iterator
     function offsetExists(mixed $offset) : bool;
     // END ArrayAccess
 
-    // Class Specific
-    function setData(array $data) : CollectionInterface;
 
-    function isStrict() : bool;
-
-    function count(): int;
 }

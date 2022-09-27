@@ -5,7 +5,9 @@ namespace PHPAlchemist\Type\Base;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
+use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\StringInterface;
+use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 
 class AbstractCollection implements CollectionInterface
@@ -98,7 +100,7 @@ class AbstractCollection implements CollectionInterface
      * Offset to set
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value  The value to set.
+     * @param mixed $value The value to set.
      *
      * @return void
      * @since 5.0.0
@@ -121,7 +123,7 @@ class AbstractCollection implements CollectionInterface
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset(mixed $offset): void
+    public function offsetUnset(mixed $offset) : void
     {
         unset($this->data[$offset]);
     }
@@ -186,7 +188,7 @@ class AbstractCollection implements CollectionInterface
     /**
      * @return array
      */
-    public function getData(): array
+    public function getData() : array
     {
         return $this->data;
     }
@@ -223,5 +225,42 @@ class AbstractCollection implements CollectionInterface
     protected function validateKey($key) : bool
     {
         return is_int($key);
+    }
+
+    function push(mixed $data) : CollectionInterface
+    {
+        $this->data[] = $data;
+
+        return $this;
+    }
+
+    function add(mixed $data) : CollectionInterface
+    {
+        $this->data[] = $data;
+
+        return $this;
+    }
+
+    function pop() : mixed
+    {
+        $value = array_pop($this->data);
+
+        if (is_string($value)) {
+            return new Twine($value);
+        }
+
+        if (is_array($value)
+//            && !($value instanceof CollectionInterface::class)
+//            && !($value instanceof HashTableInterface::class)
+        ) {
+            return new Collection($value);
+        }
+
+        return $value;
+    }
+
+    function get(mixed $key) : mixed
+    {
+        return $this->offsetGet($key);
     }
 }

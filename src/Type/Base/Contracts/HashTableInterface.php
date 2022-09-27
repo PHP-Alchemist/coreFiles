@@ -8,7 +8,7 @@ use Iterator;
 
 interface HashTableInterface extends ArrayAccess, Iterator
 {
-    function add($key, $value);
+    function add($key, $value) : HashTableInterface;
 
     function get($key) : mixed;
 

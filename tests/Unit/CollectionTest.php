@@ -12,7 +12,7 @@ class CollectionTest extends TestCase
     const ARRAYACCESS_TYPE = '\ArrayAccess';
     const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
-    const EXCEPTION_TYPE        = '\Exception';
+    const EXCEPTION_TYPE   = '\Exception';
 
     public function testCount()
     {
@@ -228,7 +228,6 @@ class CollectionTest extends TestCase
         $this->assertInstanceOf('\Traversable', $arrayTest);
     }
 
-
     /**
      * @throws InvalidKeyTypeException
      */
@@ -256,6 +255,49 @@ class CollectionTest extends TestCase
 
         $sum3 = $emptyCollection->sumByKey('a');
         $this->assertEquals('0', $sum3);
+
+    }
+
+    public function testPushPop()
+    {
+        $collection = new Collection(['a', 'b', 'c']);
+        $collection->push('d');
+        $collection->push('e');
+
+        $this->assertEquals('e', $collection->pop());
+        $this->assertEquals('d', $collection->pop());
+        $this->assertEquals('c', $collection->pop());
+
+        $testArray = ['a','b','c','d','e','f','g'];
+        $collection->add($testArray);
+        $returnedArray = $collection->pop();
+        $this->assertInstanceOf(Collection::class, $returnedArray );
+        $this->assertEquals($testArray, $returnedArray->getData());
+
+    }
+
+    public function testAdd()
+    {
+        $collection = new Collection(['a', 'b', 'c']);
+        $collection->push('d');
+        $collection->push('e');
+
+        $value = $collection->implode();
+        $this->assertEquals('a b c d e', (string) $value);
+        $this->assertInstanceOf(Twine::class, $value);
+    }
+
+    public function testGet()
+    {
+
+        $collection = new Collection(['a', 'b', 'c']);
+        $collection->push('d');
+        $collection->push('e');
+        $collection->offsetSet(42, 'ALPHA');
+        $collection->offsetSet(64, 'BRAVO');
+
+        $this->assertEquals('ALPHA', $collection->get(42));
+        $this->assertEquals('BRAVO', $collection->get(64));
 
     }
 }
