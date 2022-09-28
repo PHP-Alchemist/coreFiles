@@ -2,8 +2,18 @@
 
 namespace PHPAlchemist\Type\Base\Contracts;
 
-interface StringInterface
+interface StringInterface extends \Stringable
 {
+
+    /**
+     * @param mixed $needle
+     * @return mixed
+     */
+    public function contains(mixed $needle) : bool;
+
+    public function startsWith(mixed $needle) : bool;
+
+    public function endsWith(mixed $needle) : bool;
 
     /**
      * @return int
@@ -44,5 +54,5 @@ interface StringInterface
     /**
      * @return string
      */
-    public function __toString(): string;
+    public function __toString() : string;
 }

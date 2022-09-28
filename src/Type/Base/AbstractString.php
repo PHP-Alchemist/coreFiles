@@ -17,6 +17,20 @@ class AbstractString implements StringInterface
     /**
      * @inheritDoc
      */
+    public function contains(mixed $needle) : bool
+    {
+        return str_contains($this->value, $needle);
+    }
+
+    /** @inheritDoc */
+    public function endsWith(mixed $needle) : bool
+    {
+       return str_ends_with($this->value, $needle);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function length(): int
     {
         return strlen($this->value);
@@ -82,6 +96,12 @@ class AbstractString implements StringInterface
         $this->value = $value;
 
         return $this;
+    }
+
+    /** @inheritDoc */
+    public function startsWith(mixed $needle) : bool
+    {
+        return str_starts_with($this->value, $needle);
     }
 
 }
