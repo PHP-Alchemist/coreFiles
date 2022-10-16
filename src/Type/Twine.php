@@ -2,7 +2,7 @@
 
 namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Type\Base\AbstractString;
+use PHPAlchemist\Type\Base\AbstractTwine;
 
 /**
  * Class Twine
@@ -11,7 +11,7 @@ use PHPAlchemist\Type\Base\AbstractString;
  *
  * @package PHPAlchemist\Type
  */
-final class Twine extends AbstractString
+final class Twine extends AbstractTwine
 {
 
 }

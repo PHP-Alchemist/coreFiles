@@ -4,10 +4,10 @@ namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\StringInterface;
+use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Twine;
 
-class AbstractString implements StringInterface
+class AbstractTwine implements TwineInterface
 {
     protected $value;
 
@@ -35,7 +35,7 @@ class AbstractString implements StringInterface
     /**
      * @inheritDoc
      */
-    public function setValue($value) : StringInterface
+    public function setValue($value) : TwineInterface
     {
         $this->value = $value;
 
@@ -57,29 +57,9 @@ class AbstractString implements StringInterface
     }
 
     /** @inheritDoc */
-    public function equals(string|StringInterface $comparitive) : bool
+    public function equals(string|TwineInterface $comparitive) : bool
     {
         return (string)$comparitive === $this->value;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
-    {
-        return new Collection(explode($delimiter, $this->getValue(), $limit));
-    }
-
-    /**
-     * Convenience function for explode
-     *
-     * @param $delimiter
-     * @param $limit
-     * @return CollectionInterface
-     */
-    public function split($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
-    {
-        return $this->explode($delimiter, $limit);
     }
 
     /**
@@ -163,6 +143,26 @@ class AbstractString implements StringInterface
         $this->value = implode('', $temp);
     }
 
+    /**
+     * Convenience function for explode
+     *
+     * @param $delimiter
+     * @param $limit
+     * @return CollectionInterface
+     */
+    public function split($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    {
+        return $this->explode($delimiter, $limit);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    {
+        return new Collection(explode($delimiter, $this->getValue(), $limit));
+    }
+
     /** @inheritDoc */
     public function startsWith(mixed $needle) : bool
     {
@@ -170,7 +170,7 @@ class AbstractString implements StringInterface
     }
 
     /** @inheritDoc */
-    public function substring(int $offset, ?int $length) : StringInterface
+    public function substring(int $offset, ?int $length = null) : TwineInterface
     {
         return new Twine(substr($this->value, $offset, $length));
     }
