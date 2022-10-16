@@ -71,6 +71,18 @@ class AbstractString implements StringInterface
     }
 
     /**
+     * Convenience function for explode
+     *
+     * @param $delimiter
+     * @param $limit
+     * @return CollectionInterface
+     */
+    public function split($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    {
+        return $this->explode($delimiter, $limit);
+    }
+
+    /**
      * @inheritDoc
      */
     public function hasValue() : bool

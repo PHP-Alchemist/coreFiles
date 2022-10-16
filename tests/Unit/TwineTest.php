@@ -2,6 +2,7 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
@@ -33,9 +34,21 @@ class TwineTest extends TestCase
 
     public function testExplosion()
     {
+        $finalValue = [
+            'stuff',
+            'and',
+            'thangs',
+            'Coral',
+        ];
         $stringTest = new Twine("stuff and thangs Coral");
+        /** @var Collection $arrayTest */
         $arrayTest  = $stringTest->explode(" ");
+        /** @var Collection $arrayTest2 */
+        $arrayTest2 = $stringTest->split(" ");
         $this->assertInstanceOf(self::COLLECTION_TYPE, $arrayTest);
+        $this->assertInstanceOf(self::COLLECTION_TYPE, $arrayTest2);
+        $this->assertEquals($finalValue, $arrayTest->getData());
+        $this->assertEquals($finalValue, $arrayTest2->getData());
     }
 
     public function testGetValue()
@@ -150,13 +163,13 @@ class TwineTest extends TestCase
 
     public function testRemove() : void
     {
-        $name = new Twine('Michelle Violet Banks');
+        $name       = new Twine('Michelle Violet Banks');
         $middleName = new Twine('Violet ');
-        $offset = $name->indexOf($middleName);
-        $count = $middleName->length();
+        $offset     = $name->indexOf($middleName);
+        $count      = $middleName->length();
 
 //        die(var_dump($middleName));
         $name->remove($offset, $count);
-        $this->assertEquals('Michelle Banks', (string) $name);
+        $this->assertEquals('Michelle Banks', (string)$name);
     }
 }
