@@ -3,7 +3,9 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Base\Contracts\{CollectionInterface, StringInterface};
+use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
+use PHPAlchemist\Type\Base\Contracts\StringInterface;
+use PHPAlchemist\Type\Twine;
 
 class AbstractString implements StringInterface
 {
@@ -17,6 +19,32 @@ class AbstractString implements StringInterface
     /**
      * @inheritDoc
      */
+    public function __toString() : string
+    {
+        return $this->getValue();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValue() : string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setValue($value) : StringInterface
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function contains(mixed $needle) : bool
     {
         return str_contains($this->value, $needle);
@@ -25,41 +53,19 @@ class AbstractString implements StringInterface
     /** @inheritDoc */
     public function endsWith(mixed $needle) : bool
     {
-       return str_ends_with($this->value, $needle);
+        return str_ends_with($this->value, $needle);
+    }
+
+    /** @inheritDoc */
+    public function equals(string|StringInterface $comparitive) : bool
+    {
+        return (string)$comparitive === $this->value;
     }
 
     /**
      * @inheritDoc
      */
-    public function length(): int
-    {
-        return strlen($this->value);
-    }
-
-    /**
-     * Convert string to UPPER CASE
-     *
-     * @return string
-     */
-    public function upper(): string
-    {
-        return strtoupper($this->getValue());
-    }
-
-    /**
-     * Convert string to lower case
-     *
-     * @return string
-     */
-    public function lower(): string
-    {
-        return strtolower($this->getValue());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX): CollectionInterface
+    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
     {
         return new Collection(explode($delimiter, $this->getValue(), $limit));
     }
@@ -67,35 +73,82 @@ class AbstractString implements StringInterface
     /**
      * @inheritDoc
      */
-    public function __toString(): string
-    {
-        return $this->getValue();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function hasValue(): bool
+    public function hasValue() : bool
     {
         return !(is_null($this->value));
     }
 
+    /** @inheritDoc */
+    public function indexOf(string $needle, int $startIndex = 0) : int|false
+    {
+        return strpos($this->value, $needle, $startIndex);
+    }
+
+    /** @inheritDoc */
+    public function insert(string $insertion, int $offset) : void
+    {
+        $explosion[0] = substr($this->value, 0, $offset);
+        $explosion[1] = $insertion;
+        $explosion[2] = substr($this->value, $offset);
+
+        $this->value = implode('', $explosion);
+    }
+
+    /** @inheritDoc */
+    public function isNullOrEmpty() : bool
+    {
+        return (is_null($this->value) || empty($this->value));
+    }
+
+    /** @inheritDoc */
+    public function lastIndexOf(string $needle, int $startIndex = 0) : int|false
+    {
+        return strrpos($this->value, $needle, $startIndex);
+    }
+
     /**
      * @inheritDoc
      */
-    public function setValue($value): StringInterface
+    public function length() : int
     {
-        $this->value = $value;
+        return strlen($this->value);
+    }
 
-        return $this;
+    /**
+     * Convert string to lower case
+     *
+     * @return string
+     */
+    public function lower() : string
+    {
+        return mb_strtolower($this->getValue());
+    }
+
+    /** @inheritDoc */
+    public function padBoth(int $length, string $padValue = ' ') : void
+    {
+        $this->value = str_pad($this->value, $length, $padValue, STR_PAD_BOTH);
+    }
+
+    /** @inheritDoc */
+    public function padLeft(int $length, string $padValue = ' ') : void
+    {
+        $this->value = str_pad($this->value, $length, $padValue, STR_PAD_LEFT);
+    }
+
+    /** @inheritDoc */
+    public function padRight(int $length, string $padValue = ' ') : void
+    {
+        $this->value = str_pad($this->value, $length, $padValue, STR_PAD_RIGHT);
+    }
+
+    /** @inheritDoc */
+    public function remove(int $offset, int $length) : void
+    {
+        $temp[] = substr($this->value, 0, $offset);
+        $temp[] = substr($this->value, ($offset + $length));
+
+        $this->value = implode('', $temp);
     }
 
     /** @inheritDoc */
@@ -104,4 +157,19 @@ class AbstractString implements StringInterface
         return str_starts_with($this->value, $needle);
     }
 
+    /** @inheritDoc */
+    public function substring(int $offset, ?int $length) : StringInterface
+    {
+        return new Twine(substr($this->value, $offset, $length));
+    }
+
+    /**
+     * Convert string to UPPER CASE
+     *
+     * @return string
+     */
+    public function upper() : string
+    {
+        return mb_strtoupper($this->getValue());
+    }
 }
