@@ -6,7 +6,7 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Type\Base\Contracts\StringInterface;
+use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 
@@ -56,9 +56,9 @@ class AbstractCollection implements CollectionInterface
     /**
      * @param string $glue default: ' '
      *
-     * @return StringInterface
+     * @return TwineInterface
      */
-    public function implode($glue = ' ') : StringInterface
+    public function implode($glue = ' ') : TwineInterface
     {
         return new Twine(join($glue, $this->data));
     }

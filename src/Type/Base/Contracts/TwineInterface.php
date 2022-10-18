@@ -2,7 +2,7 @@
 
 namespace PHPAlchemist\Type\Base\Contracts;
 
-interface StringInterface extends \Stringable
+interface TwineInterface extends \Stringable
 {
     /**
      * @return string
@@ -102,9 +102,9 @@ interface StringInterface extends \Stringable
     /**
      * @param string $value
      *
-     * @return StringInterface
+     * @return TwineInterface
      */
-    public function setValue($value) : StringInterface;
+    public function setValue($value) : TwineInterface;
 
     /**
      * @param mixed $needle
@@ -115,9 +115,9 @@ interface StringInterface extends \Stringable
     /**
      * @param int $offset
      * @param int|null $length
-     * @return StringInterface
+     * @return TwineInterface
      */
-    public function substring(int $offset, ?int $length) : StringInterface;
+    public function substring(int $offset, ?int $length) : TwineInterface;
 
     /**
      * @param int $offset

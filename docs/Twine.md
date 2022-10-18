@@ -1,12 +1,17 @@
 # Twine
 
+## Purpose
+
+With 'string' being a reserved word and other options leading to length class names, such as ProperString, I chose to 
+take a differnt approach. What's a synonym of String? Twine! It's basically just a proper object String.
+
 ## Methods
 
 ### Length
  * arguments: none
  * returns: int
  
-Returns the length of the string
+Returns the length of the Twine (string)
 
 ### Upper
  * arguments: none
