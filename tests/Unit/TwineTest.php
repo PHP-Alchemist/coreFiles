@@ -17,6 +17,7 @@ class TwineTest extends TestCase
         $this->assertFalse($twine->endsWith('iSm'));
         $this->assertTrue($twine->contains('establishment'));
         $this->assertFalse($twine->contains('establishMENT'));
+        $this->assertTrue($twine->contains('establishMENT', true));
     }
 
     public function testEquals() : void

@@ -13,7 +13,7 @@ interface TwineInterface extends \Stringable
      * @param mixed $needle
      * @return mixed
      */
-    public function contains(mixed $needle) : bool;
+    public function contains(mixed $needle, bool $caseInsensitive = false) : bool;
 
     public function endsWith(mixed $needle) : bool;
 

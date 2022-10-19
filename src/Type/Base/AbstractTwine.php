@@ -2,9 +2,9 @@
 
 namespace PHPAlchemist\Type\Base;
 
-use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 
 class AbstractTwine implements TwineInterface
@@ -45,8 +45,11 @@ class AbstractTwine implements TwineInterface
     /**
      * @inheritDoc
      */
-    public function contains(mixed $needle) : bool
+    public function contains(mixed $needle, bool $caseInsensitive = false) : bool
     {
+        if ($caseInsensitive)
+            return str_contains(mb_strtolower($this->value), mb_strtolower($needle));
+
         return str_contains($this->value, $needle);
     }
 
