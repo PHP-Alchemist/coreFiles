@@ -4,6 +4,7 @@ namespace tests\Unit;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
@@ -181,7 +182,7 @@ class CollectionTest extends TestCase
             $x = new Collection([
                 'a' => 'abc',
                 'b' => 'bcd',
-                'c' => 'cde'
+                'c' => 'cde',
             ]);
         } catch (\Exception $e) {
 
@@ -268,10 +269,10 @@ class CollectionTest extends TestCase
         $this->assertEquals('d', $collection->pop());
         $this->assertEquals('c', $collection->pop());
 
-        $testArray = ['a','b','c','d','e','f','g'];
+        $testArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
         $collection->add($testArray);
         $returnedArray = $collection->pop();
-        $this->assertInstanceOf(Collection::class, $returnedArray );
+        $this->assertInstanceOf(Collection::class, $returnedArray);
         $this->assertEquals($testArray, $returnedArray->getData());
 
     }
@@ -283,7 +284,7 @@ class CollectionTest extends TestCase
         $collection->push('e');
 
         $value = $collection->implode();
-        $this->assertEquals('a b c d e', (string) $value);
+        $this->assertEquals('a b c d e', (string)$value);
         $this->assertInstanceOf(Twine::class, $value);
     }
 
@@ -299,5 +300,40 @@ class CollectionTest extends TestCase
         $this->assertEquals('ALPHA', $collection->get(42));
         $this->assertEquals('BRAVO', $collection->get(64));
 
+    }
+
+    public function testMerge()
+    {
+        $collection = new Collection(['a', 'b', 'c', 'd']);
+        $collection->merge(['e', 'f', 'g', 'h', 'i']);
+        $collection->push(1);
+
+        $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 1], $collection->getData());
+        $x = $collection->pop();
+        $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], $collection->getData());
+    }
+
+    public function testToRoll()
+    {
+        $collection = new Collection(['a', 'b', 'c', 'd']);
+        /** @var Roll $x */
+        $roll          = $collection->toRoll(new Collection(['1', '2', '3', '4']));
+
+        $this->assertInstanceOf(Roll::class, $roll);
+
+        $this->assertEquals('b', $roll->get(2));
+        $this->assertEquals('d', $roll['4']);
+
+
+        $roll2 = $collection->toRoll();
+        $this->assertEquals('c', $roll2->get(2));
+        $this->assertEquals('a', $roll2[0]);
+
+        try {
+
+            $attempt = $collection->toRoll(new Collection(['a','b']));
+        } catch (\Exception $e) {
+            $this->assertEquals('Indexes count mismatch', $e->getMessage());
+        }
     }
 }

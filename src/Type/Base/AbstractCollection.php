@@ -8,6 +8,8 @@ use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\HashTable;
+use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 
 class AbstractCollection implements CollectionInterface
@@ -29,7 +31,7 @@ class AbstractCollection implements CollectionInterface
         if (!$this->validateKeys($data)) {
             throw new InvalidKeyTypeException("Invalid Key type for Array");
         }
-        $this->data     = $data;
+        $this->data = $data;
         $this->position = 0;
     }
 
@@ -227,21 +229,26 @@ class AbstractCollection implements CollectionInterface
         return is_int($key);
     }
 
-    function push(mixed $data) : CollectionInterface
+    public function merge(CollectionInterface|array $collection) : void
+    {
+        $this->data = array_merge($this->data, $collection);
+    }
+
+    public function push(mixed $data) : CollectionInterface
     {
         $this->data[] = $data;
 
         return $this;
     }
 
-    function add(mixed $data) : CollectionInterface
+    public function add(mixed $data) : CollectionInterface
     {
         $this->data[] = $data;
 
         return $this;
     }
 
-    function pop() : mixed
+    public function pop() : mixed
     {
         $value = array_pop($this->data);
 
@@ -259,8 +266,20 @@ class AbstractCollection implements CollectionInterface
         return $value;
     }
 
-    function get(mixed $key) : mixed
+    public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
+    }
+
+    public function toRoll( Collection $indexes = new Collection(), $rollClass = Roll::class ) : AbstractList {
+        if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {
+            throw new \Exception("Indexes count mismatch");
+        }
+
+        if($indexes->count() === 0) {
+            $indexes->setData(range(0, ($this->count()-1)));
+        }
+
+        return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
 }
