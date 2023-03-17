@@ -175,4 +175,16 @@ class TwineTest extends TestCase
         $string = new Twine("stuff and thangs");
         $this->assertEquals('STUFF AND THANGS', $string->upper());
     }
+
+    public function testReplace()
+    {
+        $testString = new Twine('Hello World');
+        $testString->replace('World', 'Coral');
+        $this->assertEquals('Hello Coral', (string) $testString);
+
+
+        $newTestTwine = new Twine("It is magically Delicious");
+        $newTestTwine->replace(['/It/', '/is/', '/magically/', '/Delicious/'], ['Stuff', 'and', 'thangs', 'Coral']);
+        $this->assertEquals('Stuff and thangs Coral', $newTestTwine);
+    }
 }

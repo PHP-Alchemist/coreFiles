@@ -277,6 +277,13 @@ class CollectionTest extends TestCase
 
     }
 
+    public function testFirst()
+    {
+        $collection = new Collection(['hello', 'stuff', 'and', 'thangs', 'coral']);
+
+        $this->assertEquals('hello', $collection->first());
+    }
+
     public function testAdd()
     {
         $collection = new Collection(['a', 'b', 'c']);

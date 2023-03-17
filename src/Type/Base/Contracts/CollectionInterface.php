@@ -12,7 +12,7 @@ interface CollectionInterface extends ArrayAccess, Iterator
 
     function isStrict() : bool;
 
-    function count(): int;
+    function count() : int;
 
     function push(mixed $data) : CollectionInterface;
 
@@ -46,7 +46,9 @@ interface CollectionInterface extends ArrayAccess, Iterator
     function offsetGet(mixed $offset) : mixed;
 
     function offsetExists(mixed $offset) : bool;
+
     // END ArrayAccess
 
+    function first() : mixed;
 
 }

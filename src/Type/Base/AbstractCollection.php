@@ -271,6 +271,16 @@ class AbstractCollection implements CollectionInterface
         return $this->offsetGet($key);
     }
 
+    /**
+     * Returns the first element of the collection
+     *
+     * @return mixed
+     */
+    public function first() : mixed
+    {
+        return $this->data[array_key_first($this->data)];
+    }
+
     public function toRoll( Collection $indexes = new Collection(), $rollClass = Roll::class ) : AbstractList {
         if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {
             throw new \Exception("Indexes count mismatch");

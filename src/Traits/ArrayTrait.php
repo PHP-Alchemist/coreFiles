@@ -19,11 +19,7 @@ trait ArrayTrait
         }
         $ret = 0;
         foreach ($this->data as $key => $value) {
-            if (isset($index)) {
-                $ret += (isset($value[$index])) ? $value[$index] : 0;
-            } else {
-                $ret += $value;
-            }
+            $ret += (isset($value[$index])) ? $value[$index] : 0;
         }
 
         return $ret;

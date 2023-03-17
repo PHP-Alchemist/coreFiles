@@ -22,7 +22,7 @@ class CSVUtilTest extends TestCase
 
         $csvString = '';
 
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $csvString .= CSVUtil::sputcsv($row, ',');
         }
 
@@ -49,12 +49,11 @@ Jaromir,Jagr,68
 
         $csvString = '';
 
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $csvString .= CSVUtil::sputcsv($row, ',', '"', "<BR/>");
         }
 
         $output = "firstName,lastName,jerseyNumber<BR/>Mario,Lemieux,66<BR/>Sidney,Crosby,87<BR/>Bill,Guerin,13<BR/>";
         $this->assertEquals($output, $csvString);
-
     }
 }

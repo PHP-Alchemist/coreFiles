@@ -187,4 +187,12 @@ class AbstractTwine implements TwineInterface
     {
         return mb_strtoupper($this->getValue());
     }
+
+    public function replace(string|array $needle, string|array $replacement ) : void
+    {
+        if (is_string($needle)) {
+            $needle = "/${needle}/";
+        }
+        $this->value = preg_replace($needle, $replacement, $this->value);
+    }
 }
