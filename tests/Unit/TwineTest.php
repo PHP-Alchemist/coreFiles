@@ -166,7 +166,7 @@ class TwineTest extends TestCase
     {
         $stringValue = 'Stuff & Thangs Coral';
         $stringTest  = new Twine($stringValue);
-        $this->assertEquals($stringValue, "${stringTest}");
+        $this->assertEquals($stringValue, "{$stringTest}");
         $this->assertInstanceOf(\Stringable::class, $stringTest);
     }
 

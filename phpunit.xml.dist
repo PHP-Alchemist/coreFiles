@@ -6,8 +6,7 @@
       <directory>src</directory>
     </include>
     <report>
-      <html outputDirectory="coverageHTML" lowUpperBound="50" highLowerBound="90" />
-      <!--   <xml outputDirectory="coverageXML" /> -->
+      <html outputDirectory="reports/coverage/html" lowUpperBound="50" highLowerBound="90" />
     </report>
   </coverage>
   <php>
