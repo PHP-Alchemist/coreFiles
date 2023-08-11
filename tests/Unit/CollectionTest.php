@@ -36,7 +36,7 @@ class CollectionTest extends TestCase
             'def',
         ]);
 
-        $this->assertInstanceOf(Twine::class, $arrayTest->implode(" "));
+        $this->assertInstanceOf(Twine::class, $arrayTest->implode(' '));
     }
 
     public function testNext()
@@ -342,5 +342,23 @@ class CollectionTest extends TestCase
         } catch (\Exception $e) {
             $this->assertEquals('Indexes count mismatch', $e->getMessage());
         }
+    }
+
+    public function testIntersection()
+    {
+        $collection = new Collection(['1', '2', 3, '4', '5']);
+        $collection2 = new Collection(['3', '4', 5, '6', '7']);
+
+        $result = $collection->intersection($collection2);
+
+        $this->assertEquals(new Collection([3, '4', '5']), $result);
+
+
+        $collection3 = new Collection(['stuff', 'thangs', 'coral']);
+        $collection4 = new Collection(['i', "don't", 'like', 'thangs', 'much']);
+
+        $result = $collection3->intersection($collection4);
+
+        $this->assertEquals(new Collection(['thangs']), $result);
     }
 }

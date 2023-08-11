@@ -191,7 +191,7 @@ class AbstractTwine implements TwineInterface
     public function replace(string|array $needle, string|array $replacement ) : void
     {
         if (is_string($needle)) {
-            $needle = "/${needle}/";
+            $needle = "/{$needle}/";
         }
         $this->value = preg_replace($needle, $replacement, $this->value);
     }
