@@ -3,6 +3,8 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
@@ -11,9 +13,12 @@ use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\HashTable;
 use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
+use Serializable;
 
-class AbstractCollection implements CollectionInterface
+class AbstractCollection implements CollectionInterface, Serializable
 {
+    public static $serialize_version = 1;
+
     use ArrayTrait;
 
     /** @var boolean $strict */
@@ -31,7 +36,7 @@ class AbstractCollection implements CollectionInterface
         if (!$this->validateKeys($data)) {
             throw new InvalidKeyTypeException("Invalid Key type for Array");
         }
-        $this->data = $data;
+        $this->data     = $data;
         $this->position = 0;
     }
 
@@ -66,6 +71,29 @@ class AbstractCollection implements CollectionInterface
     }
 
     // region Contractual Obligations
+
+    public function serialize(): string
+    {
+        return serialize([
+            'version' => static::$serialize_version,
+            'model'   => get_class($this),
+            'data'    => $this->data,
+        ]);
+    }
+
+    public function unserialize(string $data): void
+    {
+        $input = unserialize($data);
+        if ($input['model'] !== get_class($this)) {
+            throw new UnmatchedClassException();
+        }
+
+        if ($input['version'] !== static::$serialize_version) {
+            throw new UnmatchedVersionException();
+        }
+
+        $this->data = $input['data'];
+    }
 
     /**
      * Whether a offset exists

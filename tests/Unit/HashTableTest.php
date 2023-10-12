@@ -6,6 +6,8 @@ use Exception;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Type\HashTable;
 use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
@@ -389,5 +391,40 @@ class HashTableTest extends TestCase
         $ht->add('DELTA', 'd');
 
         $this->assertEquals('c', $ht->get('CHARLIE') );
+    }
+
+    public function testSerializable()
+    {
+        $arrayTest = new HashTable([
+            'a' => 'abc',
+            'b' => 'bcd',
+            'c' => 'cde',
+            'd' => 'def',
+        ]);
+
+        $serializedObject = serialize($arrayTest);
+
+        $this->assertEquals('C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}', $serializedObject);
+    }
+
+    public function testDeserializable()
+    {
+        $serializedObject = 'C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+        $wrongVersion = 'C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:2;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+        $wrongClass = 'C:27:"PHPAlchemist\Type\HashTable":161:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+
+        $data = unserialize($serializedObject);
+        $this->assertInstanceOf('PHPAlchemist\Type\HashTable', $data);
+        try {
+            $wrongType = unserialize($wrongClass);
+        } catch (\Exception $e2) {
+            $this->assertEquals(UnmatchedClassException::ERROR_UNMATCHED_CLASS, $e2->getMessage());
+        }
+
+        try {
+            $version = unserialize($wrongVersion);
+        } catch (\Exception $e) {
+            $this->assertEquals(UnmatchedVersionException::ERROR_WRONG_VERSION, $e->getMessage());
+        }
     }
 }

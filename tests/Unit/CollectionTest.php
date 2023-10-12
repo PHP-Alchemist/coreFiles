@@ -3,6 +3,8 @@
 namespace tests\Unit;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
@@ -11,9 +13,9 @@ use PHPUnit\Framework\TestCase;
 class CollectionTest extends TestCase
 {
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE    = '\Iterator';
+    const ITERATOR_TYPE = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
-    const EXCEPTION_TYPE   = '\Exception';
+    const EXCEPTION_TYPE = '\Exception';
 
     public function testCount()
     {
@@ -25,6 +27,42 @@ class CollectionTest extends TestCase
         ]);
 
         $this->assertEquals('4', $arrayTest->count());
+    }
+
+    public function testSerializable()
+    {
+        $arrayTest = new Collection([
+            'abc',
+            'bcd',
+            'cde',
+            'def',
+        ]);
+
+        $serializedObject = serialize($arrayTest);
+
+        $this->assertEquals('C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}', $serializedObject);
+
+    }
+
+    public function testDeserializable()
+    {
+        $serializedObject = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $wrongVersion     = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:2;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $wrongClass       = 'C:28:"PHPAlchemist\Type\Collection":144:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\Hashtable";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+
+        $data = unserialize($serializedObject);
+        $this->assertInstanceOf('PHPAlchemist\Type\Collection', $data);
+        try {
+            $wrongType = unserialize($wrongClass);
+        } catch (\Exception $e2) {
+            $this->assertEquals(UnmatchedClassException::ERROR_UNMATCHED_CLASS, $e2->getMessage());
+        }
+
+        try {
+            $version = unserialize($wrongVersion);
+        } catch (\Exception $e) {
+            $this->assertEquals(UnmatchedVersionException::ERROR_WRONG_VERSION, $e->getMessage());
+        }
     }
 
     public function testImplode()
@@ -324,7 +362,7 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection(['a', 'b', 'c', 'd']);
         /** @var Roll $x */
-        $roll          = $collection->toRoll(new Collection(['1', '2', '3', '4']));
+        $roll = $collection->toRoll(new Collection(['1', '2', '3', '4']));
 
         $this->assertInstanceOf(Roll::class, $roll);
 
@@ -338,7 +376,7 @@ class CollectionTest extends TestCase
 
         try {
 
-            $attempt = $collection->toRoll(new Collection(['a','b']));
+            $attempt = $collection->toRoll(new Collection(['a', 'b']));
         } catch (\Exception $e) {
             $this->assertEquals('Indexes count mismatch', $e->getMessage());
         }
@@ -346,7 +384,7 @@ class CollectionTest extends TestCase
 
     public function testIntersection()
     {
-        $collection = new Collection(['1', '2', 3, '4', '5']);
+        $collection  = new Collection(['1', '2', 3, '4', '5']);
         $collection2 = new Collection(['3', '4', 5, '6', '7']);
 
         $result = $collection->intersection($collection2);
