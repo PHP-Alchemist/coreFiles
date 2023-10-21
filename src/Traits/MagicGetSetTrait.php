@@ -24,8 +24,8 @@ trait MagicGetSetTrait
             $name = lcfirst(substr($method, 3));
         }
         if (method_exists($this, $verb)) {
-            if (property_exists($this, $name)) {
-                return call_user_func_array(array($this, $verb), array_merge(array($name), $arguments));
+            if (property_exists($this, lcfirst($name))) {
+                return call_user_func_array(array($this, $verb), array_merge(array(lcfirst($name)), $arguments));
             } else {
                 throw new Exception("Variable ($name) Not Found");
             }
