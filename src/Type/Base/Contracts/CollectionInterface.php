@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Type\Base\Contracts;
+namespace PHPAlchemist\Core\Type\Base\Contracts;
 
 use ArrayAccess;
 use Iterator;

@@ -2,7 +2,7 @@
 
 namespace Unit;
 
-use PHPAlchemist\Type\Roll;
+use PHPAlchemist\Core\Type\Roll;
 use PHPUnit\Framework\TestCase;
 
 class RollTest extends TestCase

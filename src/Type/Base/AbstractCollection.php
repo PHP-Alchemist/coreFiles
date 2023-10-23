@@ -1,18 +1,18 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Core\Type\Base;
 
-use PHPAlchemist\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Exceptions\UnmatchedClassException;
-use PHPAlchemist\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\HashTable;
-use PHPAlchemist\Type\Roll;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Core\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Core\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Core\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Core\Traits\ArrayTrait;
+use PHPAlchemist\Core\Type\Base\Contracts\CollectionInterface;
+use PHPAlchemist\Core\Type\Base\Contracts\HashTableInterface;
+use PHPAlchemist\Core\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Core\Type\Collection;
+use PHPAlchemist\Core\Type\HashTable;
+use PHPAlchemist\Core\Type\Roll;
+use PHPAlchemist\Core\Type\Twine;
 use Serializable;
 
 class AbstractCollection implements CollectionInterface, Serializable

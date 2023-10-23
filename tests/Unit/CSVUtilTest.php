@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Utilities\CSVUtil;
+use PHPAlchemist\Core\Utilities\CSVUtil;
 use PHPUnit\Framework\TestCase;
 
 class CSVUtilTest extends TestCase

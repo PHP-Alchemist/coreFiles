@@ -2,14 +2,14 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Core\Exceptions\HashTableFullException;
+use PHPAlchemist\Core\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Core\Exceptions\ReadOnlyDataException;
+use PHPAlchemist\Core\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Core\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Core\Type\HashTable;
+use PHPAlchemist\Core\Type\Twine;
 use Exception;
-use PHPAlchemist\Exceptions\HashTableFullException;
-use PHPAlchemist\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Exceptions\ReadOnlyDataException;
-use PHPAlchemist\Exceptions\UnmatchedClassException;
-use PHPAlchemist\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Type\HashTable;
-use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
 class HashTableTest extends TestCase
@@ -404,17 +404,19 @@ class HashTableTest extends TestCase
 
         $serializedObject = serialize($arrayTest);
 
-        $this->assertEquals('C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}', $serializedObject);
+        $this->assertEquals('C:32:"PHPAlchemist\Core\Type\HashTable":165:{a:3:{s:7:"version";i:1;s:5:"model";s:32:"PHPAlchemist\Core\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}', $serializedObject);
     }
 
     public function testDeserializable()
     {
-        $serializedObject = 'C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
-        $wrongVersion = 'C:27:"PHPAlchemist\Type\HashTable":160:{a:3:{s:7:"version";i:2;s:5:"model";s:27:"PHPAlchemist\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
-        $wrongClass = 'C:27:"PHPAlchemist\Type\HashTable":161:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+        $serializedObject = 'C:32:"PHPAlchemist\Core\Type\HashTable":165:{a:3:{s:7:"version";i:1;s:5:"model";s:32:"PHPAlchemist\Core\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+        $wrongVersion = 'C:32:"PHPAlchemist\Core\Type\HashTable":165:{a:3:{s:7:"version";i:2;s:5:"model";s:32:"PHPAlchemist\Core\Type\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
+        $wrongClass = 'C:32:"PHPAlchemist\Core\Type\HashTable":166:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Core\Type\Collection";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}}';
 
         $data = unserialize($serializedObject);
-        $this->assertInstanceOf('PHPAlchemist\Type\HashTable', $data);
+//        var_dump($data);
+//        die();
+        $this->assertInstanceOf('PHPAlchemist\Core\Type\HashTable', $data);
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Core\Type\Base;
 
 class AbstractKeyValuePair
 {

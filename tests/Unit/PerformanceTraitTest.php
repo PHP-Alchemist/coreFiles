@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\PerformanceTrait;
+use PHPAlchemist\Core\Traits\PerformanceTrait;
 use PHPUnit\Framework\TestCase;
 
 class MockPerfTraitClass

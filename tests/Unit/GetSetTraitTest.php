@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\GetSetTrait;
+use PHPAlchemist\Core\Traits\GetSetTrait;
 use PHPUnit\Framework\TestCase;
 
 class MockGetSetTraitClass

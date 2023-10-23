@@ -2,12 +2,9 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Utilities\ArrayUtility;
+use PHPAlchemist\Core\Traits\ArrayTrait;
+use PHPAlchemist\Core\Utilities\ArrayUtility;
 use PHPUnit\Framework\TestCase;
-
-
-
 
 class ArrayUtilityTest extends TestCase
 {

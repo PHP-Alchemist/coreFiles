@@ -2,7 +2,7 @@
 
 namespace Unit;
 
-use PHPAlchemist\Type\Number;
+use PHPAlchemist\Core\Type\Number;
 use PHPUnit\Framework\TestCase;
 
 class NumberTest extends TestCase

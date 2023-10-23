@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPAlchemist\Type;
+namespace PHPAlchemist\Core\Type;
 
-use PHPAlchemist\Type\Base\AbstractCollection;
+use PHPAlchemist\Core\Type\Base\AbstractCollection;
 
 /**
  * Class Collection
  *
  * Collection is a proper Array class
  *
- * @package PHPAlchemist\Type
+ * @package PHPAlchemist\Core\Type
  */
 final class Collection extends AbstractCollection
 {

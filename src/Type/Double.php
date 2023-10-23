@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\Type;
+namespace PHPAlchemist\Core\Type;
 
-use PHPAlchemist\Type\Base\AbstractNumber;
+use PHPAlchemist\Core\Type\Base\AbstractNumber;
 
 class Double extends AbstractNumber
 {

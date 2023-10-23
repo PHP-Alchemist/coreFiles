@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPAlchemist\Type;
+namespace PHPAlchemist\Core\Type;
 
-use PHPAlchemist\Type\Base\AbstractDictionary;
+use PHPAlchemist\Core\Type\Base\AbstractDictionary;
 
 /**
  * Class Dictionary
  *
- * @package PHPAlchemist\Type
+ * @package PHPAlchemist\Core\Type
  */
 final class Dictionary extends AbstractDictionary
 {

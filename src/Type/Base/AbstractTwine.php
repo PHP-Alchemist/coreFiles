@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Core\Type\Base;
 
-use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Core\Type\Base\Contracts\CollectionInterface;
+use PHPAlchemist\Core\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Core\Type\Collection;
+use PHPAlchemist\Core\Type\Twine;
 
 class AbstractTwine implements TwineInterface
 {
