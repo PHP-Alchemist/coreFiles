@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-           "PHPAlchemist\\Core\\": "src"
+           "PHPAlchemist\\": "src"
         }
     },
     "authors": [

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Core\Traits;
+namespace PHPAlchemist\Traits;
 
 
 trait GetSetTrait

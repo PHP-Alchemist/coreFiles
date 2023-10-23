@@ -2,14 +2,14 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Core\Type\Dictionary;
+use PHPAlchemist\Type\Dictionary;
 use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
 {
     // Core-Files Types
-    const TWINE_TYPE = '\PHPAlchemist\Core\Type\Twine';
-    const DICTIONARY_TYPE = 'PHPAlchemist\Core\Type\Dictionary';
+    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
+    const DICTIONARY_TYPE = 'PHPAlchemist\Type\Dictionary';
 
     // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
@@ -18,9 +18,9 @@ class DictionaryTest extends TestCase
 
     // Exceptions
     const EXCEPTION_TYPE = '\Exception';
-    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Core\Exceptions\InvalidKeyTypeException';
-    const READONLY_EXCEPTION = 'PHPAlchemist\Core\Exceptions\ReadOnlyDataException';
-    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Core\Exceptions\HashTableFullException';
+    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
+    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
+    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
 
     public function testCount()
     {
@@ -40,7 +40,7 @@ class DictionaryTest extends TestCase
         try {
             $dictionary->add(0.24, 'abc');
         }catch(\Exception $e) {
-            $this->assertInstanceOf("PHPAlchemist\Core\Exceptions\InvalidKeyTypeException", $e);
+            $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
             $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
         }
     }

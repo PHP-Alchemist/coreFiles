@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\Core\Type;
+namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Core\Type\Base\AbstractNumber;
+use PHPAlchemist\Type\Base\AbstractNumber;
 
 class Number extends AbstractNumber
 {

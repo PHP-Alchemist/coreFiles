@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PHPAlchemist\Core\Exceptions;
+namespace PHPAlchemist\Exceptions;
 
 
 class ReadOnlyDataException extends \Exception

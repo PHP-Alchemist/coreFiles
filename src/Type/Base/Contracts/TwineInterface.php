@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Core\Type\Base\Contracts;
+namespace PHPAlchemist\Type\Base\Contracts;
 
 interface TwineInterface extends \Stringable
 {

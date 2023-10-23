@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPAlchemist\Core\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use PHPAlchemist\Core\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Core\Type\Base\Contracts\DictionaryInterface;
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Type\Base\Contracts\DictionaryInterface;
 
 /**
  * Class AbstractDictionary

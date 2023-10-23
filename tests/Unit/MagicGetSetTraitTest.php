@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Core\Traits\MagicGetSetTrait;
+use PHPAlchemist\Traits\MagicGetSetTrait;
 use PHPUnit\Framework\TestCase;
 
 /**

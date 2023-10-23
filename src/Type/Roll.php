@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\Core\Type;
+namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Core\Type\Base\AbstractList;
+use PHPAlchemist\Type\Base\AbstractList;
 
 final class Roll extends AbstractList
 {

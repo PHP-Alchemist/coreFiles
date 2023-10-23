@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPAlchemist\Core\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use PHPAlchemist\Core\Exceptions\HashTableFullException;
-use PHPAlchemist\Core\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Core\Exceptions\ReadOnlyDataException;
-use PHPAlchemist\Core\Exceptions\UnmatchedClassException;
-use PHPAlchemist\Core\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Core\Traits\ArrayTrait;
-use PHPAlchemist\Core\Type\Twine;
-use PHPAlchemist\Core\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Core\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Exceptions\HashTableFullException;
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\ReadOnlyDataException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Traits\ArrayTrait;
+use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
+use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use Exception;
 use Serializable;
 

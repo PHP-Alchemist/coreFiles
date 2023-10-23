@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\Core\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
-use PHPAlchemist\Core\Type\Base\Contracts\NumberInterface;
+use PHPAlchemist\Type\Base\Contracts\NumberInterface;
 
 class AbstractNumber implements NumberInterface
 {

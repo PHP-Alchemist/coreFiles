@@ -2,12 +2,12 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Core\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Core\Exceptions\UnmatchedClassException;
-use PHPAlchemist\Core\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Core\Type\Collection;
-use PHPAlchemist\Core\Type\Roll;
-use PHPAlchemist\Core\Type\Twine;
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\Roll;
+use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
@@ -40,18 +40,18 @@ class CollectionTest extends TestCase
 
         $serializedObject = serialize($arrayTest);
 
-        $this->assertEquals('C:33:"PHPAlchemist\Core\Type\Collection":150:{a:3:{s:7:"version";i:1;s:5:"model";s:33:"PHPAlchemist\Core\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}', $serializedObject);
+        $this->assertEquals('C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}', $serializedObject);
 
     }
 
     public function testDeserializable()
     {
-        $serializedObject = 'C:33:"PHPAlchemist\Core\Type\Collection":150:{a:3:{s:7:"version";i:1;s:5:"model";s:33:"PHPAlchemist\Core\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
-        $wrongVersion     = 'C:33:"PHPAlchemist\Core\Type\Collection":150:{a:3:{s:7:"version";i:3;s:5:"model";s:33:"PHPAlchemist\Core\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
-        $wrongClass       = 'C:33:"PHPAlchemist\Core\Type\Collection":149:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Core\Type\Hashtable";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $serializedObject = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $wrongVersion     = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:2;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $wrongClass       = 'C:28:"PHPAlchemist\Type\Collection":144:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\Hashtable";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
 
         $data = unserialize($serializedObject);
-        $this->assertInstanceOf('PHPAlchemist\Core\Type\Collection', $data);
+        $this->assertInstanceOf('PHPAlchemist\Type\Collection', $data);
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {
@@ -202,7 +202,7 @@ class CollectionTest extends TestCase
         $arrayTest = new Collection();
         $this->assertInstanceOf('\ArrayAccess', $arrayTest);
         $this->assertInstanceOf('\Iterator', $arrayTest);
-        $this->assertInstanceOf('\PHPAlchemist\Core\Type\Base\Contracts\CollectionInterface', $arrayTest);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\CollectionInterface', $arrayTest);
     }
 
     public function testPositiveStrictness()
@@ -224,7 +224,7 @@ class CollectionTest extends TestCase
             ]);
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('PHPAlchemist\Core\Exceptions\InvalidKeyTypeException', $e);
+            $this->assertInstanceOf('PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
         }
     }
 

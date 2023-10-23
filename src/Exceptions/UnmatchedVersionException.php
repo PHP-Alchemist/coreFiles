@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Core\Exceptions;
+namespace PHPAlchemist\Exceptions;
 
 class UnmatchedVersionException extends \Exception
 {

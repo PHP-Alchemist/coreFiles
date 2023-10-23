@@ -2,7 +2,7 @@
 
 namespace Unit;
 
-use PHPAlchemist\Core\Type\Base\AbstractKeyValuePair;
+use PHPAlchemist\Type\Base\AbstractKeyValuePair;
 use PHPUnit\Framework\TestCase;
 
 class MockKeyValuePair extends AbstractKeyValuePair

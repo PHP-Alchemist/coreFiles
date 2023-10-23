@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPAlchemist\Core\Type;
+namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Core\Type\Base\AbstractHashTable;
+use PHPAlchemist\Type\Base\AbstractHashTable;
 
 /**
  * Class HashTable
  *
- * @package PHPAlchemist\Core\Type
+ * @package PHPAlchemist\Type
  */
 final class HashTable extends AbstractHashTable
 {

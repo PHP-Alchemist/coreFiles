@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Core\Type\Base;
+namespace PHPAlchemist\Type\Base;
 
 
 abstract class AbstractList extends AbstractCollection

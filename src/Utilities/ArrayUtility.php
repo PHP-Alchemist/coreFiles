@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Core\Utilities;
+namespace PHPAlchemist\Utilities;
 
 
 class ArrayUtility
