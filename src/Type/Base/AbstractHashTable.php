@@ -14,7 +14,7 @@ use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use Exception;
 use Serializable;
 
-class AbstractHashTable implements HashTableInterface, Serializable
+class AbstractHashTable implements HashTableInterface
 {
     public static $serialize_version = 1;
 
@@ -53,27 +53,26 @@ class AbstractHashTable implements HashTableInterface, Serializable
         $this->fixedSize = $fixedSize;
     }
 
-    public function serialize(): string
+    public function __serialize(): array
     {
-        return serialize([
+        return [
             'version' => static::$serialize_version,
             'model'   => get_class($this),
             'data'    => $this->data,
-        ]);
+        ];
     }
 
-    public function unserialize(string $data): void
+    public function __unserialize(array $data): void
     {
-        $input = unserialize($data);
-        if ($input['model'] !== get_class($this)) {
+        if ($data['model'] !== get_class($this)) {
             throw new UnmatchedClassException();
         }
 
-        if ($input['version'] !== static::$serialize_version) {
+        if ($data['version'] !== static::$serialize_version) {
             throw new UnmatchedVersionException();
         }
 
-        $this->data = $input['data'];
+        $this->setData($data);
     }
 
     /**

@@ -2,6 +2,10 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Dictionary;
 use PHPUnit\Framework\TestCase;
 
@@ -42,6 +46,46 @@ class DictionaryTest extends TestCase
         }catch(\Exception $e) {
             $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
             $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
+        }
+
+
+    }
+
+    public function testSerializable()
+    {
+        $arrayTest = new Dictionary([
+            'alpha'   => 'abc',
+            'bravo'   => 'bcd',
+            'charlie' => 'cde',
+            'delta'   => 'def',
+        ]);
+
+        $serializedObject = serialize($arrayTest);
+
+        $this->assertEquals('O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
+
+    }
+
+    public function testUnserialize()
+    {
+        $serializedObject = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongVersion     = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongClass       = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+
+        $data = unserialize($serializedObject);
+        $this->assertInstanceOf('PHPAlchemist\Type\Dictionary', $data);
+        $this->assertEquals('def', $data['delta']);
+
+        try {
+            $wrongType = unserialize($wrongClass);
+        } catch (\Exception $e2) {
+            $this->assertEquals(UnmatchedClassException::ERROR_UNMATCHED_CLASS, $e2->getMessage());
+        }
+
+        try {
+            $version = unserialize($wrongVersion);
+        } catch (\Exception $e) {
+            $this->assertEquals(UnmatchedVersionException::ERROR_WRONG_VERSION, $e->getMessage());
         }
     }
 

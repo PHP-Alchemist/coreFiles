@@ -44,14 +44,15 @@ class CollectionTest extends TestCase
 
     }
 
-    public function testDeserializable()
+    public function testUnserialize()
     {
-        $serializedObject = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
-        $wrongVersion     = 'C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:2;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
-        $wrongClass       = 'C:28:"PHPAlchemist\Type\Collection":144:{a:3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\Hashtable";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}';
+        $serializedObject = 'O:28:"PHPAlchemist\Type\Collection":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}';
+        $wrongVersion     = 'O:28:"PHPAlchemist\Type\Collection":3:{s:7:"version";i:3;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}';
+        $wrongClass       = 'O:28:"PHPAlchemist\Type\Collection":3:{s:7:"version";i:1;s:5:"model";s:27:"PHPAlchemist\Type\Hashtable";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}';
 
         $data = unserialize($serializedObject);
         $this->assertInstanceOf('PHPAlchemist\Type\Collection', $data);
+        $this->assertEquals('abc', $data[0]);
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {

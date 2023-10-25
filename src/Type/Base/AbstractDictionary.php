@@ -3,6 +3,8 @@
 namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Type\Base\Contracts\DictionaryInterface;
 
 /**
@@ -11,6 +13,8 @@ use PHPAlchemist\Type\Base\Contracts\DictionaryInterface;
  */
 class AbstractDictionary implements DictionaryInterface
 {
+    public static $serialize_version = 1;
+
     /** @var int $position position sentinel variable */
     protected $position;
 
@@ -166,11 +170,16 @@ class AbstractDictionary implements DictionaryInterface
      */
     public function setData(array $data) : DictionaryInterface
     {
+        try {
+
         $this->validateKeys($data);
         foreach ($data as $key => $value) {
             $this->add($key, $value);
         }
 
+        } catch(\Exception $exception) {
+            die('x');
+        }
         return $this;
     }
 
@@ -217,12 +226,13 @@ class AbstractDictionary implements DictionaryInterface
      * @param array $dataSet
      *
      * @return bool
+     * @throws InvalidKeyTypeException
      */
     protected function validateKeys(array $dataSet)
     {
         foreach (array_keys($dataSet) as $key) {
             if (!($this->validateKey($key))) {
-                return false;
+                throw new InvalidKeyTypeException("Key (" . $key . ") is not a valid type.");
             }
         }
 
@@ -237,6 +247,27 @@ class AbstractDictionary implements DictionaryInterface
     protected function validateKey($key)
     {
         return is_string($key) || is_int($key);
+    }
+    public function __serialize() : array
+    {
+        return [
+            'version' => static::$serialize_version,
+            'model'   => get_class($this),
+            'data'    => $this->getData(),
+        ];
+    }
+
+    public function __unserialize(array $data) : void
+    {
+        if ($data['model'] !== get_class($this)) {
+            throw new UnmatchedClassException();
+        }
+
+        if ($data['version'] !== static::$serialize_version) {
+            throw new UnmatchedVersionException();
+        }
+
+        $this->setData( $data['data']);
     }
 
 }
