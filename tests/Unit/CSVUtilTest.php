@@ -26,14 +26,13 @@ class CSVUtilTest extends TestCase
             $csvString .= CSVUtil::sputcsv($row, ',');
         }
 
-        $output = "firstName,lastName,jerseyNumber
-Sidney,Crosby,87
-Evgeni,Malkin,71
-Bill,Guerin,13
-Matt,Cullen,7
-Mario,Lemieux,66
-Jaromir,Jagr,68
-";
+        $output = "firstName,lastName,jerseyNumber" . PHP_EOL .
+"Sidney,Crosby,87" . PHP_EOL .
+"Evgeni,Malkin,71" . PHP_EOL .
+"Bill,Guerin,13" . PHP_EOL .
+"Matt,Cullen,7" . PHP_EOL .
+"Mario,Lemieux,66" . PHP_EOL .
+"Jaromir,Jagr,68" . PHP_EOL ;
         $this->assertEquals($output, $csvString);
 
     }

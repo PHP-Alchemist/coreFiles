@@ -9,6 +9,8 @@ use PHPAlchemist\Type\Twine;
 
 class AbstractTwine implements TwineInterface
 {
+    const BEGINNING_OF_STRING_POSITION = 0;
+
     protected $value;
 
     public function __construct($value = null)
@@ -153,9 +155,17 @@ class AbstractTwine implements TwineInterface
      * @param $limit
      * @return CollectionInterface
      */
-    public function split($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    public function splitOn($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
     {
         return $this->explode($delimiter, $limit);
+    }
+
+    public function split(int $position) : CollectionInterface
+    {
+        $split1 = substr($this->value, self::BEGINNING_OF_STRING_POSITION , $position);
+        $split2 = substr($this->value, $position);
+
+        return new Collection([$split1, $split2]);
     }
 
     /**

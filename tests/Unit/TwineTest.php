@@ -38,7 +38,7 @@ class TwineTest extends TestCase
         /** @var Collection $arrayTest */
         $arrayTest = $stringTest->explode(" ");
         /** @var Collection $arrayTest2 */
-        $arrayTest2 = $stringTest->split(" ");
+        $arrayTest2 = $stringTest->splitOn(" ");
         $this->assertInstanceOf(Collection::class, $arrayTest);
         $this->assertInstanceOf(Collection::class, $arrayTest2);
         $this->assertEquals($finalValue, $arrayTest->getData());
@@ -162,6 +162,15 @@ class TwineTest extends TestCase
         $this->assertInstanceOf(Twine::class, $prisonerNumber);
     }
 
+    public function testSplit()
+    {
+        $twine = new Twine('prisoner24601');
+        $splitValues = $twine->split(8);
+
+        $this->assertEquals('prisoner', $splitValues[0]);
+        $this->assertEquals('24601', $splitValues[1]);
+    }
+
     public function testToString() : void
     {
         $stringValue = 'Stuff & Thangs Coral';
@@ -180,7 +189,7 @@ class TwineTest extends TestCase
     {
         $testString = new Twine('Hello World');
         $testString->replace('World', 'Coral');
-        $this->assertEquals('Hello Coral', (string) $testString);
+        $this->assertEquals('Hello Coral', (string)$testString);
 
 
         $newTestTwine = new Twine("It is magically Delicious");

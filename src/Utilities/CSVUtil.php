@@ -16,7 +16,7 @@ class CSVUtil
      *
      * @return bool|string
      */
-    public static function sputcsv($row, $delimiter = ',', $enclosure = '"', $eol = "\n")
+    public static function sputcsv($row, $delimiter = ',', $enclosure = '"', $eol = PHP_EOL)
     {
         static $fp = false;
         if ($fp === false) {

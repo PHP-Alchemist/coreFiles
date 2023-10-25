@@ -8,12 +8,10 @@ use PHPUnit\Framework\TestCase;
 class MockCLITraitClass
 {
     use CLITrait;
-
 }
 
 class CLITraitTest extends TestCase
 {
-
     public function testIsCLI()
     {
         $mock = new MockCLITraitClass();
@@ -23,8 +21,8 @@ class CLITraitTest extends TestCase
 
     public function testFormatErrorDOS()
     {
-        $errorType = 'STUFF';
-        $message = 'THANGS';
+        $errorType  = 'STUFF';
+        $message    = 'THANGS';
         $correction = 'Coral';
 
         $output = <<<EOF
