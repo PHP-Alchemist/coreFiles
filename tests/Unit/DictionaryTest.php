@@ -2,10 +2,8 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Dictionary;
 use PHPUnit\Framework\TestCase;
 
