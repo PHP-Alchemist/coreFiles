@@ -7,13 +7,10 @@ use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\HashTable;
 use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
-use Serializable;
 
 class AbstractCollection implements CollectionInterface
 {

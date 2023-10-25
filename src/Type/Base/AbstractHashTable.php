@@ -8,11 +8,10 @@ use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Twine;
 use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
 use PHPAlchemist\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Type\Twine;
 use Exception;
-use Serializable;
 
 class AbstractHashTable implements HashTableInterface
 {
