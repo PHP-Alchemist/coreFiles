@@ -34,7 +34,7 @@ class HashTableTest extends TestCase
 
     public function testImplode()
     {
-        $hashtable= new HashTable([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
@@ -136,7 +136,7 @@ class HashTableTest extends TestCase
 
     public function testOffsets()
     {
-        $hashtable   = new HashTable([
+        $hashtable      = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
@@ -153,8 +153,8 @@ class HashTableTest extends TestCase
         $this->assertFalse($hashtable->offsetExists('z'));
 
         try {
-           $hashtable[529] = 'Doc McStuffAndThangs';
-        }catch(Exception $e) {
+            $hashtable[529] = 'Doc McStuffAndThangs';
+        } catch (Exception $e) {
 
             $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
             $this->assertEquals('Invalid Key type (integer) for HashTable', $e->getMessage());
@@ -276,7 +276,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashTable = new HashTable($data, false, 5);
+        $hashTable  = new HashTable($data, false, 5);
         $hashTable2 = new HashTable($data, false, true);
 
         // hashtable
@@ -353,7 +353,7 @@ class HashTableTest extends TestCase
 
     public function testTraversable()
     {
-        $data     = [
+        $data  = [
             '2a' => 'abc',
             '2b' => 'bcd',
             '2c' => 'cde',
@@ -368,7 +368,7 @@ class HashTableTest extends TestCase
     {
         $ht = new HashTable([
             'ALPHA' => 'a',
-            'BRAVO' => 'b'
+            'BRAVO' => 'b',
         ]);
 
 
@@ -379,18 +379,19 @@ class HashTableTest extends TestCase
         $this->assertFalse($ht->get('DELETA'));
 
     }
+
     public function testAdd()
     {
         $ht = new HashTable([
             'ALPHA' => 'a',
-            'BRAVO' => 'b'
+            'BRAVO' => 'b',
         ]);
 
 
         $ht->add('CHARLIE', 'c');
         $ht->add('DELTA', 'd');
 
-        $this->assertEquals('c', $ht->get('CHARLIE') );
+        $this->assertEquals('c', $ht->get('CHARLIE'));
     }
 
     public function testSerializable()

@@ -13,12 +13,12 @@ class AbstractNumber implements NumberInterface
         $this->data = $number;
     }
 
-    public function get(): int|float
+    public function get() : int|float
     {
         return $this->data;
     }
 
-    public function __toString(): string
+    public function __toString() : string
     {
         return (string)$this->data;
     }

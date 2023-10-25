@@ -164,7 +164,7 @@ class TwineTest extends TestCase
 
     public function testSplit()
     {
-        $twine = new Twine('prisoner24601');
+        $twine       = new Twine('prisoner24601');
         $splitValues = $twine->split(8);
 
         $this->assertEquals('prisoner', $splitValues[0]);

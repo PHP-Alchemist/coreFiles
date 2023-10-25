@@ -162,7 +162,7 @@ class AbstractTwine implements TwineInterface
 
     public function split(int $position) : CollectionInterface
     {
-        $split1 = substr($this->value, self::BEGINNING_OF_STRING_POSITION , $position);
+        $split1 = substr($this->value, self::BEGINNING_OF_STRING_POSITION, $position);
         $split2 = substr($this->value, $position);
 
         return new Collection([$split1, $split2]);
@@ -198,7 +198,7 @@ class AbstractTwine implements TwineInterface
         return mb_strtoupper($this->getValue());
     }
 
-    public function replace(string|array $needle, string|array $replacement ) : void
+    public function replace(string|array $needle, string|array $replacement) : void
     {
         if (is_string($needle)) {
             $needle = "/{$needle}/";

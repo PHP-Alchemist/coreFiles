@@ -73,7 +73,7 @@ class AbstractDictionary implements DictionaryInterface
         return $this->values;
     }
 
-    public function count(): int
+    public function count() : int
     {
         return count($this->keys);
     }
@@ -170,16 +170,11 @@ class AbstractDictionary implements DictionaryInterface
      */
     public function setData(array $data) : DictionaryInterface
     {
-        try {
-
         $this->validateKeys($data);
         foreach ($data as $key => $value) {
             $this->add($key, $value);
         }
 
-        } catch(\Exception $exception) {
-            die('x');
-        }
         return $this;
     }
 
@@ -248,6 +243,7 @@ class AbstractDictionary implements DictionaryInterface
     {
         return is_string($key) || is_int($key);
     }
+
     public function __serialize() : array
     {
         return [
@@ -267,7 +263,7 @@ class AbstractDictionary implements DictionaryInterface
             throw new UnmatchedVersionException();
         }
 
-        $this->setData( $data['data']);
+        $this->setData($data['data']);
     }
 
 }
