@@ -1,5 +1,5 @@
 <?php
-require_once('../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use PHPAlchemist\Type\Twine;
 
@@ -7,6 +7,6 @@ $twine          = new Twine('prisoner24601');
 $value          = $twine->substring(0, 8);
 $prisonerNumber = $twine->substring(8);
 
-echo $value. "\n";
-echo $prisonerNumber . "\n";
+echo $value. PHP_EOL;
+echo $prisonerNumber . PHP_EOL;
 

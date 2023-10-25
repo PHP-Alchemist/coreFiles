@@ -40,7 +40,7 @@ class CollectionTest extends TestCase
 
         $serializedObject = serialize($arrayTest);
 
-        $this->assertEquals('C:28:"PHPAlchemist\Type\Collection":145:{a:3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}}', $serializedObject);
+        $this->assertEquals('O:28:"PHPAlchemist\Type\Collection":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}', $serializedObject);
 
     }
 

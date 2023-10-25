@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use PHPAlchemist\Type\Dictionary;
 
@@ -39,4 +39,5 @@ echo $dictionary->get('echo') . " ";
 echo $dictionary->get('golf');
 echo $dictionary->get('oscar');
 echo $dictionary->get('oscar');
-echo $dictionary->get('delta'). ".\n";
+echo $dictionary->get('delta');
+echo PHP_EOL;

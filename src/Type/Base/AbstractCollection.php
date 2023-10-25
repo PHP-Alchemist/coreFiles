@@ -15,7 +15,7 @@ use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 use Serializable;
 
-class AbstractCollection implements CollectionInterface, Serializable
+class AbstractCollection implements CollectionInterface
 {
     public static $serialize_version = 1;
 
@@ -45,7 +45,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      *
      * @return int
      */
-    public function count(): int
+    public function count() : int
     {
         return count($this->data);
     }
@@ -55,7 +55,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      *
      * @return void Any returned value is ignored.
      */
-    public function prev(): void
+    public function prev() : void
     {
         --$this->position;
     }
@@ -65,34 +65,33 @@ class AbstractCollection implements CollectionInterface, Serializable
      *
      * @return TwineInterface
      */
-    public function implode($glue = ' '): TwineInterface
+    public function implode($glue = ' ') : TwineInterface
     {
         return new Twine(join($glue, $this->data));
     }
 
     // region Contractual Obligations
 
-    public function serialize(): string
+    public function __serialize() : array
     {
-        return serialize([
+        return [
             'version' => static::$serialize_version,
             'model'   => get_class($this),
             'data'    => $this->data,
-        ]);
+        ];
     }
 
-    public function unserialize(string $data): void
+    public function __unserialize(array $data) : void
     {
-        $input = unserialize($data);
-        if ($input['model'] !== get_class($this)) {
+        if ($data['model'] !== get_class($this)) {
             throw new UnmatchedClassException();
         }
 
-        if ($input['version'] !== static::$serialize_version) {
+        if ($data['version'] !== static::$serialize_version) {
             throw new UnmatchedVersionException();
         }
 
-        $this->data = $input['data'];
+        $this->data = $data['data'];
     }
 
     /**
@@ -107,7 +106,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists(mixed $offset): bool
+    public function offsetExists(mixed $offset) : bool
     {
         return (isset($this->data[$offset]));
     }
@@ -121,7 +120,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet(mixed $offset): mixed
+    public function offsetGet(mixed $offset) : mixed
     {
         return $this->data[$offset];
     }
@@ -135,7 +134,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return void
      * @since 5.0.0
      */
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isStrict() && !$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
@@ -153,7 +152,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return void
      * @since 5.0.0
      */
-    public function offsetUnset(mixed $offset): void
+    public function offsetUnset(mixed $offset) : void
     {
         unset($this->data[$offset]);
     }
@@ -164,7 +163,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return mixed Can return any type.
      * @since 5.0.0
      */
-    public function current(): mixed
+    public function current() : mixed
     {
         return ($this->valid()) ? array_values($this->data)[$this->position] : false;
     }
@@ -175,7 +174,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function next(): void
+    public function next() : void
     {
         ++$this->position;
     }
@@ -186,7 +185,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return mixed scalar on success, or null on failure.
      * @since 5.0.0
      */
-    public function key(): mixed
+    public function key() : mixed
     {
         return array_keys($this->data)[$this->position];
     }
@@ -198,7 +197,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * Returns true on success or false on failure.
      * @since 5.0.0
      */
-    public function valid(): bool
+    public function valid() : bool
     {
         return isset(array_values($this->data)[$this->position]);
     }
@@ -209,7 +208,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
-    public function rewind(): void
+    public function rewind() : void
     {
         $this->position = 0;
     }
@@ -218,7 +217,7 @@ class AbstractCollection implements CollectionInterface, Serializable
     /**
      * @return array
      */
-    public function getData(): array
+    public function getData() : array
     {
         return $this->data;
     }
@@ -227,19 +226,19 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @param array $data
      * @return CollectionInterface
      */
-    public function setData(array $data): CollectionInterface
+    public function setData(array $data) : CollectionInterface
     {
         $this->data = $data;
 
         return $this;
     }
 
-    public function isStrict(): bool
+    public function isStrict() : bool
     {
         return $this->strict;
     }
 
-    protected function validateKeys(array $dataSet): bool
+    protected function validateKeys(array $dataSet) : bool
     {
         if ($this->isStrict()) {
             foreach (array_keys($dataSet) as $key) {
@@ -252,24 +251,24 @@ class AbstractCollection implements CollectionInterface, Serializable
         return true;
     }
 
-    protected function validateKey($key): bool
+    protected function validateKey($key) : bool
     {
         return is_int($key);
     }
 
-    public function merge(CollectionInterface|array $collection): void
+    public function merge(CollectionInterface|array $collection) : void
     {
         $this->data = array_merge($this->data, $collection);
     }
 
-    public function push(mixed $data): CollectionInterface
+    public function push(mixed $data) : CollectionInterface
     {
         $this->data[] = $data;
 
         return $this;
     }
 
-    public function add(mixed $data): CollectionInterface
+    public function add(mixed $data) : CollectionInterface
     {
         $this->data[] = $data;
 
@@ -285,7 +284,7 @@ class AbstractCollection implements CollectionInterface, Serializable
      * @return Collection
      * @throws InvalidKeyTypeException
      */
-    public function intersection(Collection $secondCollection): Collection
+    public function intersection(Collection $secondCollection) : Collection
     {
         return new Collection(array_values(
                 array_intersect($this->data, $secondCollection->getData())
@@ -293,7 +292,7 @@ class AbstractCollection implements CollectionInterface, Serializable
         );
     }
 
-    public function pop(): mixed
+    public function pop() : mixed
     {
         $value = array_pop($this->data);
 
@@ -311,7 +310,7 @@ class AbstractCollection implements CollectionInterface, Serializable
         return $value;
     }
 
-    public function get(mixed $key): mixed
+    public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
     }
@@ -321,12 +320,12 @@ class AbstractCollection implements CollectionInterface, Serializable
      *
      * @return mixed
      */
-    public function first(): mixed
+    public function first() : mixed
     {
         return $this->data[array_key_first($this->data)];
     }
 
-    public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class): AbstractList
+    public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class) : AbstractList
     {
         if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {
             throw new \Exception("Indexes count mismatch");
