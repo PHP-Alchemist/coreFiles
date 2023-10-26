@@ -5,7 +5,7 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractHashTable;
 
 /**
- * Class HashTable
+ * A proper HashTable (associative array) class for PHP
  *
  * @package PHPAlchemist\Type
  */

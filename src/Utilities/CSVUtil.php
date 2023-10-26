@@ -2,6 +2,9 @@
 
 namespace PHPAlchemist\Utilities;
 
+/**
+ * @package PHPAlchemist\Utilities
+ */
 class CSVUtil
 {
 

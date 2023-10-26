@@ -9,9 +9,10 @@ use PHPAlchemist\Type\Base\Contracts\DictionaryInterface;
 
 /**
  * Class AbstractDictionary
- * @package DruiD628\Type\Base
+ *
+ * @package PHPAlchemist\Type\Base
  */
-class AbstractDictionary implements DictionaryInterface
+abstract class AbstractDictionary implements DictionaryInterface
 {
     public static $serialize_version = 1;
 

@@ -5,7 +5,7 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractDictionary;
 
 /**
- * Class Dictionary
+ * A proper Dictionary (key-value) class for PHP
  *
  * @package PHPAlchemist\Type
  */

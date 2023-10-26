@@ -5,9 +5,7 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractCollection;
 
 /**
- * Class Collection
- *
- * Collection is a proper Array class
+ * Collection is a proper indexed Array class
  *
  * @package PHPAlchemist\Type
  */

@@ -7,7 +7,10 @@ use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 
-class AbstractTwine implements TwineInterface
+/**
+ * @package PHPAlchemist\Type\Base
+ */
+abstract class AbstractTwine implements TwineInterface
 {
     const BEGINNING_OF_STRING_POSITION = 0;
 

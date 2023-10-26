@@ -3,6 +3,9 @@
 namespace PHPAlchemist\Traits;
 
 
+/**
+ * @package PHPAlchemist\Traits
+ */
 trait GetSetTrait
 {
     /**

@@ -5,9 +5,7 @@ namespace PHPAlchemist\Type;
 use PHPAlchemist\Type\Base\AbstractTwine;
 
 /**
- * Class Twine
- *
- * Twine is a proper String class
+ * Twine is a proper String class for PHP
  *
  * @package PHPAlchemist\Type
  */

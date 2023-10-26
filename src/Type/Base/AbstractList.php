@@ -3,6 +3,9 @@
 namespace PHPAlchemist\Type\Base;
 
 
+/**
+ * @package PHPAlchemist\Type\Base
+ */
 abstract class AbstractList extends AbstractCollection
 {
     public function offsetUnset(mixed $offset) : void

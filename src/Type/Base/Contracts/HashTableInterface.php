@@ -6,6 +6,9 @@ namespace PHPAlchemist\Type\Base\Contracts;
 use ArrayAccess;
 use Iterator;
 
+/**
+ * @package PHPAlchemist\Type\Base\Contracts
+ */
 interface HashTableInterface extends ArrayAccess, Iterator
 {
     function add($key, $value) : HashTableInterface;

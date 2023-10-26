@@ -12,7 +12,10 @@ use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 
-class AbstractCollection implements CollectionInterface
+/**
+ * @package PHPAlchemist\Type\Base
+ */
+abstract class AbstractCollection implements CollectionInterface
 {
     public static $serialize_version = 1;
 
@@ -38,19 +41,16 @@ class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Get a count of the elements of the array
-     *
-     * @return int
+     * @inheritDoc
      */
     public function count() : int
     {
         return count($this->data);
     }
 
+
     /**
-     * Move forward to previous element
-     *
-     * @return void Any returned value is ignored.
+     * @inheritDoc
      */
     public function prev() : void
     {
@@ -69,8 +69,14 @@ class AbstractCollection implements CollectionInterface
 
     // region Contractual Obligations
 
+    /**
+     * Build Array from data for serialization
+     *
+     * @return array
+     */
     public function __serialize() : array
     {
+        // Check version and if mismatch call conversion method
         return [
             'version' => static::$serialize_version,
             'model'   => get_class($this),
@@ -78,8 +84,17 @@ class AbstractCollection implements CollectionInterface
         ];
     }
 
+    /**
+     * Take Deserialized Array and populate object with that data
+     *
+     * @param array $data
+     * @return void
+     * @throws UnmatchedClassException
+     * @throws UnmatchedVersionException
+     */
     public function __unserialize(array $data) : void
     {
+        // Check version and if mismatch call conversion method
         if ($data['model'] !== get_class($this)) {
             throw new UnmatchedClassException();
         }
@@ -199,11 +214,9 @@ class AbstractCollection implements CollectionInterface
         return isset(array_values($this->data)[$this->position]);
     }
 
+
     /**
-     * Rewind the Iterator to the first element
-     * @link https://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
-     * @since 5.0.0
+     * @inheritDoc
      */
     public function rewind() : void
     {
@@ -220,8 +233,7 @@ class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @param array $data
-     * @return CollectionInterface
+     * @inheritDoc
      */
     public function setData(array $data) : CollectionInterface
     {
@@ -265,6 +277,9 @@ class AbstractCollection implements CollectionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function add(mixed $data) : CollectionInterface
     {
         $this->data[] = $data;
@@ -289,6 +304,9 @@ class AbstractCollection implements CollectionInterface
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function pop() : mixed
     {
         $value = array_pop($this->data);
@@ -297,31 +315,37 @@ class AbstractCollection implements CollectionInterface
             return new Twine($value);
         }
 
-        if (is_array($value)
-//            && !($value instanceof CollectionInterface::class)
-//            && !($value instanceof HashTableInterface::class)
-        ) {
+        if (is_array($value)) {
             return new Collection($value);
         }
 
         return $value;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
     }
 
     /**
-     * Returns the first element of the collection
-     *
-     * @return mixed
+     * @inheritDoc
      */
     public function first() : mixed
     {
         return $this->data[array_key_first($this->data)];
     }
 
+    /**
+     * Convert AbstractCollection to a AbstractList (Roll)
+     *
+     * @param Collection $indexes
+     * @param $rollClass Default: \PHPAlchemist\Type\Roll
+     * @return AbstractList
+     * @throws \Exception
+     */
     public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class) : AbstractList
     {
         if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {

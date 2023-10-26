@@ -2,7 +2,10 @@
 
 namespace PHPAlchemist\Type\Base;
 
-class AbstractKeyValuePair
+/**
+ * @package PHPAlchemist\Type\Base
+ */
+abstract class AbstractKeyValuePair
 {
     protected $key;
 

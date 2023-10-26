@@ -4,7 +4,10 @@ namespace PHPAlchemist\Type\Base;
 
 use PHPAlchemist\Type\Base\Contracts\NumberInterface;
 
-class AbstractNumber implements NumberInterface
+/**
+ * @package PHPAlchemist\Type\Base
+ */
+abstract class AbstractNumber implements NumberInterface
 {
     private int|float $data;
 

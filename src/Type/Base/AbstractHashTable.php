@@ -13,7 +13,10 @@ use PHPAlchemist\Type\Base\Contracts\TwineInterface;
 use PHPAlchemist\Type\Twine;
 use Exception;
 
-class AbstractHashTable implements HashTableInterface
+/**
+ * @package PHPAlchemist\Type\Base
+ */
+abstract class AbstractHashTable implements HashTableInterface
 {
     public static $serialize_version = 1;
 

@@ -4,6 +4,9 @@ namespace PHPAlchemist\Traits;
 
 use Exception;
 
+/**
+ * @package PHPAlchemist\Traits
+ */
 trait MagicGetSetTrait
 {
     use GetSetTrait;

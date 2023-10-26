@@ -5,6 +5,9 @@ namespace PHPAlchemist\Type\Base\Contracts;
 use ArrayAccess;
 use Iterator;
 
+/**
+ * @package PHPAlchemist\Type\Base\Contracts
+ */
 interface DictionaryInterface extends ArrayAccess, Iterator
 {
     // Iterator

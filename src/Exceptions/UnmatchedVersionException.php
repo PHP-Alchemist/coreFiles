@@ -2,6 +2,11 @@
 
 namespace PHPAlchemist\Exceptions;
 
+/**
+ * When a deserialized object doesn't match the deserializing version
+ *
+ * @package PHPAlchemist\Exceptions;
+ */
 class UnmatchedVersionException extends \Exception
 {
     const ERROR_WRONG_VERSION = "Unmatched version on deserialization";
