@@ -9,15 +9,14 @@ namespace PHPAlchemist\Traits;
 trait GetSetTrait
 {
     /**
-     *
-     * standard getter
+     * Standard (simple) getter
      *
      * @param string $fieldName
+     * @return mixed
      * @throws \Exception
      *
-     * @return mixed
      */
-    public function get($fieldName)
+    public function get($fieldName) : mixed
     {
         if (!property_exists($this, $fieldName)) {
             throw new \Exception("Variable ($fieldName) Not Found");
@@ -27,15 +26,15 @@ trait GetSetTrait
     }
 
     /**
-     * standard setter
+     * Standard (simple) Setter
      *
      * @param string $fieldName
      * @param mixed $value
+     * @return boolean
      * @throws \Exception
      *
-     * @return boolean
      */
-    public function set($fieldName, $value)
+    public function set($fieldName, $value) : bool
     {
         if (!property_exists($this, $fieldName)) {
             throw new \Exception("Variable ($fieldName) Not Found");
@@ -43,6 +42,22 @@ trait GetSetTrait
 
         $this->$fieldName = $value;
         return true;
+    }
+
+    /**
+     * Boolean Getter
+     *
+     * @param string $fieldName
+     * @return bool
+     * @throws \Exception
+     */
+    public function is($fieldName) : bool
+    {
+        if (!is_bool($this->$fieldName)) {
+            throw new \Exception("Cannot call is() on non-boolean variable (" . $fieldName . ").");
+        }
+
+        return $this->get($fieldName);
     }
 
 }
