@@ -163,7 +163,7 @@ abstract class AbstractTwine implements TwineInterface
         return $this->explode($delimiter, $limit);
     }
 
-    public function split(int $position) : CollectionInterface
+    public function splitAt(int $position) : CollectionInterface
     {
         $split1 = substr($this->value, self::BEGINNING_OF_STRING_POSITION, $position);
         $split2 = substr($this->value, $position);
