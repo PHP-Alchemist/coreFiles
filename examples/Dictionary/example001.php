@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use PHPAlchemist\Type\Dictionary;
+use PHPAlchemist\Types\Dictionary;
 
 $dictionary = new Dictionary([
     'alpha' => 'a',

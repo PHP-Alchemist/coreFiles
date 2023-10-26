@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Types\Twine;
 
 $twine          = new Twine('prisoner24601');
 $value          = $twine->substring(0, 8);

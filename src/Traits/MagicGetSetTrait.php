@@ -49,7 +49,6 @@ trait MagicGetSetTrait
                 throw new Exception("Variable ($name) Not Found");
             }
         }
-        throw new Exception("No Method ($method) exists on " . get_class($this));
     }
 
     /**

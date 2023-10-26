@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Twine;
 use PHPUnit\Framework\TestCase;
 
 class TwineTest extends TestCase

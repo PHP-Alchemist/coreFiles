@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Twine;
 
 $stringTest = new Twine('Hello Coral');
 /** @var Collection $arrayTest */
