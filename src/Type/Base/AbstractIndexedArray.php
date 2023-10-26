@@ -6,18 +6,19 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Type\Base\Contracts\IndexedArrayInterface;
+use PHPAlchemist\Type\Base\Contracts\StringInterface;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 
 /**
+ * Abstract class Collection (Objectified Array Class)
  * @package PHPAlchemist\Type\Base
  */
-abstract class AbstractCollection implements CollectionInterface
+abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
-    public static $serialize_version = 1;
+    public static $serializeVersion = 1;
 
     use ArrayTrait;
 
@@ -60,9 +61,9 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * @param string $glue default: ' '
      *
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function implode($glue = ' ') : TwineInterface
+    public function implode($glue = ' ') : StringInterface
     {
         return new Twine(join($glue, $this->data));
     }
@@ -78,7 +79,7 @@ abstract class AbstractCollection implements CollectionInterface
     {
         // Check version and if mismatch call conversion method
         return [
-            'version' => static::$serialize_version,
+            'version' => static::$serializeVersion,
             'model'   => get_class($this),
             'data'    => $this->data,
         ];
@@ -99,7 +100,7 @@ abstract class AbstractCollection implements CollectionInterface
             throw new UnmatchedClassException();
         }
 
-        if ($data['version'] !== static::$serialize_version) {
+        if ($data['version'] !== static::$serializeVersion) {
             throw new UnmatchedVersionException();
         }
 
@@ -235,7 +236,7 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * @inheritDoc
      */
-    public function setData(array $data) : CollectionInterface
+    public function setData(array $data) : IndexedArrayInterface
     {
         $this->data = $data;
 
@@ -265,12 +266,12 @@ abstract class AbstractCollection implements CollectionInterface
         return is_int($key);
     }
 
-    public function merge(CollectionInterface|array $collection) : void
+    public function merge(IndexedArrayInterface|array $collection) : void
     {
         $this->data = array_merge($this->data, $collection);
     }
 
-    public function push(mixed $data) : CollectionInterface
+    public function push(mixed $data) : IndexedArrayInterface
     {
         $this->data[] = $data;
 
@@ -280,7 +281,7 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * @inheritDoc
      */
-    public function add(mixed $data) : CollectionInterface
+    public function add(mixed $data) : IndexedArrayInterface
     {
         $this->data[] = $data;
 

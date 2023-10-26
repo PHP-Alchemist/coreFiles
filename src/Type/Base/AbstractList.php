@@ -4,9 +4,10 @@ namespace PHPAlchemist\Type\Base;
 
 
 /**
+ * Abstract class for List (Roll) Objectified array class
  * @package PHPAlchemist\Type\Base
  */
-abstract class AbstractList extends AbstractCollection
+abstract class AbstractList extends AbstractIndexedArray
 {
     public function offsetUnset(mixed $offset) : void
     {

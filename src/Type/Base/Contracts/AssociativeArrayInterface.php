@@ -7,11 +7,12 @@ use ArrayAccess;
 use Iterator;
 
 /**
+ * Array
  * @package PHPAlchemist\Type\Base\Contracts
  */
-interface HashTableInterface extends ArrayAccess, Iterator
+interface AssociativeArrayInterface extends ArrayAccess, Iterator
 {
-    function add($key, $value) : HashTableInterface;
+    function add($key, $value) : AssociativeArrayInterface;
 
     function get($key) : mixed;
 

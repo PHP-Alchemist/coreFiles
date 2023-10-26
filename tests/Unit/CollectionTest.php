@@ -203,7 +203,7 @@ class CollectionTest extends TestCase
         $arrayTest = new Collection();
         $this->assertInstanceOf('\ArrayAccess', $arrayTest);
         $this->assertInstanceOf('\Iterator', $arrayTest);
-        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\CollectionInterface', $arrayTest);
+        $this->assertInstanceOf('\PHPAlchemist\Type\Base\Contracts\IndexedArrayInterface', $arrayTest);
     }
 
     public function testPositiveStrictness()

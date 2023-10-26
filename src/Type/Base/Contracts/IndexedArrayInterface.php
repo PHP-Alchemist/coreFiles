@@ -9,14 +9,14 @@ use Iterator;
  *
  * @package PHPAlchemist\Type\Base\Contracts
  */
-interface CollectionInterface extends ArrayAccess, Iterator
+interface IndexedArrayInterface extends ArrayAccess, Iterator
 {
     // Class Specific
     /**
      * @param array $data
-     * @return CollectionInterface
+     * @return IndexedArrayInterface
      */
-    function setData(array $data) : CollectionInterface;
+    function setData(array $data) : IndexedArrayInterface;
 
     /**
      * @return bool
@@ -30,15 +30,15 @@ interface CollectionInterface extends ArrayAccess, Iterator
 
     /**
      * @param mixed $data
-     * @return CollectionInterface
+     * @return IndexedArrayInterface
      */
-    function push(mixed $data) : CollectionInterface;
+    function push(mixed $data) : IndexedArrayInterface;
 
     /**
      * @param mixed $data
-     * @return CollectionInterface
+     * @return IndexedArrayInterface
      */
-    function add(mixed $data) : CollectionInterface;
+    function add(mixed $data) : IndexedArrayInterface;
 
     /**
      * @return mixed

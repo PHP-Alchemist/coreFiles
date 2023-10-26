@@ -8,7 +8,7 @@ use Iterator;
 /**
  * @package PHPAlchemist\Type\Base\Contracts
  */
-interface DictionaryInterface extends ArrayAccess, Iterator
+interface KeyValuePairInterface extends ArrayAccess, Iterator
 {
     // Iterator
     function current(): mixed;
@@ -36,15 +36,15 @@ interface DictionaryInterface extends ArrayAccess, Iterator
     // END ArrayAccess
 
     // Class Specific
-    function setData(array $data): DictionaryInterface;
+    function setData(array $data): KeyValuePairInterface;
 
     function getData(): array;
 
     function count(): int;
 
-    function add($key, $value): DictionaryInterface;
+    function add($key, $value): KeyValuePairInterface;
 
-    function set($key, $value): DictionaryInterface;
+    function set($key, $value): KeyValuePairInterface;
 
     function get($key): mixed;
 

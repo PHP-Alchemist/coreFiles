@@ -5,7 +5,7 @@ namespace PHPAlchemist\Type\Base\Contracts;
 /**
  * @package PHPAlchemist\Type\Base\Contracts
  */
-interface TwineInterface extends \Stringable
+interface StringInterface extends \Stringable
 {
     /**
      * @return string
@@ -32,9 +32,9 @@ interface TwineInterface extends \Stringable
      * @param string $delimiter
      * @param int $limit
      *
-     * @return CollectionInterface
+     * @return IndexedArrayInterface
      */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface;
+    public function explode($delimiter = '', $limit = PHP_INT_MAX) : IndexedArrayInterface;
 
     /**
      * Get value of String object0
@@ -105,9 +105,9 @@ interface TwineInterface extends \Stringable
     /**
      * @param string $value
      *
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function setValue($value) : TwineInterface;
+    public function setValue($value) : StringInterface;
 
     /**
      * @param mixed $needle
@@ -118,9 +118,9 @@ interface TwineInterface extends \Stringable
     /**
      * @param int $offset
      * @param int|null $length
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function substring(int $offset, ?int $length) : TwineInterface;
+    public function substring(int $offset, ?int $length) : StringInterface;
 
     /**
      * @param int $offset

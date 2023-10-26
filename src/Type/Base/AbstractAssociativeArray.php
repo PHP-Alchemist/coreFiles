@@ -8,17 +8,18 @@ use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Type\Base\Contracts\AssociativeArrayInterface;
+use PHPAlchemist\Type\Base\Contracts\StringInterface;
 use PHPAlchemist\Type\Twine;
 use Exception;
 
 /**
+ * Abstract class for Associative Array (Objectified Array Class)
  * @package PHPAlchemist\Type\Base
  */
-abstract class AbstractHashTable implements HashTableInterface
+abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {
-    public static $serialize_version = 1;
+    public static $serializeVersion = 1;
 
     use ArrayTrait;
 
@@ -58,7 +59,7 @@ abstract class AbstractHashTable implements HashTableInterface
     public function __serialize() : array
     {
         return [
-            'version' => static::$serialize_version,
+            'version' => static::$serializeVersion,
             'model'   => get_class($this),
             'data'    => $this->data,
         ];
@@ -70,7 +71,7 @@ abstract class AbstractHashTable implements HashTableInterface
             throw new UnmatchedClassException();
         }
 
-        if ($data['version'] !== static::$serialize_version) {
+        if ($data['version'] !== static::$serializeVersion) {
             throw new UnmatchedVersionException();
         }
 
@@ -85,7 +86,7 @@ abstract class AbstractHashTable implements HashTableInterface
      * @throws InvalidKeyTypeException
      *
      */
-    public function add($key, $value) : HashTableInterface
+    public function add($key, $value) : AssociativeArrayInterface
     {
         $this->offsetSet($key, $value);
 
@@ -123,9 +124,9 @@ abstract class AbstractHashTable implements HashTableInterface
     /**
      * @param string $glue default: ' '
      *
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function implode($glue = ' ') : TwineInterface
+    public function implode($glue = ' ') : StringInterface
     {
         return new Twine(join($glue, $this->data));
     }

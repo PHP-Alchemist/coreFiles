@@ -2,13 +2,13 @@
 
 namespace PHPAlchemist\Type;
 
-use PHPAlchemist\Type\Base\AbstractHashTable;
+use PHPAlchemist\Type\Base\AbstractAssociativeArray;
 
 /**
  * A proper HashTable (associative array) class for PHP
  *
  * @package PHPAlchemist\Type
  */
-final class HashTable extends AbstractHashTable
+final class HashTable extends AbstractAssociativeArray
 {
 }
