@@ -19,8 +19,8 @@ class GetSetTraitTest extends TestCase
 {
     public function testGetSet()
     {
-        $mock = new MockGetSetTraitClass();
-        $x = 'asdf';
+        $mock           = new MockGetSetTraitClass();
+        $x              = 'asdf';
         $youCannotSeeMe = '1qazxsw2';
         $mock->set('x', $x);
         $this->assertEquals($x, $mock->get('x'));
@@ -31,12 +31,11 @@ class GetSetTraitTest extends TestCase
 
     public function testSetExceptions()
     {
-        $mock = new MockGetSetTraitClass();
+        $mock  = new MockGetSetTraitClass();
         $value = 'asdf';
         try {
             $mock->set('irish', $value);
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
         }
@@ -49,8 +48,7 @@ class GetSetTraitTest extends TestCase
 
         try {
             $mock->get('irish');
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
         }

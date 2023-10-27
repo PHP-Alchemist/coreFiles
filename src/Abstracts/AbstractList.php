@@ -1,9 +1,13 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Abstracts;
 
 
-abstract class AbstractList extends AbstractCollection
+/**
+ * Abstract class for List (Roll) Objectified array class
+ * @package PHPAlchemist\Abstracts
+ */
+abstract class AbstractList extends AbstractIndexedArray
 {
     public function offsetUnset(mixed $offset) : void
     {

@@ -2,14 +2,16 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Type\Dictionary;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Types\Dictionary;
 use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
 {
     // Core-Files Types
-    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
-    const DICTIONARY_TYPE = 'PHPAlchemist\Type\Dictionary';
+    const TWINE_TYPE = '\PHPAlchemist\Types\Twine';
+    const DICTIONARY_TYPE = 'PHPAlchemist\Types\Dictionary';
 
     // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
@@ -39,9 +41,49 @@ class DictionaryTest extends TestCase
         $dictionary = new Dictionary();
         try {
             $dictionary->add(0.24, 'abc');
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
             $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
+        }
+
+
+    }
+
+    public function testSerializable()
+    {
+        $arrayTest = new Dictionary([
+            'alpha'   => 'abc',
+            'bravo'   => 'bcd',
+            'charlie' => 'cde',
+            'delta'   => 'def',
+        ]);
+
+        $serializedObject = serialize($arrayTest);
+
+        $this->assertEquals('O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
+
+    }
+
+    public function testUnserialize()
+    {
+        $serializedObject = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongVersion     = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:7;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongClass       = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Collection";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+
+        $data = unserialize($serializedObject);
+        $this->assertInstanceOf('PHPAlchemist\Types\Dictionary', $data);
+        $this->assertEquals('def', $data['delta']);
+
+        try {
+            $wrongType = unserialize($wrongClass);
+        } catch (\Exception $e2) {
+            $this->assertEquals(UnmatchedClassException::ERROR_UNMATCHED_CLASS, $e2->getMessage());
+        }
+
+        try {
+            $version = unserialize($wrongVersion);
+        } catch (\Exception $e) {
+            $this->assertEquals(UnmatchedVersionException::ERROR_WRONG_VERSION, $e->getMessage());
         }
     }
 
@@ -68,7 +110,7 @@ class DictionaryTest extends TestCase
         $dictionary->offsetSet('gloves', 'stuff');
         $this->assertEquals('stuff', $dictionary->offsetGet('gloves'));
 
-        $this->assertFalse( $dictionary->offsetGet('thisKeyDoesntExist'));
+        $this->assertFalse($dictionary->offsetGet('thisKeyDoesntExist'));
     }
 
     public function testNext()
@@ -87,7 +129,7 @@ class DictionaryTest extends TestCase
 
     public function testPrev()
     {
-        $dictionary= new Dictionary([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
@@ -117,7 +159,7 @@ class DictionaryTest extends TestCase
 
     public function testKey()
     {
-        $dictionary= new Dictionary([
+        $dictionary = new Dictionary([
             'abc',
             'bcd',
             'cde',
@@ -137,7 +179,7 @@ class DictionaryTest extends TestCase
             'def',
         ];
 
-        $dictionary= new Dictionary();
+        $dictionary = new Dictionary();
         $dictionary->setData($arrayData);
 
         $this->assertEquals($arrayData, $dictionary->getData());
@@ -200,7 +242,7 @@ class DictionaryTest extends TestCase
 
     public function testArrayAccess()
     {
-        $data          = [
+        $data       = [
             'abc',
             'bcd',
             'cde',
@@ -213,13 +255,13 @@ class DictionaryTest extends TestCase
 
     public function testTraversable()
     {
-        $data          = [
+        $data       = [
             'abc',
             'bcd',
             'cde',
             'def',
         ];
-        $dictionary= new Dictionary($data);
+        $dictionary = new Dictionary($data);
 
         $this->assertInstanceOf('\Traversable', $dictionary);
     }

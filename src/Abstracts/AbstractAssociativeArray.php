@@ -1,19 +1,28 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Abstracts;
 
 use Exception;
+use PHPAlchemist\Contracts\AssociativeArrayInterface;
+use PHPAlchemist\Contracts\StringInterface;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Twine;
-use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
+use PHPAlchemist\Types\Twine;
 
-class AbstractHashTable implements HashTableInterface
+/**
+ * Abstract class for Associative Array (Objectified Array Class)
+ * @package PHPAlchemist\Abstracts
+ */
+abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {
+    public static $serializeVersion = 1;
+
     use ArrayTrait;
+
     /** @var bool $readOnly */
     protected $readOnly;
 
@@ -47,6 +56,28 @@ class AbstractHashTable implements HashTableInterface
         $this->fixedSize = $fixedSize;
     }
 
+    public function __serialize() : array
+    {
+        return [
+            'version' => static::$serializeVersion,
+            'model'   => get_class($this),
+            'data'    => $this->data,
+        ];
+    }
+
+    public function __unserialize(array $data) : void
+    {
+        if ($data['model'] !== get_class($this)) {
+            throw new UnmatchedClassException();
+        }
+
+        if ($data['version'] !== static::$serializeVersion) {
+            throw new UnmatchedVersionException();
+        }
+
+        $this->setData($data);
+    }
+
     /**
      * @param string $key
      * @param mixed $value
@@ -55,7 +86,7 @@ class AbstractHashTable implements HashTableInterface
      * @throws InvalidKeyTypeException
      *
      */
-    public function add($key, $value) : HashTableInterface
+    public function add($key, $value) : AssociativeArrayInterface
     {
         $this->offsetSet($key, $value);
 
@@ -85,7 +116,7 @@ class AbstractHashTable implements HashTableInterface
     public function delete(mixed $key) : void
     {
         if (array_key_exists($key, $this->data)) {
-             unset($this->data[$key]);
+            unset($this->data[$key]);
         }
     }
 
@@ -93,9 +124,9 @@ class AbstractHashTable implements HashTableInterface
     /**
      * @param string $glue default: ' '
      *
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function implode($glue = ' '): TwineInterface
+    public function implode($glue = ' ') : StringInterface
     {
         return new Twine(join($glue, $this->data));
     }
@@ -170,9 +201,9 @@ class AbstractHashTable implements HashTableInterface
         if (!$this->offsetExists($offset) &&
             $this->isFixedSize() &&
             $this->count() == $this->fixedSize
-           ) {
+        ) {
 
-            throw new HashTableFullException("Invalid call to offsetSet on " .  __CLASS__ . "where Size is Fixed and HashTable full.");
+            throw new HashTableFullException("Invalid call to offsetSet on " . __CLASS__ . "where Size is Fixed and HashTable full.");
         }
         if (!$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for HashTable", gettype($offset)));
@@ -256,7 +287,7 @@ class AbstractHashTable implements HashTableInterface
     /**
      * @return array
      */
-    public function getData(): array
+    public function getData() : array
     {
         return $this->data;
     }

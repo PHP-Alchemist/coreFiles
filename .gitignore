@@ -2,6 +2,10 @@
 *.swp
 /nbproject/private/
 /vendor/
-/coverage/
 .idea/
 .DS_Store
+
+# Code coverage
+coverage/
+reports/
+.phpunit.result.cache

@@ -1,27 +1,36 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Abstracts;
 
+use PHPAlchemist\Contracts\IndexedArrayInterface;
+use PHPAlchemist\Contracts\StringInterface;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\ArrayTrait;
-use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\HashTableInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Types\Base\Default;
+use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Roll;
+use PHPAlchemist\Types\Twine;
 
-class AbstractCollection implements CollectionInterface
+/**
+ * Abstract class Collection (Objectified Array Class)
+ * @package PHPAlchemist\Abstracts
+ */
+abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
+    public static $serializeVersion = 1;
+
     use ArrayTrait;
 
     /** @var boolean $strict */
-    protected $strict;
+    protected bool $strict;
 
     /** @var int $position position sentinel variable */
-    protected $position;
+    protected int $position;
 
     /** @var array $data */
-    protected $data;
+    protected array $data;
 
     public function __construct(array $data = [], bool $strict = true)
     {
@@ -34,19 +43,16 @@ class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Get a count of the elements of the array
-     *
-     * @return int
+     * @inheritDoc
      */
     public function count() : int
     {
         return count($this->data);
     }
 
+
     /**
-     * Move forward to previous element
-     *
-     * @return void Any returned value is ignored.
+     * @inheritDoc
      */
     public function prev() : void
     {
@@ -56,14 +62,51 @@ class AbstractCollection implements CollectionInterface
     /**
      * @param string $glue default: ' '
      *
-     * @return TwineInterface
+     * @return StringInterface
      */
-    public function implode($glue = ' ') : TwineInterface
+    public function implode($glue = ' ') : StringInterface
     {
         return new Twine(join($glue, $this->data));
     }
 
     // region Contractual Obligations
+
+    /**
+     * Build Array from data for serialization
+     *
+     * @return array
+     */
+    public function __serialize() : array
+    {
+        // Check version and if mismatch call conversion method
+        return [
+            'version' => static::$serializeVersion,
+            'model'   => get_class($this),
+            'data'    => $this->data,
+        ];
+    }
+
+    /**
+     * Take Deserialized Array and populate object with that data
+     *
+     * @param array $data
+     * @return void
+     * @throws UnmatchedClassException
+     * @throws UnmatchedVersionException
+     */
+    public function __unserialize(array $data) : void
+    {
+        // Check version and if mismatch call conversion method
+        if ($data['model'] !== get_class($this)) {
+            throw new UnmatchedClassException();
+        }
+
+        if ($data['version'] !== static::$serializeVersion) {
+            throw new UnmatchedVersionException();
+        }
+
+        $this->data = $data['data'];
+    }
 
     /**
      * Whether a offset exists
@@ -173,11 +216,9 @@ class AbstractCollection implements CollectionInterface
         return isset(array_values($this->data)[$this->position]);
     }
 
+
     /**
-     * Rewind the Iterator to the first element
-     * @link https://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
-     * @since 5.0.0
+     * @inheritDoc
      */
     public function rewind() : void
     {
@@ -194,10 +235,9 @@ class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @param array $data
-     * @return CollectionInterface
+     * @inheritDoc
      */
-    public function setData(array $data) : CollectionInterface
+    public function setData(array $data) : IndexedArrayInterface
     {
         $this->data = $data;
 
@@ -227,21 +267,49 @@ class AbstractCollection implements CollectionInterface
         return is_int($key);
     }
 
-    function push(mixed $data) : CollectionInterface
+    public function merge(IndexedArrayInterface|array $collection) : void
+    {
+        $this->data = array_merge($this->data, $collection);
+    }
+
+    public function push(mixed $data) : IndexedArrayInterface
     {
         $this->data[] = $data;
 
         return $this;
     }
 
-    function add(mixed $data) : CollectionInterface
+    /**
+     * @inheritDoc
+     */
+    public function add(mixed $data) : IndexedArrayInterface
     {
         $this->data[] = $data;
 
         return $this;
     }
 
-    function pop() : mixed
+    /**
+     * Find intersection of this and another collection - I would really like to explore putting this into the
+     * CollectionInterface but for now  it's going to be a non-contracted function. I also REALLY would like to make a
+     * strict option that allows for type matching.
+     *
+     * @param Collection $secondCollection
+     * @return Collection
+     * @throws InvalidKeyTypeException
+     */
+    public function intersection(Collection $secondCollection) : Collection
+    {
+        return new Collection(array_values(
+                array_intersect($this->data, $secondCollection->getData())
+            )
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function pop() : mixed
     {
         $value = array_pop($this->data);
 
@@ -249,18 +317,47 @@ class AbstractCollection implements CollectionInterface
             return new Twine($value);
         }
 
-        if (is_array($value)
-//            && !($value instanceof CollectionInterface::class)
-//            && !($value instanceof HashTableInterface::class)
-        ) {
+        if (is_array($value)) {
             return new Collection($value);
         }
 
         return $value;
     }
 
-    function get(mixed $key) : mixed
+    /**
+     * @inheritDoc
+     */
+    public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function first() : mixed
+    {
+        return $this->data[array_key_first($this->data)];
+    }
+
+    /**
+     * Convert AbstractCollection to a AbstractList (Roll)
+     *
+     * @param Collection $indexes
+     * @param $rollClass Default: \PHPAlchemist\Type\Roll
+     * @return AbstractList
+     * @throws \Exception
+     */
+    public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class) : AbstractList
+    {
+        if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {
+            throw new \Exception("Indexes count mismatch");
+        }
+
+        if ($indexes->count() === 0) {
+            $indexes->setData(range(0, ($this->count() - 1)));
+        }
+
+        return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
 }

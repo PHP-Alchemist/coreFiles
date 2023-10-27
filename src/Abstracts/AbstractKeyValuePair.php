@@ -1,16 +1,20 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Abstracts;
 
+use PHPAlchemist\Contracts\KeyValuePairInterface;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
-use PHPAlchemist\Type\Base\Contracts\DictionaryInterface;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
 
 /**
- * Class AbstractDictionary
- * @package DruiD628\Type\Base
+ * Abstract class for KeyValue Pair
+ * @package PHPAlchemist\Abstracts
  */
-class AbstractDictionary implements DictionaryInterface
+abstract class AbstractKeyValuePair implements KeyValuePairInterface
 {
+    public static $serializeVersion = 1;
+
     /** @var int $position position sentinel variable */
     protected $position;
 
@@ -33,7 +37,7 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function add($key, $value) : DictionaryInterface
+    public function add($key, $value) : KeyValuePairInterface
     {
         $this->offsetSet($key, $value);
 
@@ -47,7 +51,7 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function set($key, $value) : DictionaryInterface
+    public function set($key, $value) : KeyValuePairInterface
     {
         $this->offsetSet($key, $value);
 
@@ -69,7 +73,7 @@ class AbstractDictionary implements DictionaryInterface
         return $this->values;
     }
 
-    public function count(): int
+    public function count() : int
     {
         return count($this->keys);
     }
@@ -164,7 +168,7 @@ class AbstractDictionary implements DictionaryInterface
      * @return $this
      * @throws InvalidKeyTypeException
      */
-    public function setData(array $data) : DictionaryInterface
+    public function setData(array $data) : KeyValuePairInterface
     {
         $this->validateKeys($data);
         foreach ($data as $key => $value) {
@@ -217,12 +221,13 @@ class AbstractDictionary implements DictionaryInterface
      * @param array $dataSet
      *
      * @return bool
+     * @throws InvalidKeyTypeException
      */
     protected function validateKeys(array $dataSet)
     {
         foreach (array_keys($dataSet) as $key) {
             if (!($this->validateKey($key))) {
-                return false;
+                throw new InvalidKeyTypeException("Key (" . $key . ") is not a valid type.");
             }
         }
 
@@ -237,6 +242,28 @@ class AbstractDictionary implements DictionaryInterface
     protected function validateKey($key)
     {
         return is_string($key) || is_int($key);
+    }
+
+    public function __serialize() : array
+    {
+        return [
+            'version' => static::$serializeVersion,
+            'model'   => get_class($this),
+            'data'    => $this->getData(),
+        ];
+    }
+
+    public function __unserialize(array $data) : void
+    {
+        if ($data['model'] !== get_class($this)) {
+            throw new UnmatchedClassException();
+        }
+
+        if ($data['version'] !== static::$serializeVersion) {
+            throw new UnmatchedVersionException();
+        }
+
+        $this->setData($data['data']);
     }
 
 }

@@ -3,7 +3,10 @@
 namespace PHPAlchemist\Utilities;
 
 
-trait ArrayUtility
+/**
+ * @package PHPAlchemist\Utilities
+ */
+class ArrayUtility
 {
     /**
      *

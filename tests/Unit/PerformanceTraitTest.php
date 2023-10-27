@@ -11,7 +11,7 @@ class MockPerfTraitClass
 
     public function generateRandomNumbers()
     {
-            rand(1000, 9999999);
+        rand(1000, 9999999);
     }
 }
 
@@ -31,7 +31,7 @@ class PerformanceTraitTest extends TestCase
     {
         $mock = new MockPerfTraitClass();
 
-        for( $i=0; $i>1001; $i++ ) {
+        for ($i = 0; $i > 1001; $i++) {
             $mock->generateRandomNumbers();
         }
 

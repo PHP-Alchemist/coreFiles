@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php" >
-  <coverage cacheDirectory="codeCoverage">
+  <coverage cacheDirectory="reports/cache/codeCoverage">
     <include>
       <directory>src</directory>
     </include>
     <report>
-      <html outputDirectory="coverageHTML" lowUpperBound="50" highLowerBound="90" />
-      <!--   <xml outputDirectory="coverageXML" /> -->
+      <html outputDirectory="reports/coverage/html" lowUpperBound="50" highLowerBound="90" />
     </report>
   </coverage>
   <php>

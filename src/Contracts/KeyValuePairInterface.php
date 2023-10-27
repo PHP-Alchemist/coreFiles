@@ -1,11 +1,12 @@
 <?php
 
-namespace PHPAlchemist\Type\Base\Contracts;
+namespace PHPAlchemist\Contracts;
 
-use ArrayAccess;
-use Iterator;
-
-interface DictionaryInterface extends ArrayAccess, Iterator
+/**
+ * Key Value Pair Interface
+ * @package PHPAlchemist\Contracts
+ */
+interface KeyValuePairInterface extends ArrayInterface
 {
     // Iterator
     function current(): mixed;
@@ -33,15 +34,15 @@ interface DictionaryInterface extends ArrayAccess, Iterator
     // END ArrayAccess
 
     // Class Specific
-    function setData(array $data): DictionaryInterface;
+    function setData(array $data): KeyValuePairInterface;
 
     function getData(): array;
 
     function count(): int;
 
-    function add($key, $value): DictionaryInterface;
+    function add($key, $value): KeyValuePairInterface;
 
-    function set($key, $value): DictionaryInterface;
+    function set($key, $value): KeyValuePairInterface;
 
     function get($key): mixed;
 

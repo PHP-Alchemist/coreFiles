@@ -1,14 +1,20 @@
 <?php
 
-namespace PHPAlchemist\Type\Base;
+namespace PHPAlchemist\Abstracts;
 
-use PHPAlchemist\Type\Base\Contracts\CollectionInterface;
-use PHPAlchemist\Type\Base\Contracts\TwineInterface;
-use PHPAlchemist\Type\Collection;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Contracts\IndexedArrayInterface;
+use PHPAlchemist\Contracts\StringInterface;
+use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Twine;
 
-class AbstractTwine implements TwineInterface
+/**
+ * Abstract class for String
+ * @package PHPAlchemist\Abstracts
+ */
+abstract class AbstractString implements StringInterface
 {
+    const BEGINNING_OF_STRING_POSITION = 0;
+
     protected $value;
 
     public function __construct($value = null)
@@ -35,7 +41,7 @@ class AbstractTwine implements TwineInterface
     /**
      * @inheritDoc
      */
-    public function setValue($value) : TwineInterface
+    public function setValue($value) : StringInterface
     {
         $this->value = $value;
 
@@ -60,7 +66,7 @@ class AbstractTwine implements TwineInterface
     }
 
     /** @inheritDoc */
-    public function equals(string|TwineInterface $comparitive) : bool
+    public function equals(string|StringInterface $comparitive) : bool
     {
         return (string)$comparitive === $this->value;
     }
@@ -151,17 +157,25 @@ class AbstractTwine implements TwineInterface
      *
      * @param $delimiter
      * @param $limit
-     * @return CollectionInterface
+     * @return IndexedArrayInterface
      */
-    public function split($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    public function splitOn($delimiter = '', $limit = PHP_INT_MAX) : IndexedArrayInterface
     {
         return $this->explode($delimiter, $limit);
+    }
+
+    public function splitAt(int $position) : IndexedArrayInterface
+    {
+        $split1 = substr($this->value, self::BEGINNING_OF_STRING_POSITION, $position);
+        $split2 = substr($this->value, $position);
+
+        return new Collection([$split1, $split2]);
     }
 
     /**
      * @inheritDoc
      */
-    public function explode($delimiter = '', $limit = PHP_INT_MAX) : CollectionInterface
+    public function explode($delimiter = '', $limit = PHP_INT_MAX) : IndexedArrayInterface
     {
         return new Collection(explode($delimiter, $this->getValue(), $limit));
     }
@@ -173,7 +187,7 @@ class AbstractTwine implements TwineInterface
     }
 
     /** @inheritDoc */
-    public function substring(int $offset, ?int $length = null) : TwineInterface
+    public function substring(int $offset, ?int $length = null) : StringInterface
     {
         return new Twine(substr($this->value, $offset, $length));
     }
@@ -186,5 +200,13 @@ class AbstractTwine implements TwineInterface
     public function upper() : string
     {
         return mb_strtoupper($this->getValue());
+    }
+
+    public function replace(string|array $needle, string|array $replacement) : void
+    {
+        if (is_string($needle)) {
+            $needle = "/{$needle}/";
+        }
+        $this->value = preg_replace($needle, $replacement, $this->value);
     }
 }

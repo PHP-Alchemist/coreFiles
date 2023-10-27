@@ -6,8 +6,10 @@ use Exception;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
-use PHPAlchemist\Type\HashTable;
-use PHPAlchemist\Type\Twine;
+use PHPAlchemist\Exceptions\UnmatchedClassException;
+use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Types\HashTable;
+use PHPAlchemist\Types\Twine;
 use PHPUnit\Framework\TestCase;
 
 class HashTableTest extends TestCase
@@ -32,7 +34,7 @@ class HashTableTest extends TestCase
 
     public function testImplode()
     {
-        $hashtable= new HashTable([
+        $hashtable = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
@@ -134,7 +136,7 @@ class HashTableTest extends TestCase
 
     public function testOffsets()
     {
-        $hashtable   = new HashTable([
+        $hashtable      = new HashTable([
             'a' => 'abc',
             'b' => 'bcd',
             'c' => 'cde',
@@ -151,8 +153,8 @@ class HashTableTest extends TestCase
         $this->assertFalse($hashtable->offsetExists('z'));
 
         try {
-           $hashtable[529] = 'Doc McStuffAndThangs';
-        }catch(Exception $e) {
+            $hashtable[529] = 'Doc McStuffAndThangs';
+        } catch (Exception $e) {
 
             $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
             $this->assertEquals('Invalid Key type (integer) for HashTable', $e->getMessage());
@@ -274,7 +276,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ];
 
-        $hashTable = new HashTable($data, false, 5);
+        $hashTable  = new HashTable($data, false, 5);
         $hashTable2 = new HashTable($data, false, true);
 
         // hashtable
@@ -351,7 +353,7 @@ class HashTableTest extends TestCase
 
     public function testTraversable()
     {
-        $data     = [
+        $data  = [
             '2a' => 'abc',
             '2b' => 'bcd',
             '2c' => 'cde',
@@ -362,17 +364,68 @@ class HashTableTest extends TestCase
         $this->assertInstanceOf(self::TRAVERSABLE_TYPE, $array);
     }
 
+    public function testDelete()
+    {
+        $ht = new HashTable([
+            'ALPHA' => 'a',
+            'BRAVO' => 'b',
+        ]);
+
+
+        $ht->add('CHARLIE', 'c');
+        $ht->add('DELTA', 'd');
+        $ht->delete('DELTA');
+
+        $this->assertFalse($ht->get('DELETA'));
+
+    }
+
     public function testAdd()
     {
         $ht = new HashTable([
             'ALPHA' => 'a',
-            'BRAVO' => 'b'
+            'BRAVO' => 'b',
         ]);
 
 
         $ht->add('CHARLIE', 'c');
         $ht->add('DELTA', 'd');
 
-        $this->assertEquals('c', $ht->get('CHARLIE') );
+        $this->assertEquals('c', $ht->get('CHARLIE'));
+    }
+
+    public function testSerializable()
+    {
+        $arrayTest = new HashTable([
+            'a' => 'abc',
+            'b' => 'bcd',
+            'c' => 'cde',
+            'd' => 'def',
+        ]);
+
+        $serializedObject = serialize($arrayTest);
+
+        $this->assertEquals('O:28:"PHPAlchemist\Types\HashTable":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Types\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}', $serializedObject);
+    }
+
+    public function testDeserializable()
+    {
+        $serializedObject = 'O:28:"PHPAlchemist\Types\HashTable":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Types\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}';
+        $wrongVersion     = 'O:28:"PHPAlchemist\Types\HashTable":3:{s:7:"version";i:8;s:5:"model";s:28:"PHPAlchemist\Types\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}';
+        $wrongClass       = 'O:28:"PHPAlchemist\Types\HashTable":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Collection";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}';
+
+        $data = unserialize($serializedObject);
+        $this->assertInstanceOf('PHPAlchemist\Types\HashTable', $data);
+        try {
+            $wrongType = unserialize($wrongClass);
+        } catch (\Exception $e2) {
+            $this->assertEquals(UnmatchedClassException::ERROR_UNMATCHED_CLASS, $e2->getMessage());
+        }
+
+        try {
+            $version = unserialize($wrongVersion);
+        } catch (\Exception $e) {
+            $this->assertEquals(UnmatchedVersionException::ERROR_WRONG_VERSION, $e->getMessage());
+        }
     }
 }
