@@ -4,6 +4,8 @@
 
 These files are just a collection of files that I can use for projects. It started as a thought experiment. 
 
+## Documentation
+[Core-Files Wiki](https://github.com/PHP-Alchemist/coreFiles/wiki)
 
 ## Why?
 
