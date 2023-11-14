@@ -1,5 +1,5 @@
 # PHP Core Files
-
+![Master Workflow](https://github.com/PHP-Alchemist/coreFiles/actions/workflows/php.yml/badge.svg)
 ##  Abstract
 
 These files are just a collection of files that I can use for projects. It started as a thought experiment. 
