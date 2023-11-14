@@ -26,7 +26,7 @@ $dictionary = new Dictionary([
 ]);
 
 $dictionary->add('sierra', 's');
-$dictionary->add('tengo', 't');
+$dictionary->add('tango', 't');
 $dictionary->add('uniform', 'u');
 $dictionary->add('victor', 'v');
 $dictionary->add('whiskey', 'w');
@@ -34,8 +34,9 @@ $dictionary->add('xray', 'x');
 $dictionary->add('yankee', 'y');
 $dictionary->add('zulu', 'z');
 
-echo $dictionary->get('beta');
-echo $dictionary->get('echo') . " ";
+echo $dictionary->get('golf');
+echo $dictionary->get('echo');
+echo $dictionary->get('tango') . " ";
 echo $dictionary->get('golf');
 echo $dictionary->get('oscar');
 echo $dictionary->get('oscar');
