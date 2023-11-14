@@ -22,6 +22,6 @@
         "phpunit/phpunit": ">=9.5"
     },
     "scripts": {
-        "test" : "phpunit"
+        "test" : "phpunit --no-coverage"
     }
 }
