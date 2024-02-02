@@ -11,6 +11,9 @@ use Iterator;
  */
 interface ArrayInterface extends ArrayAccess, Iterator
 {
+
+    function extract(mixed $key) : mixed;
+
     // Iterator
     /**
      * @inheritDoc

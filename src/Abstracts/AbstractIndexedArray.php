@@ -360,4 +360,28 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
         return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
+
+
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->data[$key];
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
+    public function delete(mixed $key) : void
+    {
+        if (array_key_exists($key, $this->data)) {
+            $this->offsetUnset($key);
+        }
+    }
+
 }

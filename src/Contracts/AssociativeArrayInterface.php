@@ -9,9 +9,9 @@ namespace PHPAlchemist\Contracts;
  */
 interface AssociativeArrayInterface extends  ArrayInterface
 {
-    function add($key, $value) : AssociativeArrayInterface;
+    function add(mixed $key, mixed $value) : AssociativeArrayInterface;
 
-    function get($key) : mixed;
+    function get(mixed $key) : mixed;
 
     function getKeys() : array;
 

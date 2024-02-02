@@ -298,6 +298,28 @@ class CollectionTest extends TestCase
 
     }
 
+    public function testArrayExtract()
+    {
+        $testKey   = 2;
+        $testValue = 'charlie';
+        $testArray = [
+            'alpha',
+            'bravo',
+            'charlie',
+            'delta',
+            'echo',
+            'foxtrot',
+        ];
+        $collection = new Collection($testArray);
+
+        $extractedValue = $collection->extract($testKey);
+        $this->assertEquals($testValue, $extractedValue);
+        $this->assertArrayNotHasKey($testKey, $collection);
+        $this->assertNotEquals($testArray, $collection->getData());
+
+
+    }
+
     public function testPushPop()
     {
         $collection = new Collection(['a', 'b', 'c']);

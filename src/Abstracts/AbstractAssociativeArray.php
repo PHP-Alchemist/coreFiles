@@ -86,7 +86,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      * @throws InvalidKeyTypeException
      *
      */
-    public function add($key, $value) : AssociativeArrayInterface
+    public function add(mixed $key, mixed $value) : AssociativeArrayInterface
     {
         $this->offsetSet($key, $value);
 
@@ -98,7 +98,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      *
      * @return mixed
      */
-    public function get($key) : mixed
+    public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
     }
@@ -116,9 +116,10 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     public function delete(mixed $key) : void
     {
         if (array_key_exists($key, $this->data)) {
-            unset($this->data[$key]);
+            $this->offsetUnset($key);
         }
     }
+
 
 
     /**
@@ -377,4 +378,20 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     {
         return is_string($key);
     }
+
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->data[$key];
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
 }
