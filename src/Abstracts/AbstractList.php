@@ -35,4 +35,16 @@ abstract class AbstractList extends AbstractIndexedArray
         return array_is_list($this->data);
     }
 
+    /**
+     * Uses generator to step through List data
+     *
+     * @return mixed
+     */
+    public function parseData() : mixed
+    {
+        foreach ( $this->data as $data) {
+            yield $data;
+        }
+    }
+
 }

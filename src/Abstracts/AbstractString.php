@@ -202,6 +202,11 @@ abstract class AbstractString implements StringInterface
         return mb_strtoupper($this->getValue());
     }
 
+    /**
+     * @param string|array $needle
+     * @param string|array $replacement
+     * @return void
+     */
     public function replace(string|array $needle, string|array $replacement) : void
     {
         if (is_string($needle)) {

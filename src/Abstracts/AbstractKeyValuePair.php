@@ -266,4 +266,26 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
         $this->setData($data['data']);
     }
 
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->offsetGet($key);
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
+    public function delete(mixed $key) : void
+    {
+        if ($this->offsetExists($key)) {
+            $this->offsetUnset($key);
+        }
+    }
+
 }

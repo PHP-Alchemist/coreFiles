@@ -18,4 +18,28 @@ class NumberTest extends TestCase
         $number = new Number(76);
         $this->assertTrue(is_string((string)$number));
     }
+
+    public function testAdd()
+    {
+        $jordan = 23;
+        $number = new Number(77);
+        $number->add($jordan);
+        $this->assertEquals(100, $number->get());
+    }
+
+    public function testSub()
+    {
+        $jordan = 23;
+        $number = new Number(78);
+        $number->subtract($jordan);
+        $this->assertEquals(55, $number->get());
+    }
+
+    public function testMod()
+    {
+        $number = new Number(79);
+        $remainder = $number->modulus(5);
+        $this->assertEquals(4, $remainder);
+    }
+
 }
