@@ -13,6 +13,14 @@ class NumberTest extends TestCase
         $this->assertEquals("24", (string)$value->get());
     }
 
+    public function testEquals()
+    {
+        $value  = 17;
+        $number = new Number($value);
+        $this->assertTrue($number->equals($value));
+        $this->assertEquals($value, $number->get());
+    }
+
     public function testToString()
     {
         $number = new Number(76);
@@ -37,7 +45,7 @@ class NumberTest extends TestCase
 
     public function testMod()
     {
-        $number = new Number(79);
+        $number    = new Number(79);
         $remainder = $number->modulus(5);
         $this->assertEquals(4, $remainder);
     }

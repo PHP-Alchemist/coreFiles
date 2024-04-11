@@ -5,11 +5,13 @@ namespace PHPAlchemist\Types;
 use PHPAlchemist\Abstracts\AbstractNumber;
 
 /**
- * A integer class for PHP
+ * An integer class for PHP
  *
- * @package PHPAlchemist\Types
+ * @final
+ * @codeCoverageIgnore
+ * @package            PHPAlchemist\Types
  */
-class Number extends AbstractNumber
+final class Number extends AbstractNumber
 {
 
 }
