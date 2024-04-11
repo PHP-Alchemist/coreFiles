@@ -10,13 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  * New Examples for Collections and Numbers
+ * [Types\Number] - Adds equals() functionality
 
 ### Changed
 
- * [Number] - Adds math capabilities 
- * [List] - Adds parseData
+ * [Types\Number] - Adds math capabilities 
+ * [Types\List] - Adds parseData
  * [KeyValuePair] - Adds extract key and delete functions
  * Corrected API where some function declarations were not typed
+ * [Types] - Corrects missing final modifier on classes
 
 ## [2.0.0] - 2023-10-27
 
