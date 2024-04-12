@@ -7,9 +7,11 @@ use PHPAlchemist\Contracts\StringInterface;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Traits\Array\OnInsertTrait;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Base\Default;
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Number;
 use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
 
@@ -19,9 +21,11 @@ use PHPAlchemist\Types\Twine;
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
+    use OnInsertTrait;
+    use ArrayTrait;
+
     public static $serializeVersion = 1;
 
-    use ArrayTrait;
 
     /** @var boolean $strict */
     protected bool $strict;
@@ -154,6 +158,11 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
         }
 
+        if (is_callable($this->onInsertCallback)) {
+            $onInsert = $this->onInsertCallback; // may overload __call to check if member exists && is_callable()
+            [$offset, $value] = $onInsert($offset, $value);
+        }
+
         $this->data[$offset] = $value;
     }
 
@@ -224,8 +233,9 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         $this->position = 0;
     }
-    // endRegion
+    // endregion
 
+    // region Public Methods
     /**
      * @return array
      */
@@ -284,7 +294,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function add(mixed $data) : IndexedArrayInterface
     {
-        $this->data[] = $data;
+        $this->offsetSet(($this->getNextKey())->get(), $data);
 
         return $this;
     }
@@ -360,8 +370,9 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
         return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
+    // endregion
 
-
+    // region Protected Methods
     /**
      * Get the value of a specified key and remove from
      * array.
@@ -383,5 +394,43 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $this->offsetUnset($key);
         }
     }
+    // endregion
+
+    // region Protected Methods
+
+    /**
+     * Retrieves the maximum key value from the data array.
+     * If the data array is empty, returns null.
+     *
+     * @return Number|null The maximum key value or null if the array is empty.
+     */
+    protected function getMaxKeyValue() : Number|null
+    {
+        $keys = array_keys($this->data);
+        if (empty($keys)) {
+            return null;
+        }
+
+        return new Number(max($keys));
+    }
+
+    /**
+     * Retrieves the next key to be used based on the maximum key value currently in use.
+     *
+     * @return Number|null The next key value as a Number object, or null if no key value is found.
+     */
+    protected function getNextKey() : Number
+    {
+        $keyValue = $this->getMaxKeyValue();
+
+        if (is_null($keyValue)) {
+            return new Number(0);
+        }
+
+        $keyValue->add(1);
+
+        return $keyValue;
+    }
+    // endregion
 
 }

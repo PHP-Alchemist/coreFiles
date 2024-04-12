@@ -12,9 +12,19 @@ use Iterator;
 interface ArrayInterface extends ArrayAccess, Iterator
 {
 
+    // region Additions
     function extract(mixed $key) : mixed;
 
-    // Iterator
+    /**
+     * Move forward to previous element
+     *
+     * @return void Any returned value is ignored.
+     */
+    function prev() : void;
+
+    // endregion
+
+    // region Iterator
     /**
      * @inheritDoc
      */
@@ -46,17 +56,9 @@ interface ArrayInterface extends ArrayAccess, Iterator
      */
     function rewind() : void;
 
-    // END Iterator
+    // endregion Iterator
 
-    /**
-     * Move forward to previous element
-     *
-     * @return void Any returned value is ignored.
-     */
-    function prev() : void;
-
-
-    // ArrayAccess
+    // region ArrayAccess
     /**
      * @inheritDoc
      */
@@ -76,5 +78,5 @@ interface ArrayInterface extends ArrayAccess, Iterator
      * @inheritDoc
      */
     function offsetExists($offset) : bool;
-    // END ArrayAccess
+    // endregion ArrayAccess
 }
