@@ -158,7 +158,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
         }
 
-        if (is_callable($this->onInsertCallback)) {
+        if (isset($this->onInsertCallback) && is_callable($this->onInsertCallback)) {
             $onInsert = $this->onInsertCallback; // may overload __call to check if member exists && is_callable()
             [$offset, $value] = $onInsert($offset, $value);
         }
