@@ -14,7 +14,7 @@ trait OnInsertTrait
      *
      * @return void
      */
-    public function onInsertCallback(callable $onInsertCallback) : void
+    public function setOnInsertCallback(callable $onInsertCallback) : void
     {
         $this->onInsertCallback = $onInsertCallback;
     }

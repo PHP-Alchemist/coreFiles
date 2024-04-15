@@ -20,7 +20,7 @@ class OnInsertTraitTest extends TestCase
         };
 
         $collection = new Collection();
-        $collection->onInsertCallback($x);
+        $collection->setOnInsertCallback($x);
         $collection->offsetSet(9, 'IX');
         $collection->offsetSet(10, 'x');
         $collection->offsetSet(11, 'XI');
@@ -38,7 +38,7 @@ class OnInsertTraitTest extends TestCase
 
         $collection = new Collection();
 //        $collection->aphaCenturi();
-        $collection->onInsertCallback($x);
+        $collection->setOnInsertCallback($x);
         $collection->add('ix');
         $collection->add('x');
         $collection->add('xi');

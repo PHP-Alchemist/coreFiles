@@ -8,6 +8,7 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Traits\Array\OnInsertTrait;
+use PHPAlchemist\Traits\Array\OnRemoveTrait;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Base\Default;
 use PHPAlchemist\Types\Collection;
@@ -22,6 +23,7 @@ use PHPAlchemist\Types\Twine;
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
     use OnInsertTrait;
+    use OnRemoveTrait;
     use ArrayTrait;
 
     public static $serializeVersion = 1;
@@ -178,6 +180,12 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     public function offsetUnset(mixed $offset) : void
     {
         unset($this->data[$offset]);
+
+        if (isset($this->onRemoveCallback) && is_callable($this->onRemoveCallback)) {
+            $onRemove = $this->onRemoveCallback;
+            $offset   = $onRemove($this->data);
+        }
+
     }
 
     /**
@@ -284,7 +292,8 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     public function push(mixed $data) : IndexedArrayInterface
     {
-        $this->data[] = $data;
+        $this->offsetSet(($this->getNextKey())->get(), $data);
+
 
         return $this;
     }
@@ -370,14 +379,13 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
         return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
-    // endregion
 
-    // region Protected Methods
     /**
      * Get the value of a specified key and remove from
      * array.
      *
-     * @param mixed $key
+     * @param mixed $key The key for the element desired
+     *
      * @return mixed
      */
     public function extract(mixed $key) : mixed
@@ -394,10 +402,22 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $this->offsetUnset($key);
         }
     }
+
+    /**
+     * Find the key for $value
+     *
+     * @param mixed $value the value to search the array for
+     *
+     * @return int
+     */
+    public function search(mixed $value) : int
+    {
+        return array_search($value, $this->data);
+    }
+
     // endregion
 
     // region Protected Methods
-
     /**
      * Retrieves the maximum key value from the data array.
      * If the data array is empty, returns null.
