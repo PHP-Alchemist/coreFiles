@@ -10,14 +10,13 @@ class OnRemoveTraitTest extends TestCase
 
     public function testOnRemove()
     {
-        $lowerCase = function (array &$data) {
-            array_walk($data, function (&$value, $key){
-                $value = strtolower($value);
-            });
+//        $that = $this;
+        $test = function (int $key, mixed $value)  {
+            $this->assertEquals('Corel', $value);
         };
 
         $collection = new Collection();
-        $collection->setOnRemove($lowerCase);
+        $collection->setOnRemove($test);
         $collection->add("Stuff");
         $collection->add("Thangs");
         $collection->add("Coral");
