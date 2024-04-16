@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 class OnClearTraitTest extends TestCase
 {
 
-    public function testOnSet()
+    public function testOnClear()
     {
-        $onSetCompleteCallback = function (array &$data) {
+        $onClearCallback = function (array &$data) {
             $this->assertNotEmpty($data);
             foreach (range(9, 11) as $item) {
                 $this->assertIsString($data[$item]);
@@ -23,7 +23,7 @@ class OnClearTraitTest extends TestCase
             11 => 'xi',
         ];
         $collection  = new Collection($defaultData);
-        $collection->setOnSetComplete($onSetCompleteCallback);
+        $collection->setOnClear($onClearCallback);
         $this->assertEquals($defaultData, $collection->getData());
         $collection->clear();
 
@@ -31,7 +31,7 @@ class OnClearTraitTest extends TestCase
 
     public function testOnClearComplete()
     {
-        $onSetCompleteCallback = function (array &$data) {
+        $onClearCompleteCallback = function (array &$data) {
            $this->assertEmpty($data);
         };
 
@@ -41,7 +41,7 @@ class OnClearTraitTest extends TestCase
             11 => 'xi',
         ];
         $collection  = new Collection($defaultData);
-        $collection->setOnSetComplete($onSetCompleteCallback);
+        $collection->setOnClearComplete($onClearCompleteCallback);
         $this->assertEquals($defaultData, $collection->getData());
         $collection->clear();
 
