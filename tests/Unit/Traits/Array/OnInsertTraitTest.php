@@ -5,22 +5,24 @@ namespace Unit\Traits\Array;
 use PHPAlchemist\Types\Collection;
 use PHPUnit\Framework\TestCase;
 
-
 class OnInsertTraitTest extends TestCase
 {
 
-    public function testInsertCallbackforOffsetSet()
+    public function testInsertCallbackForOffsetSet()
     {
         $x = function (mixed $key, mixed $value) {
             if ($value == 'x' && $key == 10) {
                 $value = ucwords($value);
             }
 
-            return [ $key, $value];
+            return [
+                    $key,
+                    $value,
+            ];
         };
 
         $collection = new Collection();
-        $collection->setOnInsertCallback($x);
+        $collection->setOnInsert($x);
         $collection->offsetSet(9, 'IX');
         $collection->offsetSet(10, 'x');
         $collection->offsetSet(11, 'XI');
@@ -29,16 +31,18 @@ class OnInsertTraitTest extends TestCase
 
     }
 
-    public function testInsertCallbackforAdd()
+    public function testInsertCallbackForAdd()
     {
         $x = function (mixed $key, mixed $value) {
                 $value = strtoupper($value);
-            return [ $key, $value];
+            return [
+                    $key,
+                    $value,
+            ];
         };
 
         $collection = new Collection();
-//        $collection->aphaCenturi();
-        $collection->setOnInsertCallback($x);
+        $collection->setOnInsert($x);
         $collection->add('ix');
         $collection->add('x');
         $collection->add('xi');
@@ -51,4 +55,5 @@ class OnInsertTraitTest extends TestCase
         $this->assertEquals('XI', $collection->current());
 
     }
+
 }

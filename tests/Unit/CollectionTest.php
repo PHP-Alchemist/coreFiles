@@ -316,8 +316,6 @@ class CollectionTest extends TestCase
         $this->assertEquals($testValue, $extractedValue);
         $this->assertArrayNotHasKey($testKey, $collection);
         $this->assertNotEquals($testArray, $collection->getData());
-
-
     }
 
     public function testPushPop()
