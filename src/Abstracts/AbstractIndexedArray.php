@@ -203,7 +203,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
         if (isset($this->onRemove) && is_callable($this->onRemove)) {
             $onRemove = $this->onRemove;
-            $onRemove($offset, $this->data[$offset], );
+            $onRemove($offset, $this->data[$offset]);
         }
 
         unset($this->data[$offset]);

@@ -34,7 +34,8 @@ class OnInsertTraitTest extends TestCase
     public function testInsertCallbackForAdd()
     {
         $x = function (mixed $key, mixed $value) {
-                $value = strtoupper($value);
+            $value = strtoupper($value);
+
             return [
                     $key,
                     $value,
@@ -54,6 +55,24 @@ class OnInsertTraitTest extends TestCase
         $collection->next();
         $this->assertEquals('XI', $collection->current());
 
+    }
+
+    public function testOnInsertComplete()
+    {
+
+        $callBack = function (array &$data) {
+            array_walk($data, function (mixed &$value, int $key) {
+                $value = strtoupper($value);
+            });
+        };
+
+        $collection = new Collection();
+        $collection->setOnInsertComplete($callBack);
+        $collection->offsetSet(9, 'IX');
+        $collection->offsetSet(10, 'x');
+        $collection->offsetSet(11, 'XI');
+
+        $this->assertEquals('X', $collection->get(10));
     }
 
 }

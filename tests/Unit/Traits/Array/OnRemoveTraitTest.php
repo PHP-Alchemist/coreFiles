@@ -10,9 +10,9 @@ class OnRemoveTraitTest extends TestCase
 
     public function testOnRemove()
     {
-//        $that = $this;
-        $test = function (int $key, mixed $value)  {
+        $test = function (int $key, mixed $value) {
             $this->assertEquals('Corel', $value);
+            $this->assertEquals(3, $key);
         };
 
         $collection = new Collection();
@@ -33,10 +33,10 @@ class OnRemoveTraitTest extends TestCase
         $collection->delete($collection->search('Corel'));
 
         $this->assertEquals([
-            0 => 'stuff',
-            1 => 'thangs',
-            2 => 'coral',
-            13 => 'xiii',
+            0  => 'Stuff',
+            1  => 'Thangs',
+            2  => 'Coral',
+            13 => 'XIII',
         ], $collection->getData());
 
     }
