@@ -15,13 +15,13 @@ trait OnClearTrait
      * Define a callable function to be executed on clearing of data
      * Call back will be executed against data on object prior to clearing.
      *
-     * @param Closure $onClear callable function accepting one argument array $data
+     * @param Closure $onClearCallBack callable function accepting one argument array $data
      *
      * @return void
      */
-    public function setOnClear(Closure $onClear) : void
+    public function setOnClear(Closure $onClearCallBack) : void
     {
-        $this->onClear = $onClear;
+        $this->onClear = $onClearCallBack;
     }
 
     /**

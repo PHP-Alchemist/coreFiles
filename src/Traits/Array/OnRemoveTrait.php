@@ -15,7 +15,7 @@ trait OnRemoveTrait
      * Define a callable function to be executed on removing of a key [and value]
      * Call back will be executed against the data being removed from the object.
      *
-     * @param Closure $onRemoveCallback callable function accepting one argument array $data
+     * @param Closure $onRemoveCallback callable function accepting two arguments mixed $key and mixed $value
      *
      * @return void
      */
