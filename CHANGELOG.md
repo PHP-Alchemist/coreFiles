@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  * New Examples for Collections and Numbers
  * [Types\Number] - Adds equals() functionality
+ * [Traits\Array] - Adds the following traits used within the scope of the project or added to other classes:
+   * OnSetTrait - Callback functions that can be run on setting of data
+   * OnClearTrait - Callback functions that can be run on clearing of data
+   * OnInsertTrait - Callback functions that can be run on insertion of an entry
+   * OnRemoveTrait - Callback functions that can be run on removal of an entry
 
 ### Changed
 

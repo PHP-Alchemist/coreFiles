@@ -2,6 +2,8 @@
 
 namespace PHPAlchemist\Contracts;
 
+use PHPAlchemist\Traits\ArrayInterface;
+
 /**
  * Key Value Pair Interface
  * @package PHPAlchemist\Contracts
