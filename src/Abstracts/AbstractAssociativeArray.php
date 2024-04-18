@@ -10,6 +10,10 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Traits\Array\OnClearTrait;
+use PHPAlchemist\Traits\Array\OnInsertTrait;
+use PHPAlchemist\Traits\Array\OnRemoveTrait;
+use PHPAlchemist\Traits\Array\OnSetTrait;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Twine;
 
@@ -21,6 +25,10 @@ use PHPAlchemist\Types\Twine;
 abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {
     use ArrayTrait;
+    use OnInsertTrait;
+    use OnRemoveTrait;
+    use OnClearTrait;
+    use OnSetTrait;
 
     public static $serializeVersion = 1;
 
@@ -89,11 +97,12 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
+     * Add
+     *
+     * @param string $key key to add to array
+     * @param mixed $value value to add to array
      *
      * @return $this
-     * @throws InvalidKeyTypeException
      */
     public function add(mixed $key, mixed $value) : AssociativeArrayInterface
     {
@@ -219,7 +228,20 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for HashTable", gettype($offset)));
         }
 
+        if (isset($this->onInsert) && is_callable($this->onInsert)) {
+            $onInsert = $this->onInsert;
+            [
+                $offset,
+                $value,
+            ] = $onInsert($offset, $value);
+        }
+
         $this->data[$offset] = $value;
+
+        if (isset($this->onInsertComplete) && is_callable($this->onInsertComplete)) {
+            $onInsertComplete = $this->onInsertComplete;
+            $onInsertComplete($this->data);
+        }
     }
 
     /**
@@ -233,7 +255,17 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      */
     public function offsetUnset(mixed $offset) : void
     {
+        if (isset($this->onRemove) && is_callable($this->onRemove)) {
+            $onRemove = $this->onRemove;
+            $onRemove($offset, $this->data[$offset]);
+        }
+
         unset($this->data[$offset]);
+
+        if (isset($this->onRemoveComplete) && is_callable($this->onRemoveComplete)) {
+            $onRemoveComplete = $this->onRemoveComplete;
+            $onRemoveComplete($this->data);
+        }
     }
 
     /**
@@ -312,9 +344,21 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     /**
      * @param array $data
      */
-    public function setData(array $data)
+    public function setData(array $data) : AssociativeArrayInterface
     {
+        if (isset($this->onSet) && is_callable($this->onSet)) {
+            $onSet = $this->onSet;
+            $onSet($data);
+        }
+
         $this->data = $data;
+
+        if (isset($this->onSetComplete) && is_callable($this->onSetComplete)) {
+            $onSetComplete = $this->onSetComplete;
+            $onSetComplete($this->data);
+        }
+
+        return $this;
     }
 
     /**
@@ -410,4 +454,32 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
         return $returnValue;
     }
 
+    public function clear() : void
+    {
+        if (isset($this->onClear) && is_callable($this->onClear)) {
+            $onClear = $this->onClear;
+            $onClear($this->data);
+        }
+
+        $this->data = [];
+        $this->rewind();
+
+        if (isset($this->onClearComplete) && is_callable($this->onClearComplete)) {
+            $onClearComplete = $this->onClearComplete;
+            $onClearComplete($this->data);
+        }
+
+    }
+
+    /**
+     * Find the key for $value
+     *
+     * @param mixed $value the value to search the array for
+     *
+     * @return mixed
+     */
+    public function search(mixed $value) : mixed
+    {
+        return array_search($value, $this->data);
+    }
 }

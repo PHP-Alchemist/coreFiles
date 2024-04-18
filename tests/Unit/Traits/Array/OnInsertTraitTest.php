@@ -3,12 +3,13 @@
 namespace Unit\Traits\Array;
 
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\HashTable;
 use PHPUnit\Framework\TestCase;
 
 class OnInsertTraitTest extends TestCase
 {
 
-    public function testInsertCallbackForOffsetSet()
+    public function testCollectionInsertCallbackForOffsetSet()
     {
         $x = function (mixed $key, mixed $value) {
             if ($value == 'x' && $key == 10) {
@@ -57,7 +58,7 @@ class OnInsertTraitTest extends TestCase
 
     }
 
-    public function testOnInsertComplete()
+    public function testCollectionOnInsertComplete()
     {
 
         $callBack = function (array &$data) {
@@ -73,6 +74,48 @@ class OnInsertTraitTest extends TestCase
         $collection->offsetSet(11, 'XI');
 
         $this->assertEquals('X', $collection->get(10));
+    }
+
+    public function testHashTableInsertCallback()
+    {
+        $x = function (mixed $key, mixed $value) {
+            if ($value == 'x' && $key == 'ten') {
+                $value = ucwords($value);
+            }
+
+            return [
+                $key,
+                $value,
+            ];
+        };
+
+        $hashTable = new HashTable();
+        $hashTable->setOnInsert($x);
+        $hashTable->offsetSet('nine', 'IX');
+        $hashTable->offsetSet('ten', 'x');
+        $hashTable->offsetSet('eleven', 'XI');
+
+        $this->assertEquals('X', $hashTable->get('ten'));
+
+    }
+
+    public function testHashTableOnInsertComplete()
+    {
+
+        $callBack = function (array &$data) {
+            array_walk($data, function (mixed &$value, string $key) {
+                $value = strtoupper($value);
+            });
+        };
+
+        $hashTable = new HashTable();
+        $hashTable->setOnInsertComplete($callBack);
+
+        $hashTable->offsetSet('nine', 'IX');
+        $hashTable->offsetSet('ten', 'x');
+        $hashTable->offsetSet('eleven', 'XI');
+
+        $this->assertEquals('X', $hashTable->get('ten'));
     }
 
 }

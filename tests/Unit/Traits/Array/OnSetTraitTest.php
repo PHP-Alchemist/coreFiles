@@ -3,12 +3,13 @@
 namespace Unit\Traits\Array;
 
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\HashTable;
 use PHPUnit\Framework\TestCase;
 
 class OnSetTraitTest extends TestCase
 {
 
-    public function testOnSet()
+    public function testCollectionOnSet()
     {
         $onSetCallback = function (array &$data) {
             array_walk($data, function (&$value, $key) {
@@ -28,7 +29,7 @@ class OnSetTraitTest extends TestCase
 
     }
 
-    public function testOnSetComplete()
+    public function testCollectionOnSetComplete()
     {
         $onSetCompleteCallback = function (array &$data) {
             array_walk($data, function (&$value, $key) {
@@ -48,4 +49,43 @@ class OnSetTraitTest extends TestCase
 
     }
 
+    public function testHashTableOnSet()
+    {
+        $onSetCallback = function (array &$data) {
+            array_walk($data, function (&$value, $key) {
+                $value = strtoupper($value);
+            });
+        };
+
+        $hashTable = new HashTable();
+        $hashTable->setOnSet($onSetCallback);
+        $hashTable->setData([
+            'nine'   => 'ix',
+            'ten'    => 'x',
+            'eleven' => 'xi',
+        ]);
+
+        $this->assertEquals('X', $hashTable->get('ten'));
+
+    }
+
+    public function testHashTableOnSetComplete()
+    {
+        $onSetCompleteCallback = function (array &$data) {
+            array_walk($data, function (&$value, $key) {
+                $value = strtoupper($value);
+            });
+        };
+
+        $hashTable = new HashTable();
+        $hashTable->setOnSetComplete($onSetCompleteCallback);
+        $hashTable->setData([
+            'nine'   => 'ix',
+            'ten'    => 'x',
+            'eleven' => 'xi',
+        ]);
+
+        $this->assertEquals('X', $hashTable->get('ten'));
+
+    }
 }

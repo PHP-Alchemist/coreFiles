@@ -3,12 +3,13 @@
 namespace Unit\Traits\Array;
 
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\HashTable;
 use PHPUnit\Framework\TestCase;
 
 class OnClearTraitTest extends TestCase
 {
 
-    public function testOnClear()
+    public function testCollectionOnClear()
     {
         $onClearCallback = function (array &$data) {
             $this->assertNotEmpty($data);
@@ -29,7 +30,7 @@ class OnClearTraitTest extends TestCase
 
     }
 
-    public function testOnClearComplete()
+    public function testCollectionOnClearComplete()
     {
         $onClearCompleteCallback = function (array &$data) {
            $this->assertEmpty($data);
@@ -47,4 +48,42 @@ class OnClearTraitTest extends TestCase
 
     }
 
+    public function testHashTableOnClear()
+    {
+        $onClearCallback = function (array &$data) {
+            $this->assertNotEmpty($data);
+            foreach ($data as $item) {
+                $this->assertIsString($item);
+            }
+        };
+
+        $defaultData = [
+            'ix' => '9',
+            'x'  => '10',
+            'xi' => '11',
+        ];
+        $hashTable  = new HashTable($defaultData);
+        $hashTable->setOnClear($onClearCallback);
+        $this->assertEquals($defaultData, $hashTable->getData());
+        $hashTable->clear();
+
+    }
+
+    public function testHashTableOnClearComplete()
+    {
+        $onClearCompleteCallback = function (array &$data) {
+            $this->assertEmpty($data);
+        };
+
+        $defaultData = [
+            'ix' => '9',
+            'x'  => '10',
+            'xi' => '11',
+        ];
+        $hashTable  = new HashTable($defaultData);
+        $hashTable->setOnClearComplete($onClearCompleteCallback);
+        $this->assertEquals($defaultData, $hashTable->getData());
+        $hashTable->clear();
+
+    }
 }
