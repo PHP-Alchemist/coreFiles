@@ -2,14 +2,22 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Abstracts\AbstractIndexedArray;
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Collection::class)]
+#[CoversClass(AbstractIndexedArray::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(UnmatchedClassException::class)]
+#[CoversClass(UnmatchedVersionException::class)]
 class CollectionTest extends TestCase
 {
     const ARRAYACCESS_TYPE = '\ArrayAccess';

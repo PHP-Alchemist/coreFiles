@@ -2,9 +2,13 @@
 
 namespace Unit;
 
+use PHPAlchemist\Abstracts\AbstractNumber;
 use PHPAlchemist\Types\Number;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Number::class)]
+#[CoversClass(AbstractNumber::class)]
 class NumberTest extends TestCase
 {
     public function testNumber()

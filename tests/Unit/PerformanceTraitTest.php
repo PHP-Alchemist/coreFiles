@@ -3,6 +3,7 @@
 namespace tests\Unit;
 
 use PHPAlchemist\Traits\PerformanceTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 class MockPerfTraitClass
@@ -15,6 +16,7 @@ class MockPerfTraitClass
     }
 }
 
+#[CoversClass(PerformanceTrait::class)]
 class PerformanceTraitTest extends TestCase
 {
 

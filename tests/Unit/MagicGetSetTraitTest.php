@@ -3,6 +3,8 @@
 namespace tests\Unit;
 
 use PHPAlchemist\Traits\MagicGetSetTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,6 +48,7 @@ class MagicGSExample
     private array $data;
 }
 
+#[CoversClass(MagicGetSetTrait::class)]
 class MagicGetSetTraitTest extends TestCase
 {
     public function testGetSet()
@@ -113,9 +116,9 @@ class MagicGetSetTraitTest extends TestCase
 
     }
 
+    #[CoversMethod([MagicGetSetTrait::class, 'getMethodVerb'])]
     public function testIsAndCatchAll()
     {
-
         $example = new MagicGSExample();
         $example->setActive(false);
         $example->setName('Test');
@@ -141,5 +144,4 @@ class MagicGetSetTraitTest extends TestCase
         }
 
     }
-//
 }

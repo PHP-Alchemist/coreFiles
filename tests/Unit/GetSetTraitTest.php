@@ -3,6 +3,7 @@
 namespace tests\Unit;
 
 use PHPAlchemist\Traits\GetSetTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 class MockGetSetTraitClass
@@ -15,6 +16,7 @@ class MockGetSetTraitClass
 
 }
 
+#[CoversClass(GetSetTrait::class)]
 class GetSetTraitTest extends TestCase
 {
     public function testGetSet()
