@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    * OnClearTrait - Callback functions that can be run on clearing of data
    * OnInsertTrait - Callback functions that can be run on insertion of an entry
    * OnRemoveTrait - Callback functions that can be run on removal of an entry
+ * [Code Quality] Added Psalm and other code quality tools
+ * Updated to PHP 8.3 compatibility 
 
 ### Changed
 
@@ -24,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * [KeyValuePair] - Adds extract key and delete functions
  * Corrected API where some function declarations were not typed
  * [Types] - Corrects missing final modifier on classes
+ * [Traits\GetSetTrait] - Marked as deprecated with plans to move to `AccessorTrait`
 
 ## [2.0.0] - 2023-10-27
 
