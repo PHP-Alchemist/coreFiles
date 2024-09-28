@@ -99,7 +99,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     /**
      * Add
      *
-     * @param string $key key to add to array
+     * @param mixed $key key to add to array
      * @param mixed $value value to add to array
      *
      * @return $this

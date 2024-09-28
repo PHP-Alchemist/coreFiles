@@ -23,7 +23,7 @@ trait ArrayTrait
             return 0;
         }
         $ret = 0;
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data as $value) {
             $ret += (isset($value[$index])) ? $value[$index] : 0;
         }
 

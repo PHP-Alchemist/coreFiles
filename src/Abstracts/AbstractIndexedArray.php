@@ -449,9 +449,9 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      *
      * @param mixed $value the value to search the array for
      *
-     * @return int
+     * @return int|false
      */
-    public function search(mixed $value) : int
+    public function search(mixed $value) : int|false
     {
         return array_search($value, $this->data);
     }
