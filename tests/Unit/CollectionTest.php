@@ -8,12 +8,14 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Number;
 use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Collection::class)]
+#[CoversClass(Number::class)]
 #[CoversClass(AbstractIndexedArray::class)]
 #[CoversClass(AbstractString::class)]
 #[CoversClass(UnmatchedClassException::class)]

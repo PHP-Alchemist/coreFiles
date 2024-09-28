@@ -2,10 +2,15 @@
 
 namespace Unit\Traits\Array;
 
+use PHPAlchemist\Abstracts\AbstractAssociativeArray;
+use PHPAlchemist\Abstracts\AbstractIndexedArray;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\HashTable;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(AbstractIndexedArray::class)]
+#[CoversClass(AbstractAssociativeArray::class)]
 class OnSetTraitTest extends TestCase
 {
 
