@@ -4,7 +4,6 @@ namespace tests\Unit;
 
 use PHPAlchemist\Traits\MagicGetSetTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
 /**
