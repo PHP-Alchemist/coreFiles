@@ -7,6 +7,7 @@ namespace PHPAlchemist\Traits;
  * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName)
  *
  * @package PHPAlchemist\Traits
+ * @deprecated  Will be renamed to AccessorTrait in 3.0
  */
 trait GetSetTrait
 {
