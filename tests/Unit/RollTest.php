@@ -2,9 +2,15 @@
 
 namespace Unit;
 
+use PHPAlchemist\Abstracts\AbstractIndexedArray;
+use PHPAlchemist\Abstracts\AbstractList;
 use PHPAlchemist\Types\Roll;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Roll::class)]
+#[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractIndexedArray::class)]
 class RollTest extends TestCase
 {
     /**

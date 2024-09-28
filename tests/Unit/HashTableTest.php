@@ -3,6 +3,8 @@
 namespace tests\Unit;
 
 use Exception;
+use PHPAlchemist\Abstracts\AbstractAssociativeArray;
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
@@ -11,8 +13,15 @@ use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\HashTable;
 use PHPAlchemist\Types\Twine;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(HashTable::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(HashTableFullException::class)]
+#[CoversClass(AbstractAssociativeArray::class)]
+#[CoversClass(UnmatchedClassException::class)]
+#[CoversClass(UnmatchedVersionException::class)]
 class HashTableTest extends TestCase
 {
 

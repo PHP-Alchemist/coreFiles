@@ -23,7 +23,7 @@ interface StringInterface extends \Stringable
     public function endsWith(mixed $needle) : bool;
 
     /**
-     * @param string|Twine $comparitive
+     * @param string|StringInterface $comparitive
      * @return bool
      */
     public function equals(string|self $comparitive) : bool;
