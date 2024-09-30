@@ -3,8 +3,6 @@
 
 namespace PHPAlchemist\Contracts;
 
-use PHPAlchemist\Traits\ArrayInterface;
-
 /**
  * Array
  * @package PHPAlchemist\Contracts

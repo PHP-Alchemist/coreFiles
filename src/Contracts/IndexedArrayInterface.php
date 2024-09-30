@@ -2,8 +2,6 @@
 
 namespace PHPAlchemist\Contracts;
 
-use PHPAlchemist\Traits\ArrayInterface;
-
 /**
  *
  * @package PHPAlchemist\Contracts
