@@ -1,4 +1,4 @@
-name: PHP 8.x
+name: PHPAlchemistCoreFiles
 on:
   push:
     branches: [ "master" ]
