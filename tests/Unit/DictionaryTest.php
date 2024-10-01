@@ -2,11 +2,17 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Abstracts\AbstractKeyValuePair;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Types\Dictionary;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Dictionary::class)]
+#[CoversClass(AbstractKeyValuePair::class)]
+#[CoversClass(UnmatchedClassException::class)]
+#[CoversClass(UnmatchedVersionException::class)]
 class DictionaryTest extends TestCase
 {
     // Core-Files Types

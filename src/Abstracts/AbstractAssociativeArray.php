@@ -10,29 +10,46 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Traits\Array\OnClearTrait;
+use PHPAlchemist\Traits\Array\OnInsertTrait;
+use PHPAlchemist\Traits\Array\OnRemoveTrait;
+use PHPAlchemist\Traits\Array\OnSetTrait;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Twine;
 
 /**
  * Abstract class for Associative Array (Objectified Array Class)
+ *
  * @package PHPAlchemist\Abstracts
  */
 abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {
+    use ArrayTrait;
+    use OnInsertTrait;
+    use OnRemoveTrait;
+    use OnClearTrait;
+    use OnSetTrait;
+
     public static $serializeVersion = 1;
 
-    use ArrayTrait;
-
-    /** @var bool $readOnly */
+    /**
+     * @var bool $readOnly
+     */
     protected $readOnly;
 
-    /** @var int $position position sentinel variable */
+    /**
+     * @var int $position position sentinel variable
+     */
     protected $position;
 
-    /** @var array $data */
+    /**
+     * @var array $data
+     */
     protected $data;
 
-    /** @var int $fixedSize locking a HashTable to a fixed size */
+    /**
+     * @var int $fixedSize locking a HashTable to a fixed size
+     */
     protected $fixedSize;
 
     public function __construct(array $data = [], $readOnly = false, $fixedSize = null)
@@ -40,6 +57,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
         if (!$this->validateKeys($data)) {
             throw new InvalidKeyTypeException("Invalid Key type for HashTable");
         }
+
         if (is_int($fixedSize)) {
             if (count($data) < $fixedSize) {
                 $data = array_pad($data, $fixedSize, 0);
@@ -79,14 +97,14 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
+     * Add
+     *
+     * @param mixed $key key to add to array
+     * @param mixed $value value to add to array
      *
      * @return $this
-     * @throws InvalidKeyTypeException
-     *
      */
-    public function add($key, $value) : AssociativeArrayInterface
+    public function add(mixed $key, mixed $value) : AssociativeArrayInterface
     {
         $this->offsetSet($key, $value);
 
@@ -98,7 +116,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      *
      * @return mixed
      */
-    public function get($key) : mixed
+    public function get(mixed $key) : mixed
     {
         return $this->offsetGet($key);
     }
@@ -116,10 +134,9 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     public function delete(mixed $key) : void
     {
         if (array_key_exists($key, $this->data)) {
-            unset($this->data[$key]);
+            $this->offsetUnset($key);
         }
     }
-
 
     /**
      * @param string $glue default: ' '
@@ -135,7 +152,6 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      * Move back to previous element
      *
      * @return void Any returned value is ignored.
-     *
      */
     public function prev() : void
     {
@@ -146,15 +162,16 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Whether a offset exists
-     * @link https://php.net/manual/en/arrayaccess.offsetexists.php
+     *
+     * @link   https://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
+     *                       An offset to check for.
+     *                       </p>
      * @return boolean true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetExists(mixed $offset) : bool
     {
@@ -163,12 +180,13 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Offset to retrieve
-     * @link https://php.net/manual/en/arrayaccess.offsetget.php
+     *
+     * @link   https://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     *                       The offset to retrieve.
+     *                       </p>
      * @return mixed Can return all value types.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetGet(mixed $offset) : mixed
     {
@@ -181,13 +199,14 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Offset to set
+     *
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset The offset to assign the value to.
      * @param mixed $value The value to set.
      *
      * @return void
-     * @since 5.0.0
+     * @since  5.0.0
      * @throws HashTableFullException
      * @throws InvalidKeyTypeException
      * @throws ReadOnlyDataException
@@ -198,39 +217,64 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
             throw new ReadOnlyDataException("Invalid call to offsetSet on read-only " . __CLASS__ . ".");
         }
 
-        if (!$this->offsetExists($offset) &&
-            $this->isFixedSize() &&
-            $this->count() == $this->fixedSize
+        if (!$this->offsetExists($offset)
+            && $this->isFixedSize()
+            && $this->count() == $this->fixedSize
         ) {
-
             throw new HashTableFullException("Invalid call to offsetSet on " . __CLASS__ . "where Size is Fixed and HashTable full.");
         }
+
         if (!$this->validateKey($offset)) {
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for HashTable", gettype($offset)));
         }
 
+        if (isset($this->onInsert) && is_callable($this->onInsert)) {
+            $onInsert = $this->onInsert;
+            [
+                $offset,
+                $value,
+            ] = $onInsert($offset, $value);
+        }
+
         $this->data[$offset] = $value;
+
+        if (isset($this->onInsertComplete) && is_callable($this->onInsertComplete)) {
+            $onInsertComplete = $this->onInsertComplete;
+            $onInsertComplete($this->data);
+        }
     }
 
     /**
      * Offset to unset
-     * @link https://php.net/manual/en/arrayaccess.offsetunset.php
+     *
+     * @link  https://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset The offset to unset.
      *
      * @return void
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetUnset(mixed $offset) : void
     {
+        if (isset($this->onRemove) && is_callable($this->onRemove)) {
+            $onRemove = $this->onRemove;
+            $onRemove($offset, $this->data[$offset]);
+        }
+
         unset($this->data[$offset]);
+
+        if (isset($this->onRemoveComplete) && is_callable($this->onRemoveComplete)) {
+            $onRemoveComplete = $this->onRemoveComplete;
+            $onRemoveComplete($this->data);
+        }
     }
 
     /**
      * Return the current element
+     *
      * @link https://php.net/manual/en/iterator.current.php
      *
      * @return mixed Can return any type.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function current() : mixed
     {
@@ -239,10 +283,11 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Move forward to next element
+     *
      * @link https://php.net/manual/en/iterator.next.php
      *
      * @return void Any returned value is ignored.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function next() : void
     {
@@ -251,9 +296,10 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Return the key of the current element
-     * @link https://php.net/manual/en/iterator.key.php
+     *
+     * @link   https://php.net/manual/en/iterator.key.php
      * @return mixed scalar on success, or null on failure.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function key() : mixed
     {
@@ -262,10 +308,11 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Checks if current position is valid
-     * @link https://php.net/manual/en/iterator.valid.php
+     *
+     * @link   https://php.net/manual/en/iterator.valid.php
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function valid() : bool
     {
@@ -274,14 +321,16 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 
     /**
      * Rewind the Iterator to the first element
-     * @link https://php.net/manual/en/iterator.rewind.php
+     *
+     * @link   https://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function rewind() : void
     {
         $this->position = 0;
     }
+
     // endRegion
 
     /**
@@ -295,9 +344,21 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     /**
      * @param array $data
      */
-    public function setData(array $data)
+    public function setData(array $data) : AssociativeArrayInterface
     {
+        if (isset($this->onSet) && is_callable($this->onSet)) {
+            $onSet = $this->onSet;
+            $onSet($data);
+        }
+
         $this->data = $data;
+
+        if (isset($this->onSetComplete) && is_callable($this->onSetComplete)) {
+            $onSetComplete = $this->onSetComplete;
+            $onSetComplete($this->data);
+        }
+
+        return $this;
     }
 
     /**
@@ -376,5 +437,49 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     protected function validateKey($key) : bool
     {
         return is_string($key);
+    }
+
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->data[$key];
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
+    public function clear() : void
+    {
+        if (isset($this->onClear) && is_callable($this->onClear)) {
+            $onClear = $this->onClear;
+            $onClear($this->data);
+        }
+
+        $this->data = [];
+        $this->rewind();
+
+        if (isset($this->onClearComplete) && is_callable($this->onClearComplete)) {
+            $onClearComplete = $this->onClearComplete;
+            $onClearComplete($this->data);
+        }
+
+    }
+
+    /**
+     * Find the key for $value
+     *
+     * @param mixed $value the value to search the array for
+     *
+     * @return mixed
+     */
+    public function search(mixed $value) : mixed
+    {
+        return array_search($value, $this->data);
     }
 }

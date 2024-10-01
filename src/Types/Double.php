@@ -7,8 +7,10 @@ use PHPAlchemist\Abstracts\AbstractNumber;
 /**
  * A Floating point Class for PHP
  *
- * @package PHPAlchemist\Types
+ * @final
+ * @codeCoverageIgnore
+ * @package            PHPAlchemist\Types
  */
-class Double extends AbstractNumber
+final class Double extends AbstractNumber
 {
 }

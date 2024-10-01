@@ -2,14 +2,24 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Abstracts\AbstractIndexedArray;
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Number;
 use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Collection::class)]
+#[CoversClass(Number::class)]
+#[CoversClass(AbstractIndexedArray::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(UnmatchedClassException::class)]
+#[CoversClass(UnmatchedVersionException::class)]
 class CollectionTest extends TestCase
 {
     const ARRAYACCESS_TYPE = '\ArrayAccess';
@@ -296,6 +306,26 @@ class CollectionTest extends TestCase
         $sum3 = $emptyCollection->sumByKey('a');
         $this->assertEquals('0', $sum3);
 
+    }
+
+    public function testArrayExtract()
+    {
+        $testKey   = 2;
+        $testValue = 'charlie';
+        $testArray = [
+            'alpha',
+            'bravo',
+            'charlie',
+            'delta',
+            'echo',
+            'foxtrot',
+        ];
+        $collection = new Collection($testArray);
+
+        $extractedValue = $collection->extract($testKey);
+        $this->assertEquals($testValue, $extractedValue);
+        $this->assertArrayNotHasKey($testKey, $collection);
+        $this->assertNotEquals($testArray, $collection->getData());
     }
 
     public function testPushPop()

@@ -8,10 +8,25 @@ use Iterator;
 /**
  * Parental Array Interface
  * @package PHPAlchemist\Contracts
+ * @template-extends  ArrayAccess<int, mixed>
+ * @template-extends  Iterator<mixed, mixed>
  */
 interface ArrayInterface extends ArrayAccess, Iterator
 {
-    // Iterator
+
+    // region Additions
+    function extract(mixed $key) : mixed;
+
+    /**
+     * Move forward to previous element
+     *
+     * @return void Any returned value is ignored.
+     */
+    function prev() : void;
+
+    // endregion
+
+    // region Iterator
     /**
      * @inheritDoc
      */
@@ -43,17 +58,9 @@ interface ArrayInterface extends ArrayAccess, Iterator
      */
     function rewind() : void;
 
-    // END Iterator
+    // endregion Iterator
 
-    /**
-     * Move forward to previous element
-     *
-     * @return void Any returned value is ignored.
-     */
-    function prev() : void;
-
-
-    // ArrayAccess
+    // region ArrayAccess
     /**
      * @inheritDoc
      */
@@ -73,5 +80,5 @@ interface ArrayInterface extends ArrayAccess, Iterator
      * @inheritDoc
      */
     function offsetExists($offset) : bool;
-    // END ArrayAccess
+    // endregion ArrayAccess
 }

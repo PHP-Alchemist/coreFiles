@@ -2,10 +2,16 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Abstracts\AbstractString;
+use PHPAlchemist\Abstracts\AbstractIndexedArray;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Twine::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(AbstractIndexedArray::class)]
 class TwineTest extends TestCase
 {
     public function testContainsFunctions() : void

@@ -7,7 +7,9 @@ use PHPAlchemist\Abstracts\AbstractList;
 /**
  * A Proper Generic List object for PHP
  *
- * @package PHPAlchemist\Types
+ * @final
+ * @codeCoverageIgnore
+ * @package            PHPAlchemist\Types
  */
 final class Roll extends AbstractList
 {

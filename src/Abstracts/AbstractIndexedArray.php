@@ -7,29 +7,51 @@ use PHPAlchemist\Contracts\StringInterface;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Traits\Array\OnClearTrait;
+use PHPAlchemist\Traits\Array\OnInsertTrait;
+use PHPAlchemist\Traits\Array\OnRemoveTrait;
+use PHPAlchemist\Traits\Array\OnSetTrait;
 use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Base\Default;
 use PHPAlchemist\Types\Collection;
+use PHPAlchemist\Types\Number;
 use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
 
 /**
  * Abstract class Collection (Objectified Array Class)
+ *
  * @package PHPAlchemist\Abstracts
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
-    public static $serializeVersion = 1;
-
+    use OnInsertTrait;
+    use OnRemoveTrait;
+    use OnClearTrait;
+    use OnSetTrait;
     use ArrayTrait;
 
-    /** @var boolean $strict */
+    public static $serializeVersion = 1;
+
+    /**
+     * Strict typing - force keys to be integer/Indexed
+     *
+     * @var boolean $strict Strict typing for int/index array
+     */
     protected bool $strict;
 
-    /** @var int $position position sentinel variable */
+    /**
+     * Positioning variable
+     *
+     * @var int $position position sentinel variable
+     */
     protected int $position;
 
-    /** @var array $data */
+    /**
+     * Where all the data for the IndexedArray lives
+     *
+     * @var array $data Object data
+     */
     protected array $data;
 
     public function __construct(array $data = [], bool $strict = true)
@@ -38,6 +60,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
         if (!$this->validateKeys($data)) {
             throw new InvalidKeyTypeException("Invalid Key type for Array");
         }
+
         $this->data     = $data;
         $this->position = 0;
     }
@@ -49,7 +72,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         return count($this->data);
     }
-
 
     /**
      * @inheritDoc
@@ -110,15 +132,16 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Whether a offset exists
-     * @link https://php.net/manual/en/arrayaccess.offsetexists.php
+     *
+     * @link   https://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
+     *                       An offset to check for.
+     *                       </p>
      * @return boolean true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetExists(mixed $offset) : bool
     {
@@ -127,12 +150,10 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Offset to retrieve
-     * @link https://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     *
+     * @param mixed $offset The offset to retrieve.
+     *
      * @return mixed Can return all value types.
-     * @since 5.0.0
      */
     public function offsetGet(mixed $offset) : mixed
     {
@@ -141,12 +162,12 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Offset to set
-     * @link https://php.net/manual/en/arrayaccess.offsetset.php
+     *
      * @param mixed $offset The offset to assign the value to.
      * @param mixed $value The value to set.
      *
      * @return void
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetSet(mixed $offset, mixed $value) : void
     {
@@ -154,28 +175,52 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
         }
 
+        if (isset($this->onInsert) && is_callable($this->onInsert)) {
+            $onInsert = $this->onInsert; // may overload __call to check if member exists && is_callable()
+            [
+                $offset,
+                $value,
+            ] = $onInsert($offset, $value);
+        }
+
         $this->data[$offset] = $value;
+
+        if (isset($this->onInsertComplete) && is_callable($this->onInsertComplete)) {
+            $onInsertComplete = $this->onInsertComplete;
+            $onInsertComplete($this->data);
+        }
     }
 
     /**
      * Offset to unset
-     * @link https://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     *
+     * @param mixed $offset The offset to unset.
+     *
      * @return void
-     * @since 5.0.0
      */
     public function offsetUnset(mixed $offset) : void
     {
+
+        if (isset($this->onRemove) && is_callable($this->onRemove)) {
+            $onRemove = $this->onRemove;
+            $onRemove($offset, $this->data[$offset]);
+        }
+
         unset($this->data[$offset]);
+
+        if (isset($this->onRemoveComplete) && is_callable($this->onRemoveComplete)) {
+            $onRemoveComplete = $this->onRemoveComplete;
+            $onRemoveComplete($this->data);
+        }
+
     }
 
     /**
      * Return the current element
-     * @link https://php.net/manual/en/iterator.current.php
+     *
+     * @link   https://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function current() : mixed
     {
@@ -184,9 +229,10 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Move forward to next element
-     * @link https://php.net/manual/en/iterator.next.php
+     *
+     * @link   https://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function next() : void
     {
@@ -195,9 +241,10 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Return the key of the current element
-     * @link https://php.net/manual/en/iterator.key.php
+     *
+     * @link   https://php.net/manual/en/iterator.key.php
      * @return mixed scalar on success, or null on failure.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function key() : mixed
     {
@@ -206,16 +253,16 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     /**
      * Checks if current position is valid
-     * @link https://php.net/manual/en/iterator.valid.php
+     *
+     * @link   https://php.net/manual/en/iterator.valid.php
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function valid() : bool
     {
         return isset(array_values($this->data)[$this->position]);
     }
-
 
     /**
      * @inheritDoc
@@ -224,7 +271,10 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         $this->position = 0;
     }
-    // endRegion
+
+    // endregion
+
+    // region Public Methods
 
     /**
      * @return array
@@ -239,7 +289,17 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function setData(array $data) : IndexedArrayInterface
     {
+        if (isset($this->onSet) && is_callable($this->onSet)) {
+            $onSet = $this->onSet;
+            $onSet($data);
+        }
+
         $this->data = $data;
+
+        if (isset($this->onSetComplete) && is_callable($this->onSetComplete)) {
+            $onSetComplete = $this->onSetComplete;
+            $onSetComplete($this->data);
+        }
 
         return $this;
     }
@@ -274,7 +334,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     public function push(mixed $data) : IndexedArrayInterface
     {
-        $this->data[] = $data;
+        $this->offsetSet(($this->getNextKey())->get(), $data);
 
         return $this;
     }
@@ -284,7 +344,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function add(mixed $data) : IndexedArrayInterface
     {
-        $this->data[] = $data;
+        $this->offsetSet(($this->getNextKey())->get(), $data);
 
         return $this;
     }
@@ -344,7 +404,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      * Convert AbstractCollection to a AbstractList (Roll)
      *
      * @param Collection $indexes
-     * @param $rollClass Default: \PHPAlchemist\Type\Roll
+     * @param  $rollClass Default: \PHPAlchemist\Type\Roll
      * @return AbstractList
      * @throws \Exception
      */
@@ -360,4 +420,96 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
         return new $rollClass(array_combine($indexes->getData(), $this->getData()));
     }
+
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key The key for the element desired
+     *
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->data[$key];
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
+    public function delete(mixed $key) : void
+    {
+        if (array_key_exists($key, $this->data)) {
+            $this->offsetUnset($key);
+        }
+    }
+
+    /**
+     * Find the key for $value
+     *
+     * @param mixed $value the value to search the array for
+     *
+     * @return int|false
+     */
+    public function search(mixed $value) : int|false
+    {
+        return array_search($value, $this->data);
+    }
+
+    public function clear() : void
+    {
+        if (isset($this->onClear) && is_callable($this->onClear)) {
+            $onClear = $this->onClear;
+            $onClear($this->data);
+        }
+
+        $this->data = [];
+        $this->rewind();
+
+        if (isset($this->onClearComplete) && is_callable($this->onClearComplete)) {
+            $onClearComplete = $this->onClearComplete;
+            $onClearComplete($this->data);
+        }
+
+    }
+
+    // endregion
+
+    // region Protected Methods
+
+    /**
+     * Retrieves the maximum key value from the data array.
+     * If the data array is empty, returns null.
+     *
+     * @return Number|null The maximum key value or null if the array is empty.
+     */
+    protected function getMaxKeyValue() : Number|null
+    {
+        $keys = array_keys($this->data);
+        if (empty($keys)) {
+            return null;
+        }
+
+        return new Number(max($keys));
+    }
+
+    /**
+     * Retrieves the next key to be used based on the maximum key value currently in use.
+     *
+     * @return Number|null The next key value as a Number object, or null if no key value is found.
+     */
+    protected function getNextKey() : Number
+    {
+        $keyValue = $this->getMaxKeyValue();
+
+        if (is_null($keyValue)) {
+            return new Number(0);
+        }
+
+        $keyValue->add(1);
+
+        return $keyValue;
+    }
+
+    // endregion
 }

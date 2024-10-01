@@ -128,13 +128,10 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
     /**
      * Offset to set
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return $this
+     *
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value The value to set.
+     *
      * @since 5.0.0
      * @throws InvalidKeyTypeException
      */
@@ -264,6 +261,28 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
         }
 
         $this->setData($data['data']);
+    }
+
+    /**
+     * Get the value of a specified key and remove from
+     * array.
+     *
+     * @param mixed $key
+     * @return mixed
+     */
+    public function extract(mixed $key) : mixed
+    {
+        $returnValue = $this->offsetGet($key);
+        $this->delete($key);
+
+        return $returnValue;
+    }
+
+    public function delete(mixed $key) : void
+    {
+        if ($this->offsetExists($key)) {
+            $this->offsetUnset($key);
+        }
     }
 
 }

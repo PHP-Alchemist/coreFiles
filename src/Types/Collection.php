@@ -7,7 +7,9 @@ use PHPAlchemist\Abstracts\AbstractIndexedArray;
 /**
  * Collection is a proper indexed Array class
  *
- * @package PHPAlchemist\Types
+ * @final
+ * @codeCoverageIgnore
+ * @package            PHPAlchemist\Types
  */
 final class Collection extends AbstractIndexedArray
 {

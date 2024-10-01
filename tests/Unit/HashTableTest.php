@@ -3,15 +3,25 @@
 namespace tests\Unit;
 
 use Exception;
+use PHPAlchemist\Abstracts\AbstractAssociativeArray;
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Exceptions\HashTableFullException;
 use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
+use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\HashTable;
 use PHPAlchemist\Types\Twine;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(HashTable::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(HashTableFullException::class)]
+#[CoversClass(AbstractAssociativeArray::class)]
+#[CoversClass(UnmatchedClassException::class)]
+#[CoversClass(UnmatchedVersionException::class)]
 class HashTableTest extends TestCase
 {
 
@@ -406,6 +416,28 @@ class HashTableTest extends TestCase
         $serializedObject = serialize($arrayTest);
 
         $this->assertEquals('O:28:"PHPAlchemist\Types\HashTable":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Types\HashTable";s:4:"data";a:4:{s:1:"a";s:3:"abc";s:1:"b";s:3:"bcd";s:1:"c";s:3:"cde";s:1:"d";s:3:"def";}}', $serializedObject);
+    }
+
+    public function testArrayExtract()
+    {
+        $testKey   = 'charlie';
+        $testValue = 'c';
+        $testArray = [
+            'alpha'   => 'a',
+            'bravo'   => 'B',
+            'charlie' => 'c',
+            'delta'   => 'D',
+            'echo'    => 'e',
+            'foxtrot' => 'F',
+        ];
+        $collection = new HashTable($testArray);
+
+        $extractedValue = $collection->extract($testKey);
+        $this->assertEquals($testValue, $extractedValue);
+        $this->assertArrayNotHasKey($testKey, $collection);
+        $this->assertNotEquals($testArray, $collection->getData());
+
+
     }
 
     public function testDeserializable()
