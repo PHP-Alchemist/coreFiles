@@ -43,7 +43,7 @@ interface StringInterface extends \Stringable
      *
      * @return string
      */
-    public function getValue() : string;
+    public function getValue() : ?string;
 
     /**
      * Determine if string has value
@@ -130,5 +130,13 @@ interface StringInterface extends \Stringable
      * @return void
      */
     public function remove(int $offset, int $length) : void;
+
+
+    /**
+     * Determines if a StringInterface object is empty and has no value
+     *
+     * @return bool
+     */
+    public function isEmpty() : bool;
 }
 

@@ -2,21 +2,18 @@
 
 namespace PHPAlchemist\Traits;
 
-use Exception;
+use \Exception;
 
 /**
- * Adds the capability to have getters and setters for class members so that a property on a class such as `status` would
- * magically gain `setStatus($argument)` and `getStatus()`
+ * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName)
  *
  * @package PHPAlchemist\Traits
  */
-trait MagicGetSetTrait
+trait AccessorTrait
 {
     const STRING_POSITION_BEGINNING = 0;
     const STRING_POSITION_TWO       = 2;
     const STRING_POSITION_THREE     = 3;
-
-    use GetSetTrait;
 
     /**
      * Magic
@@ -62,6 +59,58 @@ trait MagicGetSetTrait
     protected function getMethodVerb($method, $position = self::STRING_POSITION_THREE) : string
     {
         return substr($method, self::STRING_POSITION_BEGINNING, $position);
+    }
+
+    /**
+     * Standard (simple) getter
+     *
+     * @param string $fieldName
+     * @return mixed
+     * @throws \Exception
+     *
+     */
+    public function get($fieldName) : mixed
+    {
+        if (!property_exists($this, $fieldName)) {
+            throw new \Exception("Variable ($fieldName) Not Found");
+        }
+
+        return $this->$fieldName;
+    }
+
+    /**
+     * Standard (simple) Setter
+     *
+     * @param string $fieldName
+     * @param mixed $value
+     * @return boolean
+     * @throws \Exception
+     *
+     */
+    public function set($fieldName, $value) : bool
+    {
+        if (!property_exists($this, $fieldName)) {
+            throw new \Exception("Variable ($fieldName) Not Found");
+        }
+
+        $this->$fieldName = $value;
+        return true;
+    }
+
+    /**
+     * Boolean Getter
+     *
+     * @param string $fieldName
+     * @return bool
+     * @throws \Exception
+     */
+    public function is($fieldName) : bool
+    {
+        if (!is_bool($this->$fieldName)) {
+            throw new \Exception("Cannot call is() on non-boolean variable (" . $fieldName . ").");
+        }
+
+        return $this->get($fieldName);
     }
 
 }

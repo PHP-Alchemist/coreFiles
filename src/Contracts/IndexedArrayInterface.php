@@ -55,4 +55,10 @@ interface IndexedArrayInterface extends ArrayInterface
      */
     function first() : mixed;
 
+    /**
+     * Tells if the object is empty
+     *
+     * @return bool
+     */
+    function isEmpty() : bool;
 }

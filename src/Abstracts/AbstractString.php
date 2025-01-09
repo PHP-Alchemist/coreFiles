@@ -15,32 +15,22 @@ abstract class AbstractString implements StringInterface
 {
     const BEGINNING_OF_STRING_POSITION = 0;
 
-    protected $value;
 
-    public function __construct($value = null)
+    public function __construct(protected ?string $value = null)
     {
-        $this->value = $value;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function __toString() : string
     {
-        return $this->getValue();
+        return ($this->getValue()) ?: "";
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getValue() : string
+
+    public function getValue() : ?string
     {
         return $this->value;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setValue($value) : StringInterface
     {
         $this->value = $value;
@@ -48,9 +38,6 @@ abstract class AbstractString implements StringInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function contains(mixed $needle, bool $caseInsensitive = false) : bool
     {
         if ($caseInsensitive)
@@ -213,5 +200,10 @@ abstract class AbstractString implements StringInterface
             $needle = "/{$needle}/";
         }
         $this->value = preg_replace($needle, $replacement, $this->value);
+    }
+
+    public function isEmpty() : bool
+    {
+        return is_null($this->value) || $this->value === '';
     }
 }

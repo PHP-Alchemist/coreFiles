@@ -12,7 +12,7 @@
     <env name="SHELL_VERBOSITY" value="-1"/>
   </php>
   <testsuites>
-    <testsuite name="Core628 Test Suite">
+    <testsuite name="CoreFiles Test Suite">
       <directory>tests</directory>
       <!--      <directory suffix=".php">tests/Unit</directory>-->
     </testsuite>

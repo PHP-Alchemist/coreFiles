@@ -285,4 +285,9 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
         }
     }
 
+    public function isEmpty() : bool
+    {
+        return empty($this->keys) && empty($this->values);
+    }
+
 }

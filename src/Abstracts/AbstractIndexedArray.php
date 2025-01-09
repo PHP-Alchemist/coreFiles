@@ -50,7 +50,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     /**
      * Where all the data for the IndexedArray lives
      *
-     * @var array $data Object data
+     * @var array<int, mixed> $data Object data
      */
     protected array $data;
 
@@ -471,6 +471,11 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $onClearComplete($this->data);
         }
 
+    }
+
+    public function isEmpty() : bool
+    {
+        return empty($this->data);
     }
 
     // endregion

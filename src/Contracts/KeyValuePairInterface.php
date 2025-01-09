@@ -50,5 +50,6 @@ interface KeyValuePairInterface extends ArrayInterface
 
     function getValues(): array;
 
+    function isEmpty() : bool;
 
 }

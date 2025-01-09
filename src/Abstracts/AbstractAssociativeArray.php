@@ -43,7 +43,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     protected $position;
 
     /**
-     * @var array $data
+     * @var array<string, mixed> $data
      */
     protected $data;
 
@@ -481,5 +481,10 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     public function search(mixed $value) : mixed
     {
         return array_search($value, $this->data);
+    }
+
+    public function isEmpty() : bool
+    {
+        return empty($this->data);
     }
 }

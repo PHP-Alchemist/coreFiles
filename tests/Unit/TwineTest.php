@@ -202,4 +202,14 @@ class TwineTest extends TestCase
         $newTestTwine->replace(['/It/', '/is/', '/magically/', '/Delicious/'], ['Stuff', 'and', 'thangs', 'Coral']);
         $this->assertEquals('Stuff and thangs Coral', $newTestTwine);
     }
+
+    public function testIsEmpty() : void
+    {
+        $testString = new Twine('Hello World');
+        $this->assertFalse($testString->isEmpty());
+
+
+        $newTestTwine = new Twine();
+        $this->assertTrue($newTestTwine->isEmpty());
+    }
 }
