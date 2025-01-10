@@ -16,7 +16,7 @@ abstract class AbstractString implements StringInterface
     const BEGINNING_OF_STRING_POSITION = 0;
 
 
-    public function __construct(protected ?string $value)
+    public function __construct(protected ?string $value = null)
     {
     }
 
