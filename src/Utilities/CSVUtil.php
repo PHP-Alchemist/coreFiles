@@ -29,7 +29,7 @@ class CSVUtil
             rewind($fp);
         }
 
-        if (fputcsv($fp, $row, $delimiter, $enclosure) === false) {
+        if (fputcsv($fp, $row, $delimiter, $enclosure, '\\', PHP_EOL) === false) {
             return false;
         }
 

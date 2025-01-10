@@ -2,12 +2,22 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\MagicGetSetTrait;
+use PHPAlchemist\Traits\AccessorTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+class MockAccessorTraitClass
+{
+    use AccessorTrait;
+
+    private $x;
+
+    private $youCannotSeeMe;
+
+}
+
 /**
- * Class MockMagicGetSetTraitClass
+ * Class MockSecondAccessorClass
  * @package tests\Unit
  * @method setJohn
  * @method getJohn
@@ -16,9 +26,9 @@ use PHPUnit\Framework\TestCase;
  * @method setYouCantSeeMe
  * @method getYouCantSeeMe
  */
-class MockMagicGetSetTraitClass
+class MockSecondAccessorClass
 {
-    use MagicGetSetTrait;
+    use AccessorTrait;
 
     public $john;
 
@@ -36,9 +46,9 @@ class MockMagicGetSetTraitClass
  * @method setData(array $data)
  * @method getData()
  */
-class MagicGSExample
+class MagicAccessorExample
 {
-    use MagicGetSetTrait;
+    use AccessorTrait;
 
     public bool $active;
 
@@ -47,12 +57,50 @@ class MagicGSExample
     private array $data;
 }
 
-#[CoversClass(MagicGetSetTrait::class)]
-class MagicGetSetTraitTest extends TestCase
+#[CoversClass(AccessorTrait::class)]
+class AccessorTraitTest extends TestCase
 {
-    public function testGetSet()
+    public function testGetSetOne()
     {
-        $mock         = new MockMagicGetSetTraitClass();
+        $mock           = new MockAccessorTraitClass();
+        $x              = 'asdf';
+        $youCannotSeeMe = '1qazxsw2';
+        $mock->set('x', $x);
+        $this->assertEquals($x, $mock->get('x'));
+
+        $mock->set('youCannotSeeMe', $youCannotSeeMe);
+        $this->assertEquals($youCannotSeeMe, $mock->get('youCannotSeeMe'));
+    }
+
+    public function testSetExceptions()
+    {
+        $mock  = new MockAccessorTraitClass();
+        $value = 'asdf';
+        try {
+            $mock->set('irish', $value);
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('\Exception', $e);
+            $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
+        }
+
+    }
+
+    public function testGetExceptions()
+    {
+        $mock = new MockAccessorTraitClass();
+
+        try {
+            $mock->get('irish');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('\Exception', $e);
+            $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
+        }
+
+    }
+
+    public function testGetSetTwo()
+    {
+        $mock         = new MockSecondAccessorClass();
         $x            = 'asdf';
         $y            = 'xyzzy';
         $youCantSeeMe = '1qazxsw2';
@@ -67,9 +115,9 @@ class MagicGetSetTraitTest extends TestCase
         $this->assertEquals($youCantSeeMe, $mock->getYouCantSeeMe());
     }
 
-    public function testSetExceptions()
+    public function testSetExceptionsOne()
     {
-        $mock = new MockMagicGetSetTraitClass();
+        $mock = new MockSecondAccessorClass();
 
         $value = 'asdf';
         try {
@@ -81,9 +129,9 @@ class MagicGetSetTraitTest extends TestCase
 
     }
 
-    public function testGetExceptions()
+    public function testGetExceptionsTwo()
     {
-        $mock = new MockMagicGetSetTraitClass();
+        $mock = new MockSecondAccessorClass();
 
         try {
             $mock->getIrish();
@@ -96,7 +144,7 @@ class MagicGetSetTraitTest extends TestCase
             $mock->irish();
         } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
-            $this->assertEquals('No Method (irish) exists on tests\Unit\MockMagicGetSetTraitClass', $e->getMessage());
+            $this->assertEquals('No Method (irish) exists on tests\Unit\MockSecondAccessorClass', $e->getMessage());
         }
 
 
@@ -104,24 +152,24 @@ class MagicGetSetTraitTest extends TestCase
 
     public function testMethodNotFoundExceptions()
     {
-        $mock = new MockMagicGetSetTraitClass();
+        $mock = new MockSecondAccessorClass();
 
         try {
             $mock->save();
         } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
-            $this->assertEquals("No Method (save) exists on tests\Unit\MockMagicGetSetTraitClass", $e->getMessage());
+            $this->assertEquals("No Method (save) exists on tests\Unit\MockSecondAccessorClass", $e->getMessage());
         }
 
     }
 
-    #[CoversMethod([MagicGetSetTrait::class, 'getMethodVerb'])]
+    #[CoversMethod([AccessorTrait::class, 'getMethodVerb'])]
     public function testIsAndCatchAll()
     {
-        $example = new MagicGSExample();
+        $example = new MagicAccessorExample();
         $example->setActive(false);
         $example->setName('Test');
-        $example->setData(['abc','def','ghi']);
+        $example->setData(['abc', 'def', 'ghi']);
 
         $this->assertEquals('Test', $example->getName());
         $this->assertFalse($example->isActive());
@@ -130,16 +178,16 @@ class MagicGetSetTraitTest extends TestCase
         $example->setActive(true);
         $this->assertTrue($example->isActive());
 
-        try{
+        try {
             $example->isName();
         } catch (\Exception $e) {
             $this->assertEquals('Cannot call is() on non-boolean variable (name).', $e->getMessage());
         }
 
-        try{
+        try {
             $example->asIf();
         } catch (\Exception $e) {
-            $this->assertEquals('No Method (asIf) exists on tests\Unit\MagicGSExample', $e->getMessage());
+            $this->assertEquals('No Method (asIf) exists on tests\Unit\MagicAccessorExample', $e->getMessage());
         }
 
     }
