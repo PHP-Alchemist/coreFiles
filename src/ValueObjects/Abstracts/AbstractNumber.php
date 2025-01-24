@@ -6,6 +6,10 @@ use PHPAlchemist\ValueObjects\Contracts\VONumberInterface;
 
 abstract readonly class AbstractNumber implements VONumberInterface
 {
+    public function __construct(protected int $value)
+    {
+    }
+
     public function getValue() : int|float
     {
         return $this->value;
