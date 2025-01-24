@@ -69,7 +69,8 @@ abstract readonly class AbstractString implements VOStringInterface
      */
     public function length() : VONumberInterface
     {
-        return new Number(strlen($this->value));
+        $length = strlen($this->value);
+        return new Number($length);
     }
 
     /**

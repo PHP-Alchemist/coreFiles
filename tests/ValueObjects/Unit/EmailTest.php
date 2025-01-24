@@ -3,20 +3,25 @@
 namespace ValueObjects\Unit;
 
 use PharIo\Manifest\InvalidEmailException;
+use PHPAlchemist\ValueObjects\Abstracts\AbstractNumber;
+use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
+use PHPAlchemist\ValueObjects\Model\Number;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use PHPAlchemist\ValueObjects\Model\Email;
 
+
+#[CoversClass(Email::class)]
+#[CoversClass(AbstractString::class)]
+#[CoversClass(AbstractNumber::class)]
 class EmailTest extends TestCase
 {
 
     public function testInvalidEmail() : void
     {
+        $this->expectExceptionMessage('Invalid email address.');
         $invalidEmailValue = 'stuff@things';
-        try {
-            $emailObject = new Email($invalidEmailValue);
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid email address.');
-        }
+        $emailObject       = new Email($invalidEmailValue);
     }
 
 
@@ -35,6 +40,16 @@ class EmailTest extends TestCase
         $comparitiveEmail = new Email($validEmailValue);
 
         $this->assertTrue($emailObject->equals($comparitiveEmail));
-
     }
+
+    public function testLength() : void
+    {
+        $validEmailValue  = 'stuff@things.net';
+        $expectedLength   = 16;
+        $emailObject      = new Email($validEmailValue);
+
+        $this->assertInstanceOf(Number::class, $emailObject->length());
+        $this->assertequals($expectedLength, ($emailObject->length())->getValue());
+    }
+
 }
