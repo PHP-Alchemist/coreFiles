@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use PHPAlchemist\Types\Twine;
 use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
 
-final readonly class Email extends AbstractString
+final class Email extends AbstractString
 {
     public function __construct(protected string $value)
     {
