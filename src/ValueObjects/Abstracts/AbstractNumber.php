@@ -4,7 +4,7 @@ namespace PHPAlchemist\ValueObjects\Abstracts;
 
 use PHPAlchemist\ValueObjects\Contracts\VONumberInterface;
 
-abstract readonly class AbstractNumber implements VONumberInterface
+abstract class AbstractNumber implements VONumberInterface
 {
     public function __construct(protected int $value)
     {

@@ -11,7 +11,7 @@ use PHPAlchemist\ValueObjects\Contracts\VONumberInterface;
 use PHPAlchemist\ValueObjects\Contracts\VOStringInterface;
 use PHPAlchemist\ValueObjects\Model\Number;
 
-abstract readonly class AbstractString implements VOStringInterface
+abstract class AbstractString implements VOStringInterface
 {
     protected string $value;
 
