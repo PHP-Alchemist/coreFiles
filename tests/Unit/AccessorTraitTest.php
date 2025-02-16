@@ -4,6 +4,7 @@ namespace tests\Unit;
 
 use PHPAlchemist\Traits\AccessorTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use PHPUnit\Framework\TestCase;
 
 class MockAccessorTraitClass
@@ -157,7 +158,6 @@ class AccessorTraitTest extends TestCase
         }
     }
 
-    #[CoversMethod([AccessorTrait::class, 'getMethodVerb'])]
     public function testIsAndCatchAll()
     {
         $example = new MagicAccessorExample();
