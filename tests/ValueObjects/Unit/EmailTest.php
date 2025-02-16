@@ -2,14 +2,12 @@
 
 namespace ValueObjects\Unit;
 
-use PharIo\Manifest\InvalidEmailException;
 use PHPAlchemist\ValueObjects\Abstracts\AbstractNumber;
 use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
+use PHPAlchemist\ValueObjects\Model\Email;
 use PHPAlchemist\ValueObjects\Model\Number;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use PHPAlchemist\ValueObjects\Model\Email;
-
 
 #[CoversClass(Email::class)]
 #[CoversClass(AbstractString::class)]
