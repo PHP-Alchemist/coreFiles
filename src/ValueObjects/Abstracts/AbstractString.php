@@ -13,7 +13,7 @@ use PHPAlchemist\ValueObjects\Model\Number;
 
 abstract class AbstractString implements VOStringInterface
 {
-    protected string $value;
+    protected readonly string $value;
 
     public function __toString() : string
     {
