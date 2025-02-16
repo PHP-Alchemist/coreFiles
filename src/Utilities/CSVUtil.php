@@ -8,14 +8,15 @@ class CSVUtil
      * Nice String output replacement form fputcsv
      * code taken from: http://www.php.net/manual/en/function.fputcsv.php#96937.
      *
-     * @param        $row
+     *
+     * @param array  $row
      * @param string $delimiter
      * @param string $enclosure
      * @param string $eol
      *
      * @return bool|string
      */
-    public static function sputcsv($row, $delimiter = ',', $enclosure = '"', $eol = PHP_EOL)
+    public static function sputcsv(array $row, string $delimiter = ',', string $enclosure = '"', string $eol = PHP_EOL) : string
     {
         static $fp = false;
         if ($fp === false) {
@@ -26,7 +27,7 @@ class CSVUtil
         }
 
         if (fputcsv($fp, $row, $delimiter, $enclosure, '\\', PHP_EOL) === false) {
-            return false;
+            return '';
         }
 
         rewind($fp);
