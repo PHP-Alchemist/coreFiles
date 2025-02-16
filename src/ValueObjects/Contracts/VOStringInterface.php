@@ -30,15 +30,6 @@ interface VOStringInterface extends \Stringable
     public function equals(self $comparitive) : bool;
 
     /**
-     * Explode to  CollectionInterface object
-     *
-     * @param string $delimiter
-     * @param int $limit
-     *
-     * @return IndexedArrayInterface
-     */
-
-    /**
      * Get value of String object
      *
      * @return string
