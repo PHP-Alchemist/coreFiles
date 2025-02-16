@@ -14,6 +14,14 @@ final class Email extends AbstractString
             throw new InvalidArgumentException("Invalid email address.");
         }
     }
+
+    public function getUser() : Twine
+    {
+        $parts = explode('@', $this->value, 2);
+
+        return new Twine(array_shift($parts));
+    }
+
     public function getDomain() : Twine
     {
         $parts = explode('@', $this->value, 2);
