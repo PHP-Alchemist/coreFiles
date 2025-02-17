@@ -20,7 +20,7 @@ use PHPAlchemist\Type\Twine;
 /**
  * Abstract class for Associative Array (Objectified Array Class)
  *
- * @package PHPAlchemist\Abstracts
+ * @package PHPAlchemist\Abstract
  */
 abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {

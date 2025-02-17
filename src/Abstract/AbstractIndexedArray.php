@@ -21,7 +21,7 @@ use PHPAlchemist\Type\Twine;
 /**
  * Abstract class Collection (Objectified Array Class)
  *
- * @package PHPAlchemist\Abstracts
+ * @package PHPAlchemist\Abstract
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {

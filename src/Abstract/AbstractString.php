@@ -9,7 +9,7 @@ use PHPAlchemist\Type\Twine;
 
 /**
  * Abstract class for String
- * @package PHPAlchemist\Abstracts
+ * @package PHPAlchemist\Abstract
  */
 abstract class AbstractString implements StringInterface
 {
