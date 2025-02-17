@@ -2,10 +2,10 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Abstracts\AbstractIndexedArray;
-use PHPAlchemist\Abstracts\AbstractString;
-use PHPAlchemist\Types\Collection;
-use PHPAlchemist\Types\Twine;
+use PHPAlchemist\Abstract\AbstractString;
+use PHPAlchemist\Abstract\AbstractIndexedArray;
+use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
