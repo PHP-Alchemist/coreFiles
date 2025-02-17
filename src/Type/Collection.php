@@ -11,6 +11,7 @@ use PHPAlchemist\Abstract\AbstractIndexedArray;
  *
  * @codeCoverageIgnore
  * @package            PHPAlchemist\Type
+ * @author Micah Breedlove <druid628@gmail.com>
  */
 final class Collection extends AbstractIndexedArray
 {
