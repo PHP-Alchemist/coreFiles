@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\AccessorTrait;
+use PHPAlchemist\Trait\AccessorTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -72,7 +72,7 @@ class AccessorTraitTest extends TestCase
         $this->assertEquals($youCannotSeeMe, $mock->get('youCannotSeeMe'));
     }
 
-    public function testSetExceptions()
+    public function testSetException()
     {
         $mock  = new MockAccessorTraitClass();
         $value = 'asdf';
@@ -85,7 +85,7 @@ class AccessorTraitTest extends TestCase
 
     }
 
-    public function testGetExceptions()
+    public function testGetException()
     {
         $mock = new MockAccessorTraitClass();
 
@@ -115,7 +115,7 @@ class AccessorTraitTest extends TestCase
         $this->assertEquals($youCantSeeMe, $mock->getYouCantSeeMe());
     }
 
-    public function testSetExceptionsOne()
+    public function testSetExceptionOne()
     {
         $mock = new MockSecondAccessorClass();
 
@@ -129,7 +129,7 @@ class AccessorTraitTest extends TestCase
 
     }
 
-    public function testGetExceptionsTwo()
+    public function testGetExceptionTwo()
     {
         $mock = new MockSecondAccessorClass();
 
@@ -150,7 +150,7 @@ class AccessorTraitTest extends TestCase
 
     }
 
-    public function testMethodNotFoundExceptions()
+    public function testMethodNotFoundException()
     {
         $mock = new MockSecondAccessorClass();
 

@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Utilities\CSVUtil;
+use PHPAlchemist\Utility\CSVUtil;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
