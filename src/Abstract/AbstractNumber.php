@@ -5,7 +5,8 @@ namespace PHPAlchemist\Abstract;
 use PHPAlchemist\Contract\NumberInterface;
 
 /**
- * Abstract Class for Number classes.
+ * Abstract Class for Number classes
+ *
  * @package PHPAlchemist\Abstract
  */
 abstract class AbstractNumber implements NumberInterface

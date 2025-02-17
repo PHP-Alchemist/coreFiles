@@ -65,14 +65,14 @@ class DictionaryTest extends TestCase
 
         $serializedObject = serialize($arrayTest);
 
-        $this->assertEquals('O:29:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
+        $this->assertEquals('O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
     }
 
     public function testUnserialize()
     {
-        $serializedObject = 'O:29:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
-        $wrongVersion     = 'O:29:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:7;s:5:"model";s:29:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
-        $wrongClass       = 'O:29:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $serializedObject = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongVersion     = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:7;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongClass       = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
 
         $data = unserialize($serializedObject);
         $this->assertInstanceOf('PHPAlchemist\Type\Dictionary', $data);

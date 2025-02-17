@@ -8,7 +8,7 @@ use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 
 /**
- * Abstract class for String.
+ * Abstract class for String
  * @package PHPAlchemist\Abstract
  */
 abstract class AbstractString implements StringInterface
