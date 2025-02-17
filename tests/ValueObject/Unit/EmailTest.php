@@ -1,11 +1,11 @@
 <?php
 
-namespace ValueObjects\Unit;
+namespace ValueObject\Unit;
 
-use PHPAlchemist\ValueObjects\Abstracts\AbstractNumber;
-use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
-use PHPAlchemist\ValueObjects\Model\Email;
-use PHPAlchemist\ValueObjects\Model\Number;
+use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
+use PHPAlchemist\ValueObject\Abstract\AbstractString;
+use PHPAlchemist\ValueObject\Model\Email;
+use PHPAlchemist\ValueObject\Model\Number;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
