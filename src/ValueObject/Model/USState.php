@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Model;
+namespace PHPAlchemist\ValueObject\Model;
 
 use InvalidArgumentException;
-use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
+use PHPAlchemist\ValueObject\Abstract\AbstractString;
 
 final class USState extends AbstractString
 {

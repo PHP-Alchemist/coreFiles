@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Model;
+namespace PHPAlchemist\ValueObject\Model;
 
 use InvalidArgumentException;
 use PHPAlchemist\Types\Twine;
-use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
+use PHPAlchemist\ValueObject\Abstract\AbstractString;
 
 final class Email extends AbstractString
 {

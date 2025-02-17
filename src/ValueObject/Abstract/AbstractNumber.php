@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Abstracts;
+namespace PHPAlchemist\ValueObject\Abstract;
 
-use PHPAlchemist\ValueObjects\Contracts\VONumberInterface;
+use PHPAlchemist\ValueObject\Contract\VONumberInterface;
 
 abstract class AbstractNumber implements VONumberInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Contracts;
+namespace PHPAlchemist\ValueObject\Contract;
 
 use PHPAlchemist\Contracts\IndexedArrayInterface;
 use PHPAlchemist\Types\Base\Contracts\Twine;
 
 /**
- * @package PHPAlchemist\ValueObjects\Contracts
+ * @package PHPAlchemist\ValueObjects\Contract
  */
 interface VOStringInterface extends \Stringable
 {

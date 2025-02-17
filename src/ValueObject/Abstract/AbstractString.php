@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Abstracts;
+namespace PHPAlchemist\ValueObject\Abstract;
 
 
 use PHPAlchemist\Contracts\IndexedArrayInterface;
 use PHPAlchemist\Contracts\StringInterface;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
-use PHPAlchemist\ValueObjects\Contracts\VONumberInterface;
-use PHPAlchemist\ValueObjects\Contracts\VOStringInterface;
-use PHPAlchemist\ValueObjects\Model\Number;
+use PHPAlchemist\ValueObject\Contract\VONumberInterface;
+use PHPAlchemist\ValueObject\Contract\VOStringInterface;
+use PHPAlchemist\ValueObject\Model\Number;
 
 abstract class AbstractString implements VOStringInterface
 {
