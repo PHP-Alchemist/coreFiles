@@ -4,6 +4,7 @@ namespace PHPAlchemist\Exceptions;
 
 /**
  * When a HashTable has reached the fixed limit and an attempt to add data has been made.
+ * @package PHPAlchemist\Exception
  */
 class HashTableFullException extends \Exception
 {

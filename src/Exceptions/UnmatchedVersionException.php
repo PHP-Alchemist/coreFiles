@@ -4,6 +4,8 @@ namespace PHPAlchemist\Exceptions;
 
 /**
  * When a deserialized object doesn't match the deserializing version.
+ *
+ * @package PHPAlchemist\Exception
  */
 class UnmatchedVersionException extends \Exception
 {

@@ -2,10 +2,10 @@
 
 namespace Unit;
 
-use PHPAlchemist\Abstracts\AbstractIndexedArray;
-use PHPAlchemist\Abstracts\AbstractList;
-use PHPAlchemist\Types\Number;
-use PHPAlchemist\Types\Roll;
+use PHPAlchemist\Abstract\AbstractIndexedArray;
+use PHPAlchemist\Abstract\AbstractList;
+use PHPAlchemist\Type\Number;
+use PHPAlchemist\Type\Roll;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -20,9 +20,8 @@ class RollTest extends TestCase
      */
 
     /**
-     * @throws \PHPAlchemist\Exceptions\InvalidKeyTypeException
-     *
      * @return void
+     * @throws \PHPAlchemist\Exception\InvalidKeyTypeException
      */
     public function testRebalancing()
     {
