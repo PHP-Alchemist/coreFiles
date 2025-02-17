@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\CLITrait;
+use PHPAlchemist\Trait\CLITrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

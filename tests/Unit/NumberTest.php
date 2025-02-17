@@ -2,8 +2,8 @@
 
 namespace Unit;
 
-use PHPAlchemist\Abstracts\AbstractNumber;
-use PHPAlchemist\Types\Number;
+use PHPAlchemist\Abstract\AbstractNumber;
+use PHPAlchemist\Type\Number;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

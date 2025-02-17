@@ -2,7 +2,7 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Traits\PerformanceTrait;
+use PHPAlchemist\Trait\PerformanceTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
