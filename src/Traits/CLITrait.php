@@ -5,7 +5,6 @@ namespace PHPAlchemist\Traits;
 /**
  * Collection of usable CLI functions
  *
- * @method bool isCli()
  * @package PHPAlchemist\Traits
  */
 trait CLITrait
@@ -16,7 +15,7 @@ trait CLITrait
      *
      * @return boolean
      */
-    public function isCli()
+    public function isCli() : bool
     {
         return php_sapi_name() === "cli";
     }
