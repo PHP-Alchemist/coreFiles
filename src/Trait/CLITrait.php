@@ -5,8 +5,8 @@ namespace PHPAlchemist\Trait;
 /**
  * Collection of usable CLI functions.
  *
- * @method bool isCli()
  * @package PHPAlchemist\Trait
+ * @author Micah Breedlove <druid628@gmail.com>
  */
 trait CLITrait
 {

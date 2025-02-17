@@ -5,6 +5,7 @@ namespace PHPAlchemist\Trait;
 /**
  * @package PHPAlchemist\Trait
  * @deprecated  Will be removed in v4.0.0
+ * @author Micah Breedlove <druid628@gmail.com>
  */
 trait PerformanceTrait
 {
