@@ -1,14 +1,14 @@
 <?php
 
-namespace ValueObjects\Unit;
+namespace ValueObject\Unit;
 
-use PHPAlchemist\ValueObjects\Abstracts\AbstractNumber;
-use PHPAlchemist\ValueObjects\Abstracts\AbstractString;
-use PHPAlchemist\ValueObjects\Model\Number;
-use PHPAlchemist\ValueObjects\Model\USState;
+use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
+use PHPAlchemist\ValueObject\Abstract\AbstractString;
+use PHPAlchemist\ValueObject\Model\Number;
+use PHPAlchemist\ValueObject\Model\USState;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use PHPAlchemist\ValueObjects\Model\Email;
+use PHPAlchemist\ValueObject\Model\Email;
 
 
 #[CoversClass(USState::class)]

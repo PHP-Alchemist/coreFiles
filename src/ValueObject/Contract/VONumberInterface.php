@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPAlchemist\ValueObjects\Contracts;
+namespace PHPAlchemist\ValueObject\Contract;
 
 /**
- * @package PHPAlchemist\Contracts
+ * @package PHPAlchemist\Contract
  */
 interface VONumberInterface
 {
