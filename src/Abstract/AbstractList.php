@@ -3,7 +3,8 @@
 namespace PHPAlchemist\Abstract;
 
 /**
- * Abstract class for List (Roll) Objectified array class.
+ * Abstract class for List (Roll) Objectified array class
+ *
  * @package PHPAlchemist\Abstract
  */
 abstract class AbstractList extends AbstractIndexedArray

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Exceptions;
+namespace PHPAlchemist\Exception;
 
 class BadJsonException extends \Exception
 {

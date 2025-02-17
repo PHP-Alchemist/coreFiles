@@ -1,11 +1,11 @@
 <?php
 
-namespace Unit\Traits\Array;
+namespace Unit\Trait\Array;
 
-use PHPAlchemist\Abstracts\AbstractAssociativeArray;
-use PHPAlchemist\Abstracts\AbstractIndexedArray;
-use PHPAlchemist\Types\Collection;
-use PHPAlchemist\Types\HashTable;
+use PHPAlchemist\Abstract\AbstractAssociativeArray;
+use PHPAlchemist\Abstract\AbstractIndexedArray;
+use PHPAlchemist\Type\Collection;
+use PHPAlchemist\Type\HashTable;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

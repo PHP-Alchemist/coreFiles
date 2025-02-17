@@ -8,7 +8,7 @@ use PHPAlchemist\Exception\UnmatchedClassException;
 use PHPAlchemist\Exception\UnmatchedVersionException;
 
 /**
- * Abstract class for KeyValue Pair.
+ * Abstract class for KeyValue Pair
  * @package PHPAlchemist\Abstract
  */
 abstract class AbstractKeyValuePair implements KeyValuePairInterface

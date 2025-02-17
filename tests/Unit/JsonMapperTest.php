@@ -2,7 +2,7 @@
 
 namespace Unit;
 
-use PHPAlchemist\Exceptions\BadJsonException;
+use PHPAlchemist\Exception\BadJsonException;
 use PHPAlchemist\Services\JsonMapper;
 use PHPAlchemist\Traits\JsonHydratorTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
