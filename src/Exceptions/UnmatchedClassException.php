@@ -3,13 +3,11 @@
 namespace PHPAlchemist\Exceptions;
 
 /**
- * When a deserialized object doesn't match the deserializing class
- *
- * @package PHPAlchemist\Exceptions;
+ * When a deserialized object doesn't match the deserializing class.
  */
 class UnmatchedClassException extends \Exception
 {
-    const ERROR_UNMATCHED_CLASS = "Unmatched class type on deserialization";
+    const ERROR_UNMATCHED_CLASS = 'Unmatched class type on deserialization';
 
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: self::ERROR_UNMATCHED_CLASS)] $message = self::ERROR_UNMATCHED_CLASS,
@@ -18,5 +16,4 @@ class UnmatchedClassException extends \Exception
     ) {
         parent::__construct($message, $code, $previous);
     }
-
 }

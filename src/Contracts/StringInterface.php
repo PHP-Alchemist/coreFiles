@@ -2,11 +2,6 @@
 
 namespace PHPAlchemist\Contracts;
 
-use PHPAlchemist\Types\Base\Contracts\Twine;
-
-/**
- * @package PHPAlchemist\Contracts
- */
 interface StringInterface extends \Stringable
 {
     /**
@@ -16,6 +11,7 @@ interface StringInterface extends \Stringable
 
     /**
      * @param mixed $needle
+     *
      * @return mixed
      */
     public function contains(mixed $needle, bool $caseInsensitive = false) : bool;
@@ -24,29 +20,30 @@ interface StringInterface extends \Stringable
 
     /**
      * @param string|StringInterface $comparitive
+     *
      * @return bool
      */
     public function equals(string|self $comparitive) : bool;
 
     /**
-     * Explode to  CollectionInterface object
+     * Explode to  CollectionInterface object.
      *
      * @param string $delimiter
-     * @param int $limit
+     * @param int    $limit
      *
      * @return IndexedArrayInterface
      */
     public function explode($delimiter = '', $limit = PHP_INT_MAX) : IndexedArrayInterface;
 
     /**
-     * Get value of String object0
+     * Get value of String object0.
      *
      * @return string
      */
     public function getValue() : ?string;
 
     /**
-     * Determine if string has value
+     * Determine if string has value.
      *
      * @return bool
      */
@@ -54,14 +51,16 @@ interface StringInterface extends \Stringable
 
     /**
      * @param string $needle
-     * @param int $startIndex
+     * @param int    $startIndex
+     *
      * @return false|int
      */
     public function indexOf(string $needle, int $startIndex = 0) : int|false;
 
     /**
      * @param string $insertion
-     * @param int $offset
+     * @param int    $offset
+     *
      * @return void
      */
     public function insert(string $insertion, int $offset) : void;
@@ -73,7 +72,8 @@ interface StringInterface extends \Stringable
 
     /**
      * @param string $needle
-     * @param int $startIndex
+     * @param int    $startIndex
+     *
      * @return int|false
      */
     public function lastIndexOf(string $needle, int $startIndex = 0) : int|false;
@@ -84,22 +84,25 @@ interface StringInterface extends \Stringable
     public function length() : int;
 
     /**
-     * @param int $length
+     * @param int    $length
      * @param string $padValue
+     *
      * @return void
      */
     public function padBoth(int $length, string $padValue = ' ') : void;
 
     /**
-     * @param int $length
+     * @param int    $length
      * @param string $padValue
+     *
      * @return void
      */
     public function padLeft(int $length, string $padValue = ' ') : void;
 
     /**
-     * @param int $length
+     * @param int    $length
      * @param string $padValue
+     *
      * @return void
      */
     public function padRight(int $length, string $padValue = ' ') : void;
@@ -113,13 +116,15 @@ interface StringInterface extends \Stringable
 
     /**
      * @param mixed $needle
+     *
      * @return bool
      */
     public function startsWith(mixed $needle) : bool;
 
     /**
-     * @param int $offset
+     * @param int      $offset
      * @param int|null $length
+     *
      * @return StringInterface
      */
     public function substring(int $offset, ?int $length) : StringInterface;
@@ -127,16 +132,15 @@ interface StringInterface extends \Stringable
     /**
      * @param int $offset
      * @param int $length
+     *
      * @return void
      */
     public function remove(int $offset, int $length) : void;
 
-
     /**
-     * Determines if a StringInterface object is empty and has no value
+     * Determines if a StringInterface object is empty and has no value.
      *
      * @return bool
      */
     public function isEmpty() : bool;
 }
-

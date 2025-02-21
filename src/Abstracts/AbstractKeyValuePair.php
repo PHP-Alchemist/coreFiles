@@ -8,20 +8,19 @@ use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
 
 /**
- * Abstract class for KeyValue Pair
- * @package PHPAlchemist\Abstracts
+ * Abstract class for KeyValue Pair.
  */
 abstract class AbstractKeyValuePair implements KeyValuePairInterface
 {
     public static $serializeVersion = 1;
 
-    /** @var int $position position sentinel variable */
+    /** @var int position sentinel variable */
     protected $position;
 
-    /** @var array $keys */
+    /** @var array */
     protected $keys = [];
 
-    /** @var array $values */
+    /** @var array */
     protected $values = [];
 
     public function __construct($data = [])
@@ -34,8 +33,9 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
      * @param $key
      * @param $value
      *
-     * @return $this
      * @throws InvalidKeyTypeException
+     *
+     * @return $this
      */
     public function add($key, $value) : KeyValuePairInterface
     {
@@ -48,8 +48,9 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
      * @param $key
      * @param $value
      *
-     * @return $this
      * @throws InvalidKeyTypeException
+     *
+     * @return $this
      */
     public function set($key, $value) : KeyValuePairInterface
     {
@@ -96,13 +97,13 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
 
     public function next() : void
     {
-        ++$this->position;
+        $this->position++;
     }
 
     // not part of Iterator
     public function prev() : void
     {
-        --$this->position;
+        $this->position--;
     }
 
     public function current() : mixed
@@ -124,21 +125,22 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
         );
     }
 
-
     /**
-     * Offset to set
+     * Offset to set.
+     *
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
      * @since 5.0.0
+     *
      * @throws InvalidKeyTypeException
      */
     public function offsetSet($offset, $value) : void
     {
         if (!$this->validateKey($offset)) {
-            throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Dictionary", gettype($offset)));
+            throw new InvalidKeyTypeException(sprintf('Invalid Key type (%s) for Dictionary', gettype($offset)));
         }
 
         if (!$this->offsetExists($offset)) {
@@ -150,7 +152,7 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
     }
 
     /**
-     * Get raw data in PHP Array
+     * Get raw data in PHP Array.
      *
      * @return array
      */
@@ -162,8 +164,9 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
     /**
      * @param array $data
      *
-     * @return $this
      * @throws InvalidKeyTypeException
+     *
+     * @return $this
      */
     public function setData(array $data) : KeyValuePairInterface
     {
@@ -177,6 +180,7 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
 
     /**
      * @param mixed $offset
+     *
      * @return bool|mixed
      */
     public function offsetGet($offset) : mixed
@@ -192,13 +196,14 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
 
     /**
      * @param mixed $offset
+     *
      * @return bool
      */
     public function offsetExists($offset) : bool
     {
         $flippedArray = array_flip($this->keys);
 
-        return (isset($flippedArray[$offset]));
+        return isset($flippedArray[$offset]);
     }
 
     /**
@@ -211,20 +216,20 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
         $reverseKeys = array_flip($this->keys);
 
         return ($this->offsetExists($offset)) ? $reverseKeys[$offset] : false;
-
     }
 
     /**
      * @param array $dataSet
      *
-     * @return bool
      * @throws InvalidKeyTypeException
+     *
+     * @return bool
      */
     protected function validateKeys(array $dataSet)
     {
         foreach (array_keys($dataSet) as $key) {
-            if (!($this->validateKey($key))) {
-                throw new InvalidKeyTypeException("Key (" . $key . ") is not a valid type.");
+            if (!$this->validateKey($key)) {
+                throw new InvalidKeyTypeException('Key ('.$key.') is not a valid type.');
             }
         }
 
@@ -268,6 +273,7 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
      * array.
      *
      * @param mixed $key
+     *
      * @return mixed
      */
     public function extract(mixed $key) : mixed
@@ -289,5 +295,4 @@ abstract class AbstractKeyValuePair implements KeyValuePairInterface
     {
         return empty($this->keys) && empty($this->values);
     }
-
 }

@@ -3,16 +3,15 @@
 namespace PHPAlchemist\Traits;
 
 /**
- * A collection of usable array functions
- *
- * @package PHPAlchemist\Traits
+ * A collection of usable array functions.
  */
 trait ArrayTrait
 {
     /**
-     * sum values in data by key
+     * sum values in data by key.
      *
-     * @param  mixed (string|int) $index
+     * @param mixed (string|int) $index
+     *
      * @return int result
      *
      * source: http://www.php.net/manual/en/function.array-sum.php#85548

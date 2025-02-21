@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractAssociativeArray::class)]
 class OnSetTraitTest extends TestCase
 {
-
     public function testCollectionOnSet()
     {
         $onSetCallback = function (array &$data) {
@@ -31,7 +30,6 @@ class OnSetTraitTest extends TestCase
         ]);
 
         $this->assertEquals('X', $collection->get(10));
-
     }
 
     public function testCollectionOnSetComplete()
@@ -51,7 +49,6 @@ class OnSetTraitTest extends TestCase
         ]);
 
         $this->assertEquals('X', $collection->get(10));
-
     }
 
     public function testHashTableOnSet()
@@ -71,7 +68,6 @@ class OnSetTraitTest extends TestCase
         ]);
 
         $this->assertEquals('X', $hashTable->get('ten'));
-
     }
 
     public function testHashTableOnSetComplete()
@@ -91,6 +87,5 @@ class OnSetTraitTest extends TestCase
         ]);
 
         $this->assertEquals('X', $hashTable->get('ten'));
-
     }
 }

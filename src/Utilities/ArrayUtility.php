@@ -2,20 +2,15 @@
 
 namespace PHPAlchemist\Utilities;
 
-
-/**
- * @package PHPAlchemist\Utilities
- */
 class ArrayUtility
 {
     /**
-     *
      * Takes an array test to see if it is multi-dimensional.
      * Great for use before using array_diff
      * example:
      * $x = arary(1, array(2,3,4), 5, 6);
      * $y = arary(1, array(7,8), 5, 6);
-     * $z = arary(1, 'Array', 5, 6);
+     * $z = arary(1, 'Array', 5, 6);.
      *
      * empty(array_diff($x, $y)); // returns true
      * empty(array_diff($y, $z)); // returns true
@@ -24,18 +19,20 @@ class ArrayUtility
      * thanks to @epochblue for that find
      *
      * @param array $array
-     * @return boolean
+     *
+     * @return bool
      */
     public static function isMulti($array) : bool
     {
-        return (bool)(count($array) != count($array, COUNT_RECURSIVE));
+        return (bool) (count($array) != count($array, COUNT_RECURSIVE));
     }
 
     /**
-     * sum values in data by key
+     * sum values in data by key.
      *
      * @param array $arr
      * @param string [optional]$index
+     *
      * @return int result
      *
      * source: http://www.php.net/manual/en/function.array-sum.php#85548
@@ -56,6 +53,4 @@ class ArrayUtility
 
         return $ret;
     }
-
-
 }
