@@ -5,13 +5,10 @@ namespace PHPAlchemist\Abstracts;
 use PHPAlchemist\Contracts\NumberInterface;
 
 /**
- * Abstract Class for Number classes
- *
- * @package PHPAlchemist\Abstracts
+ * Abstract Class for Number classes.
  */
 abstract class AbstractNumber implements NumberInterface
 {
-
     private int|float $data;
 
     public function __construct(int|float $number)
@@ -20,7 +17,7 @@ abstract class AbstractNumber implements NumberInterface
     }
 
     /**
-     * Return Number value
+     * Return Number value.
      *
      * @return int|float
      */
@@ -30,7 +27,7 @@ abstract class AbstractNumber implements NumberInterface
     }
 
     /**
-     * Add to Number value
+     * Add to Number value.
      *
      * @param int|float $number value to add to Number object
      *
@@ -42,7 +39,7 @@ abstract class AbstractNumber implements NumberInterface
     }
 
     /**
-     * Loose equality - does not verify type
+     * Loose equality - does not verify type.
      *
      * @param int|float $number value to evaluate for equality
      *
@@ -54,7 +51,7 @@ abstract class AbstractNumber implements NumberInterface
     }
 
     /**
-     * Subtract from Number Value
+     * Subtract from Number Value.
      *
      * @param int|float $number value to subtract from Number object
      *
@@ -75,12 +72,11 @@ abstract class AbstractNumber implements NumberInterface
      */
     public function modulus(int|float $divideBy) : int
     {
-        return ($this->data % $divideBy);
+        return $this->data % $divideBy;
     }
 
     public function __toString() : string
     {
         return (string) $this->data;
     }
-
 }

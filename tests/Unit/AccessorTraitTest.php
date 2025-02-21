@@ -13,12 +13,11 @@ class MockAccessorTraitClass
     private $x;
 
     private $youCannotSeeMe;
-
 }
 
 /**
- * Class MockSecondAccessorClass
- * @package tests\Unit
+ * Class MockSecondAccessorClass.
+ *
  * @method setJohn
  * @method getJohn
  * @method setCena
@@ -35,7 +34,6 @@ class MockSecondAccessorClass
     protected $cena;
 
     private $youCantSeeMe;
-
 }
 
 /**
@@ -76,13 +74,13 @@ class AccessorTraitTest extends TestCase
     {
         $mock  = new MockAccessorTraitClass();
         $value = 'asdf';
+
         try {
             $mock->set('irish', $value);
         } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
         }
-
     }
 
     public function testGetExceptions()
@@ -95,7 +93,6 @@ class AccessorTraitTest extends TestCase
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
         }
-
     }
 
     public function testGetSetTwo()
@@ -120,13 +117,13 @@ class AccessorTraitTest extends TestCase
         $mock = new MockSecondAccessorClass();
 
         $value = 'asdf';
+
         try {
             $mock->setIrish($value);
         } catch (\Exception $e) {
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('Variable (irish) Not Found', $e->getMessage());
         }
-
     }
 
     public function testGetExceptionsTwo()
@@ -146,8 +143,6 @@ class AccessorTraitTest extends TestCase
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals('No Method (irish) exists on tests\Unit\MockSecondAccessorClass', $e->getMessage());
         }
-
-
     }
 
     public function testMethodNotFoundExceptions()
@@ -160,7 +155,6 @@ class AccessorTraitTest extends TestCase
             $this->assertInstanceOf('\Exception', $e);
             $this->assertEquals("No Method (save) exists on tests\Unit\MockSecondAccessorClass", $e->getMessage());
         }
-
     }
 
     #[CoversMethod([AccessorTrait::class, 'getMethodVerb'])]
@@ -189,6 +183,5 @@ class AccessorTraitTest extends TestCase
         } catch (\Exception $e) {
             $this->assertEquals('No Method (asIf) exists on tests\Unit\MagicAccessorExample', $e->getMessage());
         }
-
     }
 }

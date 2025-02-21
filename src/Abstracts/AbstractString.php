@@ -8,13 +8,11 @@ use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
 
 /**
- * Abstract class for String
- * @package PHPAlchemist\Abstracts
+ * Abstract class for String.
  */
 abstract class AbstractString implements StringInterface
 {
     const BEGINNING_OF_STRING_POSITION = 0;
-
 
     public function __construct(protected ?string $value = null)
     {
@@ -22,9 +20,8 @@ abstract class AbstractString implements StringInterface
 
     public function __toString() : string
     {
-        return ($this->getValue()) ?: "";
+        return ($this->getValue()) ?: '';
     }
-
 
     public function getValue() : ?string
     {
@@ -40,8 +37,9 @@ abstract class AbstractString implements StringInterface
 
     public function contains(mixed $needle, bool $caseInsensitive = false) : bool
     {
-        if ($caseInsensitive)
+        if ($caseInsensitive) {
             return str_contains(mb_strtolower($this->value), mb_strtolower($needle));
+        }
 
         return str_contains($this->value, $needle);
     }
@@ -55,7 +53,7 @@ abstract class AbstractString implements StringInterface
     /** @inheritDoc */
     public function equals(string|StringInterface $comparitive) : bool
     {
-        return (string)$comparitive === $this->value;
+        return (string) $comparitive === $this->value;
     }
 
     /**
@@ -63,7 +61,7 @@ abstract class AbstractString implements StringInterface
      */
     public function hasValue() : bool
     {
-        return !(is_null($this->value));
+        return !is_null($this->value);
     }
 
     /** @inheritDoc */
@@ -85,7 +83,7 @@ abstract class AbstractString implements StringInterface
     /** @inheritDoc */
     public function isNullOrEmpty() : bool
     {
-        return (is_null($this->value) || empty($this->value));
+        return is_null($this->value) || empty($this->value);
     }
 
     /** @inheritDoc */
@@ -103,7 +101,7 @@ abstract class AbstractString implements StringInterface
     }
 
     /**
-     * Convert string to lower case
+     * Convert string to lower case.
      *
      * @return string
      */
@@ -134,16 +132,17 @@ abstract class AbstractString implements StringInterface
     public function remove(int $offset, int $length) : void
     {
         $temp[] = substr($this->value, 0, $offset);
-        $temp[] = substr($this->value, ($offset + $length));
+        $temp[] = substr($this->value, $offset + $length);
 
         $this->value = implode('', $temp);
     }
 
     /**
-     * Convenience function for explode
+     * Convenience function for explode.
      *
      * @param $delimiter
      * @param $limit
+     *
      * @return IndexedArrayInterface
      */
     public function splitOn($delimiter = '', $limit = PHP_INT_MAX) : IndexedArrayInterface
@@ -180,7 +179,7 @@ abstract class AbstractString implements StringInterface
     }
 
     /**
-     * Convert string to UPPER CASE
+     * Convert string to UPPER CASE.
      *
      * @return string
      */
@@ -192,6 +191,7 @@ abstract class AbstractString implements StringInterface
     /**
      * @param string|array $needle
      * @param string|array $replacement
+     *
      * @return void
      */
     public function replace(string|array $needle, string|array $replacement) : void

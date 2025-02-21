@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../vendor/autoload.php');
+require_once __DIR__.'/../../vendor/autoload.php';
 
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
@@ -11,5 +11,5 @@ $arrayTest = $stringTest->explode(' ');
 /** @var Collection $arrayTest2 */
 $arrayTest2 = $stringTest->splitOn(' ');
 
-echo $stringTest . PHP_EOL;
-echo $arrayTest->first() . PHP_EOL;
+echo $stringTest.PHP_EOL;
+echo $arrayTest->first().PHP_EOL;

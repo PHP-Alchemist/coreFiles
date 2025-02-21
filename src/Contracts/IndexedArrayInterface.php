@@ -2,63 +2,63 @@
 
 namespace PHPAlchemist\Contracts;
 
-/**
- *
- * @package PHPAlchemist\Contracts
- */
 interface IndexedArrayInterface extends ArrayInterface
 {
     // Class Specific
     /**
      * @param array $data
+     *
      * @return IndexedArrayInterface
      */
-    function setData(array $data) : IndexedArrayInterface;
+    public function setData(array $data) : IndexedArrayInterface;
 
     /**
      * @return bool
      */
-    function isStrict() : bool;
+    public function isStrict() : bool;
 
     /**
      * @return int
      */
-    function count() : int;
+    public function count() : int;
 
     /**
      * @param mixed $data
+     *
      * @return IndexedArrayInterface
      */
-    function push(mixed $data) : IndexedArrayInterface;
+    public function push(mixed $data) : IndexedArrayInterface;
 
     /**
      * @param mixed $data
+     *
      * @return IndexedArrayInterface
      */
-    function add(mixed $data) : IndexedArrayInterface;
+    public function add(mixed $data) : IndexedArrayInterface;
 
     /**
      * @return mixed
      */
-    function pop() : mixed;
+    public function pop() : mixed;
 
     /**
      * @param mixed $key
-     * @return mixed
-     */
-    function get(mixed $key) : mixed;
-
-    /**
-     * Returns the first element of the collection
      *
      * @return mixed
      */
-    function first() : mixed;
+    public function get(mixed $key) : mixed;
 
     /**
-     * Tells if the object is empty
+     * Returns the first element of the collection.
+     *
+     * @return mixed
+     */
+    public function first() : mixed;
+
+    /**
+     * Tells if the object is empty.
      *
      * @return bool
      */
-    function isEmpty() : bool;
+    public function isEmpty() : bool;
 }

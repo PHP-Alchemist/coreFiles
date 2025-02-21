@@ -16,18 +16,18 @@ use PHPUnit\Framework\TestCase;
 class DictionaryTest extends TestCase
 {
     // Core-Files Types
-    const TWINE_TYPE = '\PHPAlchemist\Types\Twine';
+    const TWINE_TYPE      = '\PHPAlchemist\Types\Twine';
     const DICTIONARY_TYPE = 'PHPAlchemist\Types\Dictionary';
 
     // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE = '\Iterator';
+    const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
 
     // Exceptions
-    const EXCEPTION_TYPE = '\Exception';
+    const EXCEPTION_TYPE        = '\Exception';
     const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
-    const READONLY_EXCEPTION = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
+    const READONLY_EXCEPTION    = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
     const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
 
     public function testCount()
@@ -45,14 +45,13 @@ class DictionaryTest extends TestCase
     public function testValidationError()
     {
         $dictionary = new Dictionary();
+
         try {
             $dictionary->add(0.24, 'abc');
         } catch (\Exception $e) {
             $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
-            $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
+            $this->assertEquals('Invalid Key type (double) for Dictionary', $e->getMessage());
         }
-
-
     }
 
     public function testSerializable()
@@ -67,7 +66,6 @@ class DictionaryTest extends TestCase
         $serializedObject = serialize($arrayTest);
 
         $this->assertEquals('O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
-
     }
 
     public function testUnserialize()
@@ -148,7 +146,6 @@ class DictionaryTest extends TestCase
         $this->assertEquals('cde', $dictionary->current());
         $dictionary->prev();
         $this->assertEquals('bcd', $dictionary->current());
-
     }
 
     public function testCurrent()
@@ -206,7 +203,6 @@ class DictionaryTest extends TestCase
         $this->assertEquals(3, $dictionary->key());
         $dictionary->rewind();
         $this->assertEquals(0, $dictionary->key());
-
     }
 
     public function testOffsets()
@@ -232,7 +228,6 @@ class DictionaryTest extends TestCase
         try {
             $dictionary['doc'] = 'McStuffAndThangs';
         } catch (\Exception $e) {
-
             $this->assertInstanceOf(self::INVALID_KEY_EXCEPTION, $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }

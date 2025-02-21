@@ -2,11 +2,10 @@
 
 namespace PHPAlchemist\Traits\Array;
 
-use \Closure;
+use Closure;
 
 trait OnClearTrait
 {
-
     protected Closure $onClear;
 
     protected Closure $onClearComplete;
@@ -36,5 +35,4 @@ trait OnClearTrait
     {
         $this->onClearComplete = $onClearCompleteCallback;
     }
-
 }

@@ -6,23 +6,22 @@ use ArrayAccess;
 use Iterator;
 
 /**
- * Parental Array Interface
- * @package PHPAlchemist\Contracts
+ * Parental Array Interface.
+ *
  * @template-extends  ArrayAccess<int, mixed>
  * @template-extends  Iterator<mixed, mixed>
  */
 interface ArrayInterface extends ArrayAccess, Iterator
 {
-
     // region Additions
-    function extract(mixed $key) : mixed;
+    public function extract(mixed $key) : mixed;
 
     /**
-     * Move forward to previous element
+     * Move forward to previous element.
      *
      * @return void Any returned value is ignored.
      */
-    function prev() : void;
+    public function prev() : void;
 
     // endregion
 
@@ -30,22 +29,22 @@ interface ArrayInterface extends ArrayAccess, Iterator
     /**
      * @inheritDoc
      */
-    function valid() : bool;
+    public function valid() : bool;
 
     /**
      * @inheritDoc
      */
-    function current() : mixed;
+    public function current() : mixed;
 
     /**
      * @inheritDoc
      */
-    function key() : mixed;
+    public function key() : mixed;
 
     /**
      * @inheritDoc
      */
-    function next() : void;
+    public function next() : void;
 
     /*
      * Rewind the Iterator to the first element
@@ -56,7 +55,7 @@ interface ArrayInterface extends ArrayAccess, Iterator
     /**
      * @return void
      */
-    function rewind() : void;
+    public function rewind() : void;
 
     // endregion Iterator
 
@@ -64,21 +63,21 @@ interface ArrayInterface extends ArrayAccess, Iterator
     /**
      * @inheritDoc
      */
-    function offsetUnset($offset) : void;
+    public function offsetUnset($offset) : void;
 
     /**
      * @inheritDoc
      */
-    function offsetSet($offset, $value) : void;
+    public function offsetSet($offset, $value) : void;
 
     /**
      * @inheritDoc
      */
-    function offsetGet($offset) : mixed;
+    public function offsetGet($offset) : mixed;
 
     /**
      * @inheritDoc
      */
-    function offsetExists($offset) : bool;
+    public function offsetExists($offset) : bool;
     // endregion ArrayAccess
 }

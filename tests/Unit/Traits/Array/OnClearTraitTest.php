@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractAssociativeArray::class)]
 class OnClearTraitTest extends TestCase
 {
-
     public function testCollectionOnClear()
     {
         $onClearCallback = function (array &$data) {
@@ -32,13 +31,12 @@ class OnClearTraitTest extends TestCase
         $collection->setOnClear($onClearCallback);
         $this->assertEquals($defaultData, $collection->getData());
         $collection->clear();
-
     }
 
     public function testCollectionOnClearComplete()
     {
         $onClearCompleteCallback = function (array &$data) {
-           $this->assertEmpty($data);
+            $this->assertEmpty($data);
         };
 
         $defaultData = [
@@ -50,7 +48,6 @@ class OnClearTraitTest extends TestCase
         $collection->setOnClearComplete($onClearCompleteCallback);
         $this->assertEquals($defaultData, $collection->getData());
         $collection->clear();
-
     }
 
     public function testHashTableOnClear()
@@ -71,7 +68,6 @@ class OnClearTraitTest extends TestCase
         $hashTable->setOnClear($onClearCallback);
         $this->assertEquals($defaultData, $hashTable->getData());
         $hashTable->clear();
-
     }
 
     public function testHashTableOnClearComplete()
@@ -89,6 +85,5 @@ class OnClearTraitTest extends TestCase
         $hashTable->setOnClearComplete($onClearCompleteCallback);
         $this->assertEquals($defaultData, $hashTable->getData());
         $hashTable->clear();
-
     }
 }

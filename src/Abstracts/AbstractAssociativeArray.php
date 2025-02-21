@@ -18,9 +18,7 @@ use PHPAlchemist\Traits\ArrayTrait;
 use PHPAlchemist\Types\Twine;
 
 /**
- * Abstract class for Associative Array (Objectified Array Class)
- *
- * @package PHPAlchemist\Abstracts
+ * Abstract class for Associative Array (Objectified Array Class).
  */
 abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {
@@ -33,29 +31,29 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     public static $serializeVersion = 1;
 
     /**
-     * @var bool $readOnly
+     * @var bool
      */
     protected $readOnly;
 
     /**
-     * @var int $position position sentinel variable
+     * @var int position sentinel variable
      */
     protected $position;
 
     /**
-     * @var array<string, mixed> $data
+     * @var array<string, mixed>
      */
     protected $data;
 
     /**
-     * @var int $fixedSize locking a HashTable to a fixed size
+     * @var int locking a HashTable to a fixed size
      */
     protected $fixedSize;
 
     public function __construct(array $data = [], $readOnly = false, $fixedSize = null)
     {
         if (!$this->validateKeys($data)) {
-            throw new InvalidKeyTypeException("Invalid Key type for HashTable");
+            throw new InvalidKeyTypeException('Invalid Key type for HashTable');
         }
 
         if (is_int($fixedSize)) {
@@ -97,9 +95,9 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Add
+     * Add.
      *
-     * @param mixed $key key to add to array
+     * @param mixed $key   key to add to array
      * @param mixed $value value to add to array
      *
      * @return $this
@@ -122,7 +120,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Get a count of the elements of the array
+     * Get a count of the elements of the array.
      *
      * @return int
      */
@@ -149,43 +147,49 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Move back to previous element
+     * Move back to previous element.
      *
      * @return void Any returned value is ignored.
      */
     public function prev() : void
     {
-        --$this->position;
+        $this->position--;
     }
 
     // region Contractual Obligations
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      *
      * @link   https://php.net/manual/en/arrayaccess.offsetexists.php
+     *
      * @param mixed $offset <p>
-     *                       An offset to check for.
-     *                       </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
+     *                      An offset to check for.
+     *                      </p>
+     *
+     * @return bool true on success or false on failure.
+     *              </p>
+     *              <p>
+     *              The return value will be casted to boolean if non-boolean was returned.
+     *
      * @since  5.0.0
      */
     public function offsetExists(mixed $offset) : bool
     {
-        return (isset($this->data[$offset]));
+        return isset($this->data[$offset]);
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      *
      * @link   https://php.net/manual/en/arrayaccess.offsetget.php
+     *
      * @param mixed $offset <p>
-     *                       The offset to retrieve.
-     *                       </p>
+     *                      The offset to retrieve.
+     *                      </p>
+     *
      * @return mixed Can return all value types.
+     *
      * @since  5.0.0
      */
     public function offsetGet(mixed $offset) : mixed
@@ -198,34 +202,36 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
-     * @return void
-     * @since  5.0.0
      * @throws HashTableFullException
      * @throws InvalidKeyTypeException
      * @throws ReadOnlyDataException
+     *
+     * @return void
+     *
+     * @since  5.0.0
      */
     public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isReadOnly()) {
-            throw new ReadOnlyDataException("Invalid call to offsetSet on read-only " . __CLASS__ . ".");
+            throw new ReadOnlyDataException('Invalid call to offsetSet on read-only '.__CLASS__.'.');
         }
 
         if (!$this->offsetExists($offset)
             && $this->isFixedSize()
             && $this->count() == $this->fixedSize
         ) {
-            throw new HashTableFullException("Invalid call to offsetSet on " . __CLASS__ . "where Size is Fixed and HashTable full.");
+            throw new HashTableFullException('Invalid call to offsetSet on '.__CLASS__.'where Size is Fixed and HashTable full.');
         }
 
         if (!$this->validateKey($offset)) {
-            throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for HashTable", gettype($offset)));
+            throw new InvalidKeyTypeException(sprintf('Invalid Key type (%s) for HashTable', gettype($offset)));
         }
 
         if (isset($this->onInsert) && is_callable($this->onInsert)) {
@@ -245,12 +251,14 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      *
      * @link  https://php.net/manual/en/arrayaccess.offsetunset.php
+     *
      * @param mixed $offset The offset to unset.
      *
      * @return void
+     *
      * @since  5.0.0
      */
     public function offsetUnset(mixed $offset) : void
@@ -269,11 +277,12 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Return the current element
+     * Return the current element.
      *
      * @link https://php.net/manual/en/iterator.current.php
      *
      * @return mixed Can return any type.
+     *
      * @since  5.0.0
      */
     public function current() : mixed
@@ -282,23 +291,26 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Move forward to next element
+     * Move forward to next element.
      *
      * @link https://php.net/manual/en/iterator.next.php
      *
      * @return void Any returned value is ignored.
+     *
      * @since  5.0.0
      */
     public function next() : void
     {
-        ++$this->position;
+        $this->position++;
     }
 
     /**
-     * Return the key of the current element
+     * Return the key of the current element.
      *
      * @link   https://php.net/manual/en/iterator.key.php
+     *
      * @return mixed scalar on success, or null on failure.
+     *
      * @since  5.0.0
      */
     public function key() : mixed
@@ -307,11 +319,13 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Checks if current position is valid
+     * Checks if current position is valid.
      *
      * @link   https://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *
+     * @return bool The return value will be casted to boolean and then evaluated.
+     *              Returns true on success or false on failure.
+     *
      * @since  5.0.0
      */
     public function valid() : bool
@@ -320,10 +334,12 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Rewind the Iterator to the first element
+     * Rewind the Iterator to the first element.
      *
      * @link   https://php.net/manual/en/iterator.rewind.php
+     *
      * @return void Any returned value is ignored.
+     *
      * @since  5.0.0
      */
     public function rewind() : void
@@ -362,7 +378,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Return an array of keys
+     * Return an array of keys.
      *
      * @return array
      */
@@ -372,7 +388,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Return an array of values
+     * Return an array of values.
      *
      * @return array
      */
@@ -392,7 +408,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Locks HashTable to current size
+     * Locks HashTable to current size.
      *
      * @return $this
      */
@@ -404,13 +420,13 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     }
 
     /**
-     * Determine if HashTable is of a fixed size
+     * Determine if HashTable is of a fixed size.
      *
      * @return bool
      */
     public function isFixedSize() : bool
     {
-        return !(is_null($this->fixedSize));
+        return !is_null($this->fixedSize);
     }
 
     /**
@@ -421,7 +437,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
     protected function validateKeys(array $dataSet) : bool
     {
         foreach (array_keys($dataSet) as $key) {
-            if (!($this->validateKey($key))) {
+            if (!$this->validateKey($key)) {
                 return false;
             }
         }
@@ -444,6 +460,7 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
      * array.
      *
      * @param mixed $key
+     *
      * @return mixed
      */
     public function extract(mixed $key) : mixed
@@ -468,11 +485,10 @@ abstract class AbstractAssociativeArray implements AssociativeArrayInterface
             $onClearComplete = $this->onClearComplete;
             $onClearComplete($this->data);
         }
-
     }
 
     /**
-     * Find the key for $value
+     * Find the key for $value.
      *
      * @param mixed $value the value to search the array for
      *
