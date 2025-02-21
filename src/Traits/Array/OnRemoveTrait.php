@@ -6,7 +6,6 @@ use Closure;
 
 trait OnRemoveTrait
 {
-
     protected Closure $onRemove;
 
     protected Closure $onRemoveComplete;
@@ -36,5 +35,4 @@ trait OnRemoveTrait
     {
         $this->onRemoveComplete = $onRemoveCompleteCallback;
     }
-
 }

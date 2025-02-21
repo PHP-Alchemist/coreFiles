@@ -14,7 +14,7 @@ class NumberTest extends TestCase
     public function testNumber()
     {
         $value = new Number(24);
-        $this->assertEquals("24", (string)$value->get());
+        $this->assertEquals('24', (string) $value->get());
     }
 
     public function testEquals()
@@ -28,7 +28,7 @@ class NumberTest extends TestCase
     public function testToString()
     {
         $number = new Number(76);
-        $this->assertTrue(is_string((string)$number));
+        $this->assertTrue(is_string((string) $number));
     }
 
     public function testAdd()
@@ -53,5 +53,4 @@ class NumberTest extends TestCase
         $remainder = $number->modulus(5);
         $this->assertEquals(4, $remainder);
     }
-
 }

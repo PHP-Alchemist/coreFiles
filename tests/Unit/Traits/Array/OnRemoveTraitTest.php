@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Number::class)]
 class OnRemoveTraitTest extends TestCase
 {
-
     public function testCollectionOnRemove()
     {
         $test = function (int $key, mixed $value) {
@@ -25,10 +24,10 @@ class OnRemoveTraitTest extends TestCase
 
         $collection = new Collection();
         $collection->setOnRemove($test);
-        $collection->add("Stuff");
-        $collection->add("Thangs");
-        $collection->add("Coral");
-        $collection->add("Corel");
+        $collection->add('Stuff');
+        $collection->add('Thangs');
+        $collection->add('Coral');
+        $collection->add('Corel');
         $collection->offsetSet(13, 'XIII');
         $this->assertEquals([
             0  => 'Stuff',
@@ -46,7 +45,6 @@ class OnRemoveTraitTest extends TestCase
             2  => 'Coral',
             13 => 'XIII',
         ], $collection->getData());
-
     }
 
     public function testCollectionOnRemoveCompleteForOffsetUnset()
@@ -57,7 +55,7 @@ class OnRemoveTraitTest extends TestCase
 
         $collection = new Collection();
         $collection->setOnRemoveComplete($rebalance);
-        $collection->add("Stuff");
+        $collection->add('Stuff');
         $collection->offsetSet(9, 'IX');
         $collection->offsetSet(10, 'x');
         $collection->offsetSet(11, 'XI');
@@ -74,7 +72,6 @@ class OnRemoveTraitTest extends TestCase
             'x',
             'XI',
         ], $collection->getData());
-
     }
 
     public function testCollectionRemoveComplete()
@@ -110,10 +107,10 @@ class OnRemoveTraitTest extends TestCase
 
         $hashTable = new HashTable();
         $hashTable->setOnRemove($test);
-        $hashTable->add("one", "Stuff");
-        $hashTable->add("two", "Thangs");
-        $hashTable->add("three", "Coral");
-        $hashTable->add("four", "Corel");
+        $hashTable->add('one', 'Stuff');
+        $hashTable->add('two', 'Thangs');
+        $hashTable->add('three', 'Coral');
+        $hashTable->add('four', 'Corel');
         $hashTable->offsetSet('XIII', 'thirteen');
         $this->assertEquals([
             'one'   => 'Stuff',
@@ -131,7 +128,6 @@ class OnRemoveTraitTest extends TestCase
             'three' => 'Coral',
             'XIII'  => 'thirteen',
         ], $hashTable->getData());
-
     }
 
     public function testHashTableRemoveComplete()
@@ -157,5 +153,4 @@ class OnRemoveTraitTest extends TestCase
             'four'  => 'XI',
         ], $hashTable->getData());
     }
-
 }

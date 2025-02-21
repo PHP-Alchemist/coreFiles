@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Number::class)]
 class OnInsertTraitTest extends TestCase
 {
-
     public function testCollectionInsertCallbackForOffsetSet()
     {
         $x = function (mixed $key, mixed $value) {
@@ -24,8 +23,8 @@ class OnInsertTraitTest extends TestCase
             }
 
             return [
-                    $key,
-                    $value,
+                $key,
+                $value,
             ];
         };
 
@@ -36,7 +35,6 @@ class OnInsertTraitTest extends TestCase
         $collection->offsetSet(11, 'XI');
 
         $this->assertEquals('X', $collection->get(10));
-
     }
 
     public function testInsertCallbackForAdd()
@@ -45,8 +43,8 @@ class OnInsertTraitTest extends TestCase
             $value = strtoupper($value);
 
             return [
-                    $key,
-                    $value,
+                $key,
+                $value,
             ];
         };
 
@@ -62,12 +60,10 @@ class OnInsertTraitTest extends TestCase
         $this->assertEquals('X', $collection->current());
         $collection->next();
         $this->assertEquals('XI', $collection->current());
-
     }
 
     public function testCollectionOnInsertComplete()
     {
-
         $callBack = function (array &$data) {
             array_walk($data, function (mixed &$value, int $key) {
                 $value = strtoupper($value);
@@ -103,12 +99,10 @@ class OnInsertTraitTest extends TestCase
         $hashTable->offsetSet('eleven', 'XI');
 
         $this->assertEquals('X', $hashTable->get('ten'));
-
     }
 
     public function testHashTableOnInsertComplete()
     {
-
         $callBack = function (array &$data) {
             array_walk($data, function (mixed &$value, string $key) {
                 $value = strtoupper($value);
@@ -124,5 +118,4 @@ class OnInsertTraitTest extends TestCase
 
         $this->assertEquals('X', $hashTable->get('ten'));
     }
-
 }

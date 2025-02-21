@@ -10,7 +10,6 @@ use PHPAlchemist\Exceptions\InvalidKeyTypeException;
 use PHPAlchemist\Exceptions\ReadOnlyDataException;
 use PHPAlchemist\Exceptions\UnmatchedClassException;
 use PHPAlchemist\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\HashTable;
 use PHPAlchemist\Types\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -24,11 +23,10 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(UnmatchedVersionException::class)]
 class HashTableTest extends TestCase
 {
-
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE = '\Iterator';
+    const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
-    const EXCEPTION_TYPE = '\Exception';
+    const EXCEPTION_TYPE   = '\Exception';
 
     public function testCount()
     {
@@ -51,7 +49,7 @@ class HashTableTest extends TestCase
             'd' => 'def',
         ]);
 
-        $this->assertInstanceOf(Twine::class, $hashtable->implode(" "));
+        $this->assertInstanceOf(Twine::class, $hashtable->implode(' '));
     }
 
     public function testNext()
@@ -83,7 +81,6 @@ class HashTableTest extends TestCase
         $this->assertEquals('cde', $hashtable->current());
         $hashtable->prev();
         $this->assertEquals('bcd', $hashtable->current());
-
     }
 
     public function testCurrent()
@@ -141,7 +138,6 @@ class HashTableTest extends TestCase
         $this->assertEquals('d', $hashtable->key());
         $hashtable->rewind();
         $this->assertEquals('a', $hashtable->key());
-
     }
 
     public function testOffsets()
@@ -165,7 +161,6 @@ class HashTableTest extends TestCase
         try {
             $hashtable[529] = 'Doc McStuffAndThangs';
         } catch (Exception $e) {
-
             $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
             $this->assertEquals('Invalid Key type (integer) for HashTable', $e->getMessage());
         }
@@ -182,7 +177,6 @@ class HashTableTest extends TestCase
     public function testKeyValidation()
     {
         try {
-
             $hashtable = new HashTable([
                 0 => 'abc',
                 1 => 'bcd',
@@ -192,7 +186,6 @@ class HashTableTest extends TestCase
         } catch (\Exception $e) {
             $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
         }
-
     }
 
     public function testAddGet()
@@ -207,7 +200,6 @@ class HashTableTest extends TestCase
         $key       = 'five';
         $value     = 'this Should Work';
         $testValue = $hashtable->add($key, $value);
-
 
         $this->assertEquals($value, $hashtable->get($key));
         $this->assertInstanceOf(HashTable::class, $testValue);
@@ -295,7 +287,7 @@ class HashTableTest extends TestCase
         $this->assertEquals(0, $hashTable[4]);
 
         try {
-            $hashTable->add('seven', "YOU KEELING ME");
+            $hashTable->add('seven', 'YOU KEELING ME');
         } catch (Exception $e) {
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
@@ -307,7 +299,7 @@ class HashTableTest extends TestCase
         $this->assertFalse($hashTable[4]);
 
         try {
-            $hashTable->add('seven', "YOU KEELING ME");
+            $hashTable->add('seven', 'YOU KEELING ME');
         } catch (Exception $e) {
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
@@ -325,11 +317,8 @@ class HashTableTest extends TestCase
         ];
 
         try {
-
             $hashTable = new HashTable($data, false, 2);
-
         } catch (\Exception $e) {
-
             $this->assertInstanceOf(self::EXCEPTION_TYPE, $e);
             $this->assertEquals('HashTable data size is larger than defined size', $e->getMessage());
         }
@@ -352,11 +341,10 @@ class HashTableTest extends TestCase
         $this->assertEquals(0, $hashTable[4]);
 
         try {
-            $hashTable->add('seven', "YOU KEELING ME");
+            $hashTable->add('seven', 'YOU KEELING ME');
         } catch (Exception $e) {
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
-
 
         $this->assertFalse($hashTable['seven']);
     }
@@ -381,13 +369,11 @@ class HashTableTest extends TestCase
             'BRAVO' => 'b',
         ]);
 
-
         $ht->add('CHARLIE', 'c');
         $ht->add('DELTA', 'd');
         $ht->delete('DELTA');
 
         $this->assertFalse($ht->get('DELETA'));
-
     }
 
     public function testAdd()
@@ -396,7 +382,6 @@ class HashTableTest extends TestCase
             'ALPHA' => 'a',
             'BRAVO' => 'b',
         ]);
-
 
         $ht->add('CHARLIE', 'c');
         $ht->add('DELTA', 'd');
@@ -436,8 +421,6 @@ class HashTableTest extends TestCase
         $this->assertEquals($testValue, $extractedValue);
         $this->assertArrayNotHasKey($testKey, $collection);
         $this->assertNotEquals($testArray, $collection->getData());
-
-
     }
 
     public function testDeserializable()
@@ -448,6 +431,7 @@ class HashTableTest extends TestCase
 
         $data = unserialize($serializedObject);
         $this->assertInstanceOf('PHPAlchemist\Types\HashTable', $data);
+
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {

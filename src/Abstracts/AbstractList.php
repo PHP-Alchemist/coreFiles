@@ -3,9 +3,7 @@
 namespace PHPAlchemist\Abstracts;
 
 /**
- * Abstract class for List (Roll) Objectified array class
- *
- * @package PHPAlchemist\Abstracts
+ * Abstract class for List (Roll) Objectified array class.
  */
 abstract class AbstractList extends AbstractIndexedArray
 {
@@ -42,7 +40,7 @@ abstract class AbstractList extends AbstractIndexedArray
     }
 
     /**
-     * Determine if array is a List
+     * Determine if array is a List.
      *
      * @return bool
      */
@@ -52,7 +50,7 @@ abstract class AbstractList extends AbstractIndexedArray
     }
 
     /**
-     * Uses generator to step through List data
+     * Uses generator to step through List data.
      *
      * @return mixed
      */
@@ -62,5 +60,4 @@ abstract class AbstractList extends AbstractIndexedArray
             yield $data;
         }
     }
-
 }

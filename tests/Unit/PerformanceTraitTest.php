@@ -19,7 +19,6 @@ class MockPerfTraitClass
 #[CoversClass(PerformanceTrait::class)]
 class PerformanceTraitTest extends TestCase
 {
-
     public function testGetPerformance()
     {
         $mock = new MockPerfTraitClass();
@@ -40,8 +39,5 @@ class PerformanceTraitTest extends TestCase
         $perfData = $mock->getPerformance();
 
         $this->assertStringContainsString('mega', $perfData);
-
     }
-
-
 }

@@ -19,9 +19,7 @@ use PHPAlchemist\Types\Roll;
 use PHPAlchemist\Types\Twine;
 
 /**
- * Abstract class Collection (Objectified Array Class)
- *
- * @package PHPAlchemist\Abstracts
+ * Abstract class Collection (Objectified Array Class).
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
@@ -34,23 +32,23 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     public static $serializeVersion = 1;
 
     /**
-     * Strict typing - force keys to be integer/Indexed
+     * Strict typing - force keys to be integer/Indexed.
      *
-     * @var boolean $strict Strict typing for int/index array
+     * @var bool Strict typing for int/index array
      */
     protected bool $strict;
 
     /**
-     * Positioning variable
+     * Positioning variable.
      *
-     * @var int $position position sentinel variable
+     * @var int position sentinel variable
      */
     protected int $position;
 
     /**
-     * Where all the data for the IndexedArray lives
+     * Where all the data for the IndexedArray lives.
      *
-     * @var array<int, mixed> $data Object data
+     * @var array<int, mixed> Object data
      */
     protected array $data;
 
@@ -58,7 +56,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         $this->strict = $strict;
         if (!$this->validateKeys($data)) {
-            throw new InvalidKeyTypeException("Invalid Key type for Array");
+            throw new InvalidKeyTypeException('Invalid Key type for Array');
         }
 
         $this->data     = $data;
@@ -78,7 +76,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function prev() : void
     {
-        --$this->position;
+        $this->position--;
     }
 
     /**
@@ -94,7 +92,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     // region Contractual Obligations
 
     /**
-     * Build Array from data for serialization
+     * Build Array from data for serialization.
      *
      * @return array
      */
@@ -109,12 +107,14 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Take Deserialized Array and populate object with that data
+     * Take Deserialized Array and populate object with that data.
      *
      * @param array $data
-     * @return void
+     *
      * @throws UnmatchedClassException
      * @throws UnmatchedVersionException
+     *
+     * @return void
      */
     public function __unserialize(array $data) : void
     {
@@ -131,25 +131,28 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      *
      * @link   https://php.net/manual/en/arrayaccess.offsetexists.php
+     *
      * @param mixed $offset <p>
-     *                       An offset to check for.
-     *                       </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
+     *                      An offset to check for.
+     *                      </p>
+     *
+     * @return bool true on success or false on failure.
+     *              </p>
+     *              <p>
+     *              The return value will be casted to boolean if non-boolean was returned.
+     *
      * @since  5.0.0
      */
     public function offsetExists(mixed $offset) : bool
     {
-        return (isset($this->data[$offset]));
+        return isset($this->data[$offset]);
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      *
      * @param mixed $offset The offset to retrieve.
      *
@@ -161,18 +164,19 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
      * @return void
+     *
      * @since  5.0.0
      */
     public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isStrict() && !$this->validateKey($offset)) {
-            throw new InvalidKeyTypeException(sprintf("Invalid Key type (%s) for Array", gettype($offset)));
+            throw new InvalidKeyTypeException(sprintf('Invalid Key type (%s) for Array', gettype($offset)));
         }
 
         if (isset($this->onInsert) && is_callable($this->onInsert)) {
@@ -192,7 +196,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      *
      * @param mixed $offset The offset to unset.
      *
@@ -200,7 +204,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function offsetUnset(mixed $offset) : void
     {
-
         if (isset($this->onRemove) && is_callable($this->onRemove)) {
             $onRemove = $this->onRemove;
             $onRemove($offset, $this->data[$offset]);
@@ -212,14 +215,15 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $onRemoveComplete = $this->onRemoveComplete;
             $onRemoveComplete($this->data);
         }
-
     }
 
     /**
-     * Return the current element
+     * Return the current element.
      *
      * @link   https://php.net/manual/en/iterator.current.php
+     *
      * @return mixed Can return any type.
+     *
      * @since  5.0.0
      */
     public function current() : mixed
@@ -228,22 +232,26 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Move forward to next element
+     * Move forward to next element.
      *
      * @link   https://php.net/manual/en/iterator.next.php
+     *
      * @return void Any returned value is ignored.
+     *
      * @since  5.0.0
      */
     public function next() : void
     {
-        ++$this->position;
+        $this->position++;
     }
 
     /**
-     * Return the key of the current element
+     * Return the key of the current element.
      *
      * @link   https://php.net/manual/en/iterator.key.php
+     *
      * @return mixed scalar on success, or null on failure.
+     *
      * @since  5.0.0
      */
     public function key() : mixed
@@ -252,11 +260,13 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Checks if current position is valid
+     * Checks if current position is valid.
      *
      * @link   https://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *
+     * @return bool The return value will be casted to boolean and then evaluated.
+     *              Returns true on success or false on failure.
+     *
      * @since  5.0.0
      */
     public function valid() : bool
@@ -313,7 +323,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         if ($this->isStrict()) {
             foreach (array_keys($dataSet) as $key) {
-                if (!($this->validateKey($key))) {
+                if (!$this->validateKey($key)) {
                     return false;
                 }
             }
@@ -334,7 +344,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
 
     public function push(mixed $data) : IndexedArrayInterface
     {
-        $this->offsetSet(($this->getNextKey())->get(), $data);
+        $this->offsetSet($this->getNextKey()->get(), $data);
 
         return $this;
     }
@@ -344,7 +354,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      */
     public function add(mixed $data) : IndexedArrayInterface
     {
-        $this->offsetSet(($this->getNextKey())->get(), $data);
+        $this->offsetSet($this->getNextKey()->get(), $data);
 
         return $this;
     }
@@ -355,14 +365,17 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      * strict option that allows for type matching.
      *
      * @param Collection $secondCollection
-     * @return Collection
+     *
      * @throws InvalidKeyTypeException
+     *
+     * @return Collection
      */
     public function intersection(Collection $secondCollection) : Collection
     {
-        return new Collection(array_values(
-                array_intersect($this->data, $secondCollection->getData())
-            )
+        return new Collection(
+            array_values(
+            array_intersect($this->data, $secondCollection->getData())
+        )
         );
     }
 
@@ -401,21 +414,23 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Convert AbstractCollection to a AbstractList (Roll)
+     * Convert AbstractCollection to a AbstractList (Roll).
      *
      * @param Collection $indexes
-     * @param  $rollClass Default: \PHPAlchemist\Type\Roll
-     * @return AbstractList
+     * @param            $rollClass Default: \PHPAlchemist\Type\Roll
+     *
      * @throws \Exception
+     *
+     * @return AbstractList
      */
     public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class) : AbstractList
     {
         if ($indexes->count() > 0 && $indexes->count() !== $this->count()) {
-            throw new \Exception("Indexes count mismatch");
+            throw new \Exception('Indexes count mismatch');
         }
 
         if ($indexes->count() === 0) {
-            $indexes->setData(range(0, ($this->count() - 1)));
+            $indexes->setData(range(0, $this->count() - 1));
         }
 
         return new $rollClass(array_combine($indexes->getData(), $this->getData()));
@@ -445,7 +460,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Find the key for $value
+     * Find the key for $value.
      *
      * @param mixed $value the value to search the array for
      *
@@ -470,7 +485,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $onClearComplete = $this->onClearComplete;
             $onClearComplete($this->data);
         }
-
     }
 
     public function isEmpty() : bool

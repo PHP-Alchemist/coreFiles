@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '/../../vendor/autoload.php');
+
+require_once __DIR__.'/../../vendor/autoload.php';
 
 use PHPAlchemist\Traits\MagicGetSetTrait;
 
@@ -22,21 +23,20 @@ class MagicGSExample
     private array $data;
 }
 
-
 $example = new MagicGSExample();
 $example->setActive(false);
 $example->setName('Test');
-$example->setData(['abc','def','ghi']);
+$example->setData(['abc', 'def', 'ghi']);
 
-echo $example->getName() . PHP_EOL;
+echo $example->getName().PHP_EOL;
 var_dump($example->isActive());
 var_dump($example->getData());
 
 $example->setActive(true);
 var_dump($example->isActive());
-try{
 
+try {
     $example->asIf();
 } catch (\Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+    echo $e->getMessage().PHP_EOL;
 }

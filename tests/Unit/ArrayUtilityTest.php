@@ -6,11 +6,9 @@ use PHPAlchemist\Utilities\ArrayUtility;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-
 #[CoversClass(ArrayUtility::class)]
 class ArrayUtilityTest extends TestCase
 {
-
     public function testArraySumKey()
     {
         $sumArray  = ['a' => '1', 'b' => '2', 'z' => '26'];

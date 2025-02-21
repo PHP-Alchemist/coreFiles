@@ -2,12 +2,8 @@
 
 namespace PHPAlchemist\Contracts;
 
-/**
- * @package PHPAlchemist\Contracts
- */
 interface NumberInterface
 {
-
     public function get() : int|float;
 
     public function add(int|float $number) : void;
@@ -17,5 +13,4 @@ interface NumberInterface
     public function subtract(int|float $number) : void;
 
     public function modulus(int|float $divideBy) : int;
-
 }

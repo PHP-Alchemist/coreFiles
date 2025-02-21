@@ -23,9 +23,9 @@ use PHPUnit\Framework\TestCase;
 class CollectionTest extends TestCase
 {
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE = '\Iterator';
+    const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
-    const EXCEPTION_TYPE = '\Exception';
+    const EXCEPTION_TYPE   = '\Exception';
 
     public function testCount()
     {
@@ -51,7 +51,6 @@ class CollectionTest extends TestCase
         $serializedObject = serialize($arrayTest);
 
         $this->assertEquals('O:29:"PHPAlchemist\Types\Collection":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Collection";s:4:"data";a:4:{i:0;s:3:"abc";i:1;s:3:"bcd";i:2;s:3:"cde";i:3;s:3:"def";}}', $serializedObject);
-
     }
 
     public function testUnserialize()
@@ -63,6 +62,7 @@ class CollectionTest extends TestCase
         $data = unserialize($serializedObject);
         $this->assertInstanceOf('PHPAlchemist\Types\Collection', $data);
         $this->assertEquals('abc', $data[0]);
+
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {
@@ -117,7 +117,6 @@ class CollectionTest extends TestCase
         $this->assertEquals('cde', $arrayTest->current());
         $arrayTest->prev();
         $this->assertEquals('bcd', $arrayTest->current());
-
     }
 
     public function testCurrent()
@@ -175,7 +174,6 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, $arrayTest->key());
         $arrayTest->rewind();
         $this->assertEquals(0, $arrayTest->key());
-
     }
 
     public function testOffsets()
@@ -198,11 +196,9 @@ class CollectionTest extends TestCase
         $arrayTest->offsetUnset(25);
         $this->assertFalse($arrayTest->offsetExists(25));
 
-
         try {
             $arrayTest['doc'] = 'McStuffAndThangs';
         } catch (\Exception $e) {
-
             $this->assertInstanceOf(InvalidKeyTypeException::class, $e);
             $this->assertEquals('Invalid Key type (string) for Array', $e->getMessage());
         }
@@ -227,6 +223,7 @@ class CollectionTest extends TestCase
 
         $this->assertEquals('4', $arrayTest->count());
         $this->assertTrue($arrayTest->isStrict());
+
         try {
             $x = new Collection([
                 'a' => 'abc',
@@ -234,7 +231,6 @@ class CollectionTest extends TestCase
                 'c' => 'cde',
             ]);
         } catch (\Exception $e) {
-
             $this->assertInstanceOf('PHPAlchemist\Exceptions\InvalidKeyTypeException', $e);
         }
     }
@@ -305,7 +301,6 @@ class CollectionTest extends TestCase
 
         $sum3 = $emptyCollection->sumByKey('a');
         $this->assertEquals('0', $sum3);
-
     }
 
     public function testArrayExtract()
@@ -343,7 +338,6 @@ class CollectionTest extends TestCase
         $returnedArray = $collection->pop();
         $this->assertInstanceOf(Collection::class, $returnedArray);
         $this->assertEquals($testArray, $returnedArray->getData());
-
     }
 
     public function testFirst()
@@ -360,13 +354,12 @@ class CollectionTest extends TestCase
         $collection->push('e');
 
         $value = $collection->implode();
-        $this->assertEquals('a b c d e', (string)$value);
+        $this->assertEquals('a b c d e', (string) $value);
         $this->assertInstanceOf(Twine::class, $value);
     }
 
     public function testGet()
     {
-
         $collection = new Collection(['a', 'b', 'c']);
         $collection->push('d');
         $collection->push('e');
@@ -375,7 +368,6 @@ class CollectionTest extends TestCase
 
         $this->assertEquals('ALPHA', $collection->get(42));
         $this->assertEquals('BRAVO', $collection->get(64));
-
     }
 
     public function testMerge()
@@ -400,13 +392,11 @@ class CollectionTest extends TestCase
         $this->assertEquals('b', $roll->get(2));
         $this->assertEquals('d', $roll['4']);
 
-
         $roll2 = $collection->toRoll();
         $this->assertEquals('c', $roll2->get(2));
         $this->assertEquals('a', $roll2[0]);
 
         try {
-
             $attempt = $collection->toRoll(new Collection(['a', 'b']));
         } catch (\Exception $e) {
             $this->assertEquals('Indexes count mismatch', $e->getMessage());
@@ -421,7 +411,6 @@ class CollectionTest extends TestCase
         $result = $collection->intersection($collection2);
 
         $this->assertEquals(new Collection([3, '4', '5']), $result);
-
 
         $collection3 = new Collection(['stuff', 'thangs', 'coral']);
         $collection4 = new Collection(['i', "don't", 'like', 'thangs', 'much']);

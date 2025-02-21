@@ -3,53 +3,51 @@
 namespace PHPAlchemist\Contracts;
 
 /**
- * Key Value Pair Interface
- * @package PHPAlchemist\Contracts
+ * Key Value Pair Interface.
  */
 interface KeyValuePairInterface extends ArrayInterface
 {
     // Iterator
-    function current(): mixed;
+    public function current(): mixed;
 
-    function key(): mixed;
+    public function key(): mixed;
 
-    function next(): void;
+    public function next(): void;
 
     // Not part of Iterator
-    function prev(): void;
+    public function prev(): void;
 
-    function valid(): bool;
+    public function valid(): bool;
 
-    function rewind(): void;
+    public function rewind(): void;
     // END Iterator
 
     // ArrayAccess
-    function offsetUnset($offset): void;
+    public function offsetUnset($offset): void;
 
-    function offsetSet($offset, $value): void;
+    public function offsetSet($offset, $value): void;
 
-    function offsetGet($offset): mixed;
+    public function offsetGet($offset): mixed;
 
-    function offsetExists($offset): bool;
+    public function offsetExists($offset): bool;
     // END ArrayAccess
 
     // Class Specific
-    function setData(array $data): KeyValuePairInterface;
+    public function setData(array $data): KeyValuePairInterface;
 
-    function getData(): array;
+    public function getData(): array;
 
-    function count(): int;
+    public function count(): int;
 
-    function add($key, $value): KeyValuePairInterface;
+    public function add($key, $value): KeyValuePairInterface;
 
-    function set($key, $value): KeyValuePairInterface;
+    public function set($key, $value): KeyValuePairInterface;
 
-    function get($key): mixed;
+    public function get($key): mixed;
 
-    function getKeys(): array;
+    public function getKeys(): array;
 
-    function getValues(): array;
+    public function getValues(): array;
 
-    function isEmpty() : bool;
-
+    public function isEmpty() : bool;
 }

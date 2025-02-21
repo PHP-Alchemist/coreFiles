@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Abstracts\AbstractIndexedArray;
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -16,7 +16,7 @@ class TwineTest extends TestCase
 {
     public function testContainsFunctions() : void
     {
-        $twine = new Twine("antidisestablishmentarianism");
+        $twine = new Twine('antidisestablishmentarianism');
         $this->assertTrue($twine->startsWith('anti'));
         $this->assertFalse($twine->startsWith('Anti'));
         $this->assertTrue($twine->endsWith('ism'));
@@ -28,7 +28,7 @@ class TwineTest extends TestCase
 
     public function testEquals() : void
     {
-        $string = new Twine("ABACABB");
+        $string = new Twine('ABACABB');
         $this->assertTrue($string->equals('ABACABB'));
     }
 
@@ -40,11 +40,11 @@ class TwineTest extends TestCase
             'thangs',
             'Coral',
         ];
-        $stringTest = new Twine("stuff and thangs Coral");
+        $stringTest = new Twine('stuff and thangs Coral');
         /** @var Collection $arrayTest */
-        $arrayTest = $stringTest->explode(" ");
+        $arrayTest = $stringTest->explode(' ');
         /** @var Collection $arrayTest2 */
-        $arrayTest2 = $stringTest->splitOn(" ");
+        $arrayTest2 = $stringTest->splitOn(' ');
         $this->assertInstanceOf(Collection::class, $arrayTest);
         $this->assertInstanceOf(Collection::class, $arrayTest2);
         $this->assertEquals($finalValue, $arrayTest->getData());
@@ -75,7 +75,7 @@ class TwineTest extends TestCase
         $string->insert(' ', $string->indexOf('2'));
 
         $this->assertTrue($string->equals($endValue));
-        $this->assertEquals($endValue, (string)$string);
+        $this->assertEquals($endValue, (string) $string);
     }
 
     public function testInsert() : void
@@ -85,12 +85,12 @@ class TwineTest extends TestCase
         $string->insert(' ', 8);
 
         $this->assertTrue($string->equals($endValue));
-        $this->assertEquals($endValue, (string)$string);
+        $this->assertEquals($endValue, (string) $string);
     }
 
     public function testIsNullOrEmpty() : void
     {
-        $string = new Twine("This is a test of twine functionality");
+        $string = new Twine('This is a test of twine functionality');
         $this->assertFalse($string->isNullOrEmpty());
     }
 
@@ -102,7 +102,7 @@ class TwineTest extends TestCase
 
     public function testLower()
     {
-        $string = new Twine("stuff and thangs");
+        $string = new Twine('stuff and thangs');
         $this->assertEquals('stuff and thangs', $string->lower());
     }
 
@@ -111,7 +111,7 @@ class TwineTest extends TestCase
         $twine = new Twine('ABACABB');
         $twine->padBoth(11, '-');
 
-        $this->assertEquals('--ABACABB--', (string)$twine);
+        $this->assertEquals('--ABACABB--', (string) $twine);
     }
 
     public function testPadLeft() : void
@@ -119,7 +119,7 @@ class TwineTest extends TestCase
         $twine = new Twine('ABACABB');
         $twine->padLeft(10, '-');
 
-        $this->assertEquals('---ABACABB', (string)$twine);
+        $this->assertEquals('---ABACABB', (string) $twine);
     }
 
     public function testPadRight() : void
@@ -127,7 +127,7 @@ class TwineTest extends TestCase
         $twine = new Twine('ABACABB');
         $twine->padRight(11, '-');
 
-        $this->assertEquals('ABACABB----', (string)$twine);
+        $this->assertEquals('ABACABB----', (string) $twine);
     }
 
     public function testRemove() : void
@@ -138,7 +138,7 @@ class TwineTest extends TestCase
         $count      = $middleName->length();
 
         $name->remove($offset, $count);
-        $this->assertEquals('Michelle Banks', (string)$name);
+        $this->assertEquals('Michelle Banks', (string) $name);
     }
 
     public function testSetValue()
@@ -152,7 +152,7 @@ class TwineTest extends TestCase
     public function testStringlength()
     {
         $expectedLength = 16;
-        $string         = new Twine("stuff and thangs");
+        $string         = new Twine('stuff and thangs');
         $this->assertEquals($expectedLength, $string->length());
     }
 
@@ -187,7 +187,7 @@ class TwineTest extends TestCase
 
     public function testUpper()
     {
-        $string = new Twine("stuff and thangs");
+        $string = new Twine('stuff and thangs');
         $this->assertEquals('STUFF AND THANGS', $string->upper());
     }
 
@@ -195,10 +195,9 @@ class TwineTest extends TestCase
     {
         $testString = new Twine('Hello World');
         $testString->replace('World', 'Coral');
-        $this->assertEquals('Hello Coral', (string)$testString);
+        $this->assertEquals('Hello Coral', (string) $testString);
 
-
-        $newTestTwine = new Twine("It is magically Delicious");
+        $newTestTwine = new Twine('It is magically Delicious');
         $newTestTwine->replace(['/It/', '/is/', '/magically/', '/Delicious/'], ['Stuff', 'and', 'thangs', 'Coral']);
         $this->assertEquals('Stuff and thangs Coral', $newTestTwine);
     }
@@ -207,7 +206,6 @@ class TwineTest extends TestCase
     {
         $testString = new Twine('Hello World');
         $this->assertFalse($testString->isEmpty());
-
 
         $newTestTwine = new Twine();
         $this->assertTrue($newTestTwine->isEmpty());

@@ -2,12 +2,10 @@
 
 namespace PHPAlchemist\Traits;
 
-use \Exception;
+use Exception;
 
 /**
- * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName)
- *
- * @package PHPAlchemist\Traits
+ * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName).
  */
 trait AccessorTrait
 {
@@ -16,13 +14,14 @@ trait AccessorTrait
     const STRING_POSITION_THREE     = 3;
 
     /**
-     * Magic
+     * Magic.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function __call($method, $arguments)
     {
@@ -32,7 +31,7 @@ trait AccessorTrait
             $position = self::STRING_POSITION_TWO;
             $verb     = $this->getMethodVerb($method, $position);
             if (!in_array($verb, ['is'])) {
-                throw new Exception("No Method ($method) exists on " . get_class($this));
+                throw new Exception("No Method ($method) exists on ".get_class($this));
             }
         }
 
@@ -40,7 +39,6 @@ trait AccessorTrait
 
         if (method_exists($this, $verb)) {
             if (property_exists($this, lcfirst($name))) {
-
                 return call_user_func_array([$this, $verb], array_merge([lcfirst($name)], $arguments));
             } else {
                 throw new Exception("Variable ($name) Not Found");
@@ -50,10 +48,11 @@ trait AccessorTrait
 
     /**
      * Get the verb from the method name being called.
-     * e.g. [get]Data(), [set]Name(), [is]Active()
+     * e.g. [get]Data(), [set]Name(), [is]Active().
      *
      * @param $method
      * @param $position
+     *
      * @return string
      */
     protected function getMethodVerb($method, $position = self::STRING_POSITION_THREE) : string
@@ -62,12 +61,13 @@ trait AccessorTrait
     }
 
     /**
-     * Standard (simple) getter
+     * Standard (simple) getter.
      *
      * @param string $fieldName
-     * @return mixed
+     *
      * @throws \Exception
      *
+     * @return mixed
      */
     public function get($fieldName) : mixed
     {
@@ -79,13 +79,14 @@ trait AccessorTrait
     }
 
     /**
-     * Standard (simple) Setter
+     * Standard (simple) Setter.
      *
      * @param string $fieldName
-     * @param mixed $value
-     * @return boolean
+     * @param mixed  $value
+     *
      * @throws \Exception
      *
+     * @return bool
      */
     public function set($fieldName, $value) : bool
     {
@@ -94,23 +95,25 @@ trait AccessorTrait
         }
 
         $this->$fieldName = $value;
+
         return true;
     }
 
     /**
-     * Boolean Getter
+     * Boolean Getter.
      *
      * @param string $fieldName
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function is($fieldName) : bool
     {
         if (!is_bool($this->$fieldName)) {
-            throw new \Exception("Cannot call is() on non-boolean variable (" . $fieldName . ").");
+            throw new \Exception('Cannot call is() on non-boolean variable ('.$fieldName.').');
         }
 
         return $this->get($fieldName);
     }
-
 }

@@ -1,28 +1,28 @@
 <?php
 
-require_once(__DIR__ . '/../../vendor/autoload.php');
+require_once __DIR__.'/../../vendor/autoload.php';
 
 use PHPAlchemist\Types\Dictionary;
 
 $dictionary = new Dictionary([
-    'alpha' => 'a',
-    'beta' => 'b',
-    'charlie' => 'c',
-    'delta' => 'd',
-    'echo' => 'e',
-    'foxtrot' => 'f',
-    'golf' => 'g',
-    'hotel' => 'h',
-    'india' => 'i',
-    'juliet' => 'j',
-    'kilo' => 'k',
-    'lima' => 'l',
-    'mike' => 'm',
+    'alpha'    => 'a',
+    'beta'     => 'b',
+    'charlie'  => 'c',
+    'delta'    => 'd',
+    'echo'     => 'e',
+    'foxtrot'  => 'f',
+    'golf'     => 'g',
+    'hotel'    => 'h',
+    'india'    => 'i',
+    'juliet'   => 'j',
+    'kilo'     => 'k',
+    'lima'     => 'l',
+    'mike'     => 'm',
     'november' => 'n',
-    'oscar' => 'o',
-    'papa' => 'p',
-    'quebec' => 'q',
-    'romeo' => 'r',
+    'oscar'    => 'o',
+    'papa'     => 'p',
+    'quebec'   => 'q',
+    'romeo'    => 'r',
 ]);
 
 $dictionary->add('sierra', 's');
@@ -36,7 +36,7 @@ $dictionary->add('zulu', 'z');
 
 echo $dictionary->get('golf');
 echo $dictionary->get('echo');
-echo $dictionary->get('tango') . " ";
+echo $dictionary->get('tango').' ';
 echo $dictionary->get('golf');
 echo $dictionary->get('oscar');
 echo $dictionary->get('oscar');

@@ -1,26 +1,21 @@
 <?php
 
-
 namespace PHPAlchemist\Contracts;
 
 /**
- * Array
- * @package PHPAlchemist\Contracts
+ * Array.
  */
-interface AssociativeArrayInterface extends  ArrayInterface
+interface AssociativeArrayInterface extends ArrayInterface
 {
-    function add(mixed $key, mixed $value) : AssociativeArrayInterface;
+    public function add(mixed $key, mixed $value) : AssociativeArrayInterface;
 
-    function get(mixed $key) : mixed;
+    public function get(mixed $key) : mixed;
 
-    function getKeys() : array;
+    public function getKeys() : array;
 
-    function getValues() : array;
+    public function getValues() : array;
 
-    function count() : int;
+    public function count() : int;
 
-    function isReadOnly() : bool;
-
-
-
+    public function isReadOnly() : bool;
 }
