@@ -1,6 +1,6 @@
 # PHP Core Files
 ![Master Workflow](https://github.com/PHP-Alchemist/coreFiles/actions/workflows/php.yml/badge.svg)  
-![StyleCI](https://github.styleci.io/repos/283579344/shield?branch=master)  
+[![StyleCI](https://github.styleci.io/repos/283579344/shield?branch=master)](https://github.styleci.io/repos/283579344?branch=master)
 
 ##  Abstract
 
