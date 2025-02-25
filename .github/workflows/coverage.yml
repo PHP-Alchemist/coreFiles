@@ -13,7 +13,7 @@ jobs:
           php-version: '8.4'  # adjust to your PHP version
 
       - name: Install dependencies
-        run: composer --dev install
+        run: composer install
 
       - name: Run tests
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
