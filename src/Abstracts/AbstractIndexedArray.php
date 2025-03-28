@@ -374,8 +374,8 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         return new Collection(
             array_values(
-            array_intersect($this->data, $secondCollection->getData())
-        )
+                array_intersect($this->data, $secondCollection->getData())
+            )
         );
     }
 
@@ -502,7 +502,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      *
      * @return Number|null The maximum key value or null if the array is empty.
      */
-    protected function getMaxKeyValue() : Number|null
+    protected function getMaxKeyValue() : ?Number
     {
         $keys = array_keys($this->data);
         if (empty($keys)) {

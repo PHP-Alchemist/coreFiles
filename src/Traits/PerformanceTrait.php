@@ -20,7 +20,7 @@ trait PerformanceTrait
             $whoa = $mem_usage.' bytes';
         } elseif ($mem_usage < 1048576) {
             $whoa = round($mem_usage / 1024, 2).' kilobytes';
-        // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
         } else {
             $whoa = round($mem_usage / 1048576, 2).' megabytes';
         }
