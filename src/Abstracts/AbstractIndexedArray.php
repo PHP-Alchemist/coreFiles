@@ -374,8 +374,8 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         return new Collection(
             array_values(
-            array_intersect($this->data, $secondCollection->getData())
-        )
+                array_intersect($this->data, $secondCollection->getData())
+            )
         );
     }
 
