@@ -10,7 +10,6 @@ use PHPAlchemist\Exception\InvalidKeyTypeException;
 use PHPAlchemist\Exception\ReadOnlyDataException;
 use PHPAlchemist\Exception\UnmatchedClassException;
 use PHPAlchemist\Exception\UnmatchedVersionException;
-use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\HashTable;
 use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -432,6 +431,7 @@ class HashTableTest extends TestCase
 
         $data = unserialize($serializedObject);
         $this->assertInstanceOf('PHPAlchemist\Type\HashTable', $data);
+
         try {
             $wrongType = unserialize($wrongClass);
         } catch (\Exception $e2) {

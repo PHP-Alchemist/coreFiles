@@ -4,9 +4,6 @@ namespace PHPAlchemist\Trait\Array;
 
 use Closure;
 
-/**
- * @package PHPAlchemist\Trait\Array
- */
 trait OnSetTrait
 {
     protected Closure $onSet;

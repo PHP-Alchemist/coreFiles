@@ -2,9 +2,6 @@
 
 namespace PHPAlchemist\Contract;
 
-/**
- * @package PHPAlchemist\Contract
- */
 interface NumberInterface
 {
     public function get() : int|float;

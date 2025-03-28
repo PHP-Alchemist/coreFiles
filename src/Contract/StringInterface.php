@@ -2,9 +2,6 @@
 
 namespace PHPAlchemist\Contract;
 
-/**
- * @package PHPAlchemist\Contract
- */
 interface StringInterface extends \Stringable
 {
     /**

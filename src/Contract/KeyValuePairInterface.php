@@ -3,8 +3,7 @@
 namespace PHPAlchemist\Contract;
 
 /**
- * Key Value Pair Interface
- * @package PHPAlchemist\Contract
+ * Key Value Pair Interface.
  */
 interface KeyValuePairInterface extends ArrayInterface
 {

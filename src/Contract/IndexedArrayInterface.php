@@ -2,10 +2,6 @@
 
 namespace PHPAlchemist\Contract;
 
-/**
- *
- * @package PHPAlchemist\Contract
- */
 interface IndexedArrayInterface extends ArrayInterface
 {
     // Class Specific

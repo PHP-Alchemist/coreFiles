@@ -3,7 +3,6 @@
 namespace PHPAlchemist\Trait;
 
 /**
- * @package PHPAlchemist\Trait
  * @author Micah Breedlove <druid628@gmail.com>
  */
 trait PerformanceTrait

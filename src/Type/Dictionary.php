@@ -10,7 +10,7 @@ use PHPAlchemist\Abstract\AbstractKeyValuePair;
  * @final
  *
  * @codeCoverageIgnore
- * @package            PHPAlchemist\Type
+ *
  * @author Micah Breedlove <druid628@gmail.com>
  */
 final class Dictionary extends AbstractKeyValuePair

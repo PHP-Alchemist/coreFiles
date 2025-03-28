@@ -10,7 +10,7 @@ use PHPAlchemist\Abstract\AbstractList;
  * @final
  *
  * @codeCoverageIgnore
- * @package            PHPAlchemist\Type
+ *
  * @author Micah Breedlove <druid628@gmail.com>
  */
 final class Roll extends AbstractList

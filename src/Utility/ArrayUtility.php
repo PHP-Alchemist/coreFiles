@@ -2,9 +2,6 @@
 
 namespace PHPAlchemist\Utility;
 
-/**
- * @package PHPAlchemist\Utility
- */
 class ArrayUtility
 {
     /**

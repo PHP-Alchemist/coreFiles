@@ -2,8 +2,8 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Abstract\AbstractString;
 use PHPAlchemist\Abstract\AbstractIndexedArray;
+use PHPAlchemist\Abstract\AbstractString;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Twine;
 use PHPUnit\Framework\Attributes\CoversClass;

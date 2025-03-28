@@ -6,8 +6,8 @@ use ArrayAccess;
 use Iterator;
 
 /**
- * Parental Array Interface
- * @package PHPAlchemist\Contract
+ * Parental Array Interface.
+ *
  * @template-extends  ArrayAccess<int, mixed>
  * @template-extends  Iterator<mixed, mixed>
  */

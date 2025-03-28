@@ -10,7 +10,7 @@ use PHPAlchemist\Abstract\AbstractString;
  * @final
  *
  * @codeCoverageIgnore
- * @package            PHPAlchemist\Type
+ *
  * @author Micah Breedlove <druid628@gmail.com>
  */
 final class Twine extends AbstractString
