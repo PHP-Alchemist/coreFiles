@@ -2,10 +2,10 @@
 
 namespace tests\Unit;
 
-use PHPAlchemist\Abstracts\AbstractKeyValuePair;
-use PHPAlchemist\Exceptions\UnmatchedClassException;
-use PHPAlchemist\Exceptions\UnmatchedVersionException;
-use PHPAlchemist\Types\Dictionary;
+use PHPAlchemist\Abstract\AbstractKeyValuePair;
+use PHPAlchemist\Exception\UnmatchedClassException;
+use PHPAlchemist\Exception\UnmatchedVersionException;
+use PHPAlchemist\Type\Dictionary;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -16,19 +16,19 @@ use PHPUnit\Framework\TestCase;
 class DictionaryTest extends TestCase
 {
     // Core-Files Types
-    const TWINE_TYPE      = '\PHPAlchemist\Types\Twine';
-    const DICTIONARY_TYPE = 'PHPAlchemist\Types\Dictionary';
+    const TWINE_TYPE      = '\PHPAlchemist\Type\Twine';
+    const DICTIONARY_TYPE = 'PHPAlchemist\Type\Dictionary';
 
     // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
     const ITERATOR_TYPE    = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
 
-    // Exceptions
+    // Exception
     const EXCEPTION_TYPE        = '\Exception';
-    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exceptions\InvalidKeyTypeException';
-    const READONLY_EXCEPTION    = 'PHPAlchemist\Exceptions\ReadOnlyDataException';
-    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exceptions\HashTableFullException';
+    const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exception\InvalidKeyTypeException';
+    const READONLY_EXCEPTION    = 'PHPAlchemist\Exception\ReadOnlyDataException';
+    const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exception\HashTableFullException';
 
     public function testCount()
     {
@@ -49,7 +49,7 @@ class DictionaryTest extends TestCase
         try {
             $dictionary->add(0.24, 'abc');
         } catch (\Exception $e) {
-            $this->assertInstanceOf("PHPAlchemist\Exceptions\InvalidKeyTypeException", $e);
+            $this->assertInstanceOf("PHPAlchemist\Exception\InvalidKeyTypeException", $e);
             $this->assertEquals('Invalid Key type (double) for Dictionary', $e->getMessage());
         }
     }
@@ -65,17 +65,17 @@ class DictionaryTest extends TestCase
 
         $serializedObject = serialize($arrayTest);
 
-        $this->assertEquals('O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
+        $this->assertEquals('O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}', $serializedObject);
     }
 
     public function testUnserialize()
     {
-        $serializedObject = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
-        $wrongVersion     = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:7;s:5:"model";s:29:"PHPAlchemist\Types\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
-        $wrongClass       = 'O:29:"PHPAlchemist\Types\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:29:"PHPAlchemist\Types\Collection";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $serializedObject = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongVersion     = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:7;s:5:"model";s:28:"PHPAlchemist\Type\Dictionary";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
+        $wrongClass       = 'O:28:"PHPAlchemist\Type\Dictionary":3:{s:7:"version";i:1;s:5:"model";s:28:"PHPAlchemist\Type\Collection";s:4:"data";a:4:{s:5:"alpha";s:3:"abc";s:5:"bravo";s:3:"bcd";s:7:"charlie";s:3:"cde";s:5:"delta";s:3:"def";}}';
 
         $data = unserialize($serializedObject);
-        $this->assertInstanceOf('PHPAlchemist\Types\Dictionary', $data);
+        $this->assertInstanceOf('PHPAlchemist\Type\Dictionary', $data);
         $this->assertEquals('def', $data['delta']);
 
         try {
