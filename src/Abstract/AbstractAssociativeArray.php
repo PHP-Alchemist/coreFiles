@@ -18,9 +18,7 @@ use PHPAlchemist\Trait\ArrayTrait;
 use PHPAlchemist\Type\Twine;
 
 /**
- * Abstract class for Associative Array (Objectified Array Class)
- *
- * @package PHPAlchemist\Abstract
+ * Abstract class for Associative Array (Objectified Array Class).
  */
 abstract class AbstractAssociativeArray implements AssociativeArrayInterface
 {

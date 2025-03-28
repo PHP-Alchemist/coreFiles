@@ -10,7 +10,7 @@ use PHPAlchemist\Abstract\AbstractNumber;
  * @final
  *
  * @codeCoverageIgnore
- * @package            PHPAlchemist\Type
+ *
  * @author Micah Breedlove <druid628@gmail.com>
  */
 final class Number extends AbstractNumber

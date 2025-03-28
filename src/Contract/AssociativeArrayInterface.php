@@ -3,8 +3,7 @@
 namespace PHPAlchemist\Contract;
 
 /**
- * Array
- * @package PHPAlchemist\Contract
+ * Array.
  */
 interface AssociativeArrayInterface extends ArrayInterface
 {

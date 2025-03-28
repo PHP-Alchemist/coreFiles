@@ -5,9 +5,8 @@ namespace PHPAlchemist\Trait;
 use Exception;
 
 /**
- * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName)
+ * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName).
  *
- * @package PHPAlchemist\Trait
  * @author Micah Breedlove <druid628@gmail.com>
  */
 trait AccessorTrait

@@ -3,9 +3,8 @@
 namespace PHPAlchemist\Trait;
 
 /**
- * A collection of usable array functions
+ * A collection of usable array functions.
  *
- * @package PHPAlchemist\Trait
  * @author Micah Breedlove <druid628@gmail.com>
  */
 trait ArrayTrait

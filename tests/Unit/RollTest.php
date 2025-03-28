@@ -20,8 +20,9 @@ class RollTest extends TestCase
      */
 
     /**
-     * @return void
      * @throws \PHPAlchemist\Exception\InvalidKeyTypeException
+     *
+     * @return void
      */
     public function testRebalancing()
     {
