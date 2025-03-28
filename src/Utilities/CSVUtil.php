@@ -20,7 +20,7 @@ class CSVUtil
         static $fp = false;
         if ($fp === false) {
             $fp = fopen('php://temp', 'r+'); // see http://php.net/manual/en/wrappers.php.php - yes there are 2 '.php's on the end.
-        // NB: anything you read/write to/from 'php://temp' is specific to this filehandle
+            // NB: anything you read/write to/from 'php://temp' is specific to this filehandle
         } else {
             rewind($fp);
         }

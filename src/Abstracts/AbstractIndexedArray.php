@@ -502,7 +502,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
      *
      * @return Number|null The maximum key value or null if the array is empty.
      */
-    protected function getMaxKeyValue() : Number|null
+    protected function getMaxKeyValue() : ?Number
     {
         $keys = array_keys($this->data);
         if (empty($keys)) {
