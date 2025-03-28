@@ -2,9 +2,6 @@
 
 namespace PHPAlchemist\Trait\Array;
 
-/**
- * @package PHPAlchemist\Trait\Array
- */
 trait OnInsertTrait
 {
     protected \Closure $onInsert;

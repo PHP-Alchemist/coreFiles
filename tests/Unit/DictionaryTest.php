@@ -50,7 +50,7 @@ class DictionaryTest extends TestCase
             $dictionary->add(0.24, 'abc');
         } catch (\Exception $e) {
             $this->assertInstanceOf("PHPAlchemist\Exception\InvalidKeyTypeException", $e);
-            $this->assertEquals("Invalid Key type (double) for Dictionary", $e->getMessage());
+            $this->assertEquals('Invalid Key type (double) for Dictionary', $e->getMessage());
         }
     }
 

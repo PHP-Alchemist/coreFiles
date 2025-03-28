@@ -19,9 +19,7 @@ use PHPAlchemist\Type\Roll;
 use PHPAlchemist\Type\Twine;
 
 /**
- * Abstract class Collection (Objectified Array Class)
- *
- * @package PHPAlchemist\Abstract
+ * Abstract class Collection (Objectified Array Class).
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
