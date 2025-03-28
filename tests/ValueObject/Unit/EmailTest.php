@@ -14,14 +14,12 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractNumber::class)]
 class EmailTest extends TestCase
 {
-
     public function testInvalidEmail() : void
     {
         $this->expectExceptionMessage('Invalid email address.');
         $invalidEmailValue = 'stuff@things';
         $emailObject       = new Email($invalidEmailValue);
     }
-
 
     public function testValidEmail() : void
     {
@@ -47,7 +45,6 @@ class EmailTest extends TestCase
         $emailObject      = new Email($validEmailValue);
 
         $this->assertInstanceOf(Number::class, $emailObject->length());
-        $this->assertequals($expectedLength, ($emailObject->length())->getValue());
+        $this->assertequals($expectedLength, $emailObject->length()->getValue());
     }
-
 }

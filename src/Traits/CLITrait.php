@@ -4,8 +4,6 @@ namespace PHPAlchemist\Traits;
 
 /**
  * Collection of usable CLI functions.
- *
- * @package PHPAlchemist\Traits
  */
 trait CLITrait
 {

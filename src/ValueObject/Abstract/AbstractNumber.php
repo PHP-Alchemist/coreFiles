@@ -7,6 +7,7 @@ use PHPAlchemist\ValueObject\Contract\VONumberInterface;
 abstract class AbstractNumber implements VONumberInterface
 {
     protected readonly int $value;
+
     public function __construct(int $value)
     {
         $this->value = $value;
@@ -28,5 +29,4 @@ abstract class AbstractNumber implements VONumberInterface
 
         return false;
     }
-
 }

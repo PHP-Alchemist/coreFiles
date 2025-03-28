@@ -2,12 +2,6 @@
 
 namespace PHPAlchemist\ValueObject\Contract;
 
-use PHPAlchemist\Contracts\IndexedArrayInterface;
-use PHPAlchemist\Types\Base\Contracts\Twine;
-
-/**
- * @package PHPAlchemist\ValueObjects\Contract
- */
 interface VOStringInterface extends \Stringable
 {
     /** @return string */
@@ -15,7 +9,7 @@ interface VOStringInterface extends \Stringable
 
     /**
      * @param mixed $needle
-     * @param bool $caseInsensitive
+     * @param bool  $caseInsensitive
      *
      * @return bool
      */
@@ -25,19 +19,20 @@ interface VOStringInterface extends \Stringable
 
     /**
      * @param VOStringInterface $comparitive
+     *
      * @return bool
      */
     public function equals(self $comparitive) : bool;
 
     /**
-     * Get value of String object
+     * Get value of String object.
      *
      * @return string
      */
     public function getValue() : ?string;
 
     /**
-     * Determine if string has value
+     * Determine if string has value.
      *
      * @return bool
      */
@@ -45,32 +40,34 @@ interface VOStringInterface extends \Stringable
 
     /**
      * @param string $needle
-     * @param int $startIndex
+     * @param int    $startIndex
+     *
      * @return false|int
      */
     public function indexOf(string $needle, int $startIndex = 0) : int|false;
 
     /**
      * @param string $needle
-     * @param int $startIndex
+     * @param int    $startIndex
+     *
      * @return int|false
      */
     public function lastIndexOf(string $needle, int $startIndex = 0) : int|false;
 
     public function length() : VONumberInterface;
 
-
     /**
      * @param mixed $needle
+     *
      * @return bool
      */
     public function startsWith(mixed $needle) : bool;
 
     /**
-     * @param int $offset
+     * @param int      $offset
      * @param int|null $length
+     *
      * @return VOStringInterface
      */
     public function substring(int $offset, ?int $length) : VOStringInterface;
 }
-
