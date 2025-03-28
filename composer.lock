@@ -1519,12 +1519,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-interfaces.git",
-                "reference": "ac02641b3e18117bcc4cc36b2743d84c10eb3fa9"
+                "reference": "5a73ebb17a1e36d9c9bfc54f329ab18aabff90cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/ac02641b3e18117bcc4cc36b2743d84c10eb3fa9",
-                "reference": "ac02641b3e18117bcc4cc36b2743d84c10eb3fa9",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/5a73ebb17a1e36d9c9bfc54f329ab18aabff90cb",
+                "reference": "5a73ebb17a1e36d9c9bfc54f329ab18aabff90cb",
                 "shasum": ""
             },
             "require": {
@@ -1597,7 +1597,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-23T19:43:02+00:00"
+            "time": "2025-03-28T20:54:10+00:00"
         },
         {
             "name": "myclabs/deep-copy",
