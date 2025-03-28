@@ -8,15 +8,12 @@ use PHPAlchemist\ValueObject\Model\Number;
 use PHPAlchemist\ValueObject\Model\USState;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use PHPAlchemist\ValueObject\Model\Email;
-
 
 #[CoversClass(USState::class)]
 #[CoversClass(AbstractString::class)]
 #[CoversClass(AbstractNumber::class)]
 class USStateTest extends TestCase
 {
-
     public function testInvalidState() : void
     {
         $this->expectExceptionMessage('Invalid US State value.');
@@ -24,10 +21,8 @@ class USStateTest extends TestCase
         $stateObject        = new USState($invalidStatelValue);
     }
 
-
     public function testValidStateCode() : void
     {
-
         $validStateValue = 'Nebraska';
         $validStateCode  = 'NE';
         $emailObject     = new USState($validStateCode);
@@ -53,7 +48,6 @@ class USStateTest extends TestCase
         $state           = new USState($validStateCode);
 
         $this->assertInstanceOf(Number::class, $state->length());
-        $this->assertequals($expectedLength, ($state->length())->getValue());
+        $this->assertequals($expectedLength, $state->length()->getValue());
     }
-
 }

@@ -2,10 +2,6 @@
 
 namespace PHPAlchemist\ValueObject\Abstract;
 
-
-use PHPAlchemist\Contracts\IndexedArrayInterface;
-use PHPAlchemist\Contracts\StringInterface;
-use PHPAlchemist\Types\Collection;
 use PHPAlchemist\Types\Twine;
 use PHPAlchemist\ValueObject\Contract\VONumberInterface;
 use PHPAlchemist\ValueObject\Contract\VOStringInterface;
@@ -17,7 +13,7 @@ abstract class AbstractString implements VOStringInterface
 
     public function __toString() : string
     {
-        return ($this->getValue()) ?: "";
+        return ($this->getValue()) ?: '';
     }
 
     public function getValue() : ?string
@@ -27,8 +23,9 @@ abstract class AbstractString implements VOStringInterface
 
     public function contains(mixed $needle, bool $caseInsensitive = false) : bool
     {
-        if ($caseInsensitive)
+        if ($caseInsensitive) {
             return str_contains(mb_strtolower($this->value), mb_strtolower($needle));
+        }
 
         return str_contains($this->value, $needle);
     }
@@ -42,7 +39,7 @@ abstract class AbstractString implements VOStringInterface
     /** @inheritDoc */
     public function equals(VOStringInterface $comparitive) : bool
     {
-        return ($comparitive->getValue() === $this->getValue());
+        return $comparitive->getValue() === $this->getValue();
     }
 
     /**
@@ -50,7 +47,7 @@ abstract class AbstractString implements VOStringInterface
      */
     public function hasValue() : bool
     {
-        return !(is_null($this->value));
+        return !is_null($this->value);
     }
 
     /** @inheritDoc */
@@ -70,11 +67,12 @@ abstract class AbstractString implements VOStringInterface
     public function length() : VONumberInterface
     {
         $length = strlen($this->value);
+
         return new Number($length);
     }
 
     /**
-     * Convert string to lower case
+     * Convert string to lower case.
      *
      * @return string
      */
@@ -94,6 +92,4 @@ abstract class AbstractString implements VOStringInterface
     {
         return new Twine(substr($this->value, $offset, $length));
     }
-
-
 }

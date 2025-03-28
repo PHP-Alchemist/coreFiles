@@ -6,5 +6,4 @@ use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
 
 final class Number extends AbstractNumber
 {
-
 }
