@@ -47,7 +47,6 @@ class MockJsonHydratorTraitClass
 
 class JsonHydratorTraitTest extends TestCase
 {
-
     public function testHydrateFromJson()
     {
         $json = '{"foo":"alpha","bar":"beta","fiz":"charlie","buzz":"delta"}';

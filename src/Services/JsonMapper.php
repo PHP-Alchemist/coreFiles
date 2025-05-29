@@ -4,10 +4,8 @@ namespace PHPAlchemist\Services;
 
 class JsonMapper
 {
-
     public function map(string $json, string $class) : object
     {
-
         if (!$this->validateJson($json)) {
             throw new \Exception('Invalid JSON');
         }
@@ -25,8 +23,8 @@ class JsonMapper
                 continue;
             }
 
-            if (is_callable([$newObject, 'set' . ucfirst($key)])) {
-                $newObject->{'set' . ucfirst($key)}($value);
+            if (is_callable([$newObject, 'set'.ucfirst($key)])) {
+                $newObject->{'set'.ucfirst($key)}($value);
             } elseif (property_exists($newObject, $key)) {
                 $newObject->{$key} = $value;
             }
@@ -43,11 +41,9 @@ class JsonMapper
 
         $validation = json_encode(json_decode($json, true));
         if ($validation !== $json) {
-
             return false;
         }
 
         return true;
     }
-
 }

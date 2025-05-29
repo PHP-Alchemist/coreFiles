@@ -136,7 +136,6 @@ class MockBoringClass
 
 class JsonMapperTest extends TestCase
 {
-
     public function testJsonMapperWithHydrator()
     {
         $json       = '{"foo":"alpha","bar":"beta","fiz":"charlie","buzz":"delta"}';
@@ -153,7 +152,7 @@ class JsonMapperTest extends TestCase
         $this->expectException(\Error::class);
         $json       = '{"foo":"alpha","bar":"beta","fiz":"charlie","buzz":"delta"}';
         $jsonMapper = new JsonMapper();
-        $obj        = $jsonMapper->map($json, MockJsonBadHydratorClass::class);;
+        $obj        = $jsonMapper->map($json, MockJsonBadHydratorClass::class);
     }
 
     public function testJsonMapperWithBoringClass()
@@ -166,5 +165,4 @@ class JsonMapperTest extends TestCase
         $this->assertEquals('charlie', $obj->getFiz());
         $this->assertEquals('delta', $obj->getBuzz());
     }
-
 }
