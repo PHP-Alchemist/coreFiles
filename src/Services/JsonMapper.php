@@ -19,7 +19,6 @@ class JsonMapper
 
         $jsonDecodedData = json_decode($json, true);
         foreach ($jsonDecodedData as $key => $value) {
-
             if (!property_exists($newObject, $key)) {
                 continue;
             }

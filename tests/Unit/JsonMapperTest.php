@@ -13,14 +13,10 @@ trait FizSetter
         $this->fiz = $fiz;
     }
 }
-trait Buzz
-{
-
-}
 
 abstract class AbstractHydratorClass
 {
-    public ?string $foo = null;
+    public ?string $foo    = null;
     protected ?string $bar = null;
     protected ?string $fiz = null;
 
@@ -48,8 +44,6 @@ abstract class AbstractHydratorClass
     {
         return $this->fiz;
     }
-
-
 }
 
 class MockJsonBadHydratorClass extends AbstractHydratorClass
