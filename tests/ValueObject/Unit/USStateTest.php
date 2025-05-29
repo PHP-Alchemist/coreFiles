@@ -18,7 +18,7 @@ class USStateTest extends TestCase
     {
         $this->expectExceptionMessage('Invalid US State value.');
         $invalidStatelValue = 'ZA';
-        $stateObject        = new USState($invalidStatelValue);
+        new USState($invalidStatelValue);
     }
 
     public function testValidStateCode() : void
@@ -27,8 +27,8 @@ class USStateTest extends TestCase
         $validStateCode  = 'NE';
         $emailObject     = new USState($validStateCode);
 
-        $this->assertEquals($emailObject->getValue(), $validStateValue);
-        $this->assertEquals($emailObject->getCode(), $validStateCode);
+        $this->assertEquals($validStateValue, $emailObject->getValue());
+        $this->assertEquals($validStateCode, $emailObject->getCode());
     }
 
     public function testEquals() : void
@@ -42,10 +42,9 @@ class USStateTest extends TestCase
 
     public function testLength() : void
     {
-        $validStateCode  = 'LA';
-        $validEmailValue = 'Louisiana';
-        $expectedLength  = 9;
-        $state           = new USState($validStateCode);
+        $validStateCode = 'LA';
+        $expectedLength = 9;
+        $state          = new USState($validStateCode);
 
         $this->assertInstanceOf(Number::class, $state->length());
         $this->assertequals($expectedLength, $state->length()->getValue());

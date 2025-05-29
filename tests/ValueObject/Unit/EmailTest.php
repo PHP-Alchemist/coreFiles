@@ -14,35 +14,35 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractNumber::class)]
 class EmailTest extends TestCase
 {
+
+    const string VALID_EMAIL_VALUE = 'stuff@things.net';
+
     public function testInvalidEmail() : void
     {
         $this->expectExceptionMessage('Invalid email address.');
         $invalidEmailValue = 'stuff@things';
-        $emailObject       = new Email($invalidEmailValue);
+        new Email($invalidEmailValue);
     }
 
     public function testValidEmail() : void
     {
-        $validEmailValue = 'stuff@things.net';
-        $emailObject     = new Email($validEmailValue);
+        $emailObject = new Email(self::VALID_EMAIL_VALUE);
 
-        $this->assertEquals($emailObject->getValue(), $validEmailValue);
+        $this->assertEquals(self::VALID_EMAIL_VALUE, $emailObject->getValue());
     }
 
     public function testEquals() : void
     {
-        $validEmailValue  = 'stuff@things.net';
-        $emailObject      = new Email($validEmailValue);
-        $comparitiveEmail = new Email($validEmailValue);
+        $emailObject      = new Email(self::VALID_EMAIL_VALUE);
+        $comparitiveEmail = new Email(self::VALID_EMAIL_VALUE);
 
         $this->assertTrue($emailObject->equals($comparitiveEmail));
     }
 
     public function testLength() : void
     {
-        $validEmailValue  = 'stuff@things.net';
-        $expectedLength   = 16;
-        $emailObject      = new Email($validEmailValue);
+        $expectedLength = 16;
+        $emailObject    = new Email(self::VALID_EMAIL_VALUE);
 
         $this->assertInstanceOf(Number::class, $emailObject->length());
         $this->assertequals($expectedLength, $emailObject->length()->getValue());
