@@ -1,0 +1,137 @@
+<?php
+
+namespace Unit;
+
+use PHPAlchemist\Services\JsonMapper;
+use PHPAlchemist\Traits\JsonHydratorTrait;
+use PHPUnit\Framework\TestCase;
+
+trait FizSetter
+{
+    public function setFiz($fiz) : void
+    {
+        $this->fiz = $fiz;
+    }
+}
+trait Buzz
+{
+
+}
+
+abstract class AbstractHydratorClass
+{
+    public ?string $foo = null;
+    protected ?string $bar = null;
+    protected ?string $fiz = null;
+
+    // foo
+    public function getFoo() : ?string
+    {
+        return $this->foo;
+    }
+
+    // bar
+
+    public function getBar() : ?string
+    {
+        return $this->bar;
+    }
+
+    public function setBar($bar) : void
+    {
+        $this->bar = $bar;
+    }
+
+    // fiz
+
+    public function getFiz() : ?string
+    {
+        return $this->fiz;
+    }
+
+
+}
+
+class MockJsonBadHydratorClass extends AbstractHydratorClass
+{
+    use JsonHydratorTrait;
+    private ?string $buzz = null;
+
+    // buzz
+    public function getBuzz() : ?string
+    {
+        return $this->buzz;
+    }
+
+    public function setBuzz(string $buzz) : void
+    {
+        $this->buzz = $buzz;
+    }
+}
+
+class MockJsonHydratorClass extends AbstractHydratorClass
+{
+    use JsonHydratorTrait;
+    use FizSetter;
+    private ?string $buzz = null;
+
+    // buzz
+    public function getBuzz() : ?string
+    {
+        return $this->buzz;
+    }
+
+    public function setBuzz(string $buzz) : void
+    {
+        $this->buzz = $buzz;
+    }
+}
+
+class MockBoringClass extends AbstractHydratorClass
+{
+    use FizSetter;
+    private ?string $buzz = null;
+
+    // buzz
+    public function getBuzz() : ?string
+    {
+        return $this->buzz;
+    }
+
+    public function setBuzz(string $buzz) : void
+    {
+        $this->buzz = $buzz;
+    }
+}
+
+class JsonMapperTest extends TestCase
+{
+    protected string $json = '{"foo":"alpha","bar":"beta","fiz":"charlie","buzz":"delta"}';
+
+    public function testJsonMapperWithHydrator()
+    {
+        $jsonMapper = new JsonMapper();
+        $obj        = $jsonMapper->map($this->json, MockJsonHydratorClass::class);
+        $this->assertEquals('alpha', $obj->foo);
+        $this->assertEquals('beta', $obj->getBar());
+        $this->assertEquals('charlie', $obj->getFiz());
+        $this->assertEquals('delta', $obj->getBuzz());
+    }
+
+    public function testJsonMapperWithBadHydrator()
+    {
+        $this->expectException(\Error::class);
+        $jsonMapper = new JsonMapper();
+        $obj        = $jsonMapper->map($this->json, MockJsonBadHydratorClass::class);
+    }
+
+    public function testJsonMapperWithBoringClass()
+    {
+        $jsonMapper = new JsonMapper();
+        $obj        = $jsonMapper->map($this->json, MockBoringClass::class);
+        $this->assertEquals('alpha', $obj->getFoo());
+        $this->assertEquals('beta', $obj->getBar());
+        $this->assertEquals('charlie', $obj->getFiz());
+        $this->assertEquals('delta', $obj->getBuzz());
+    }
+}
