@@ -3,6 +3,7 @@
 namespace Unit\Traits;
 
 use PHPAlchemist\Traits\JsonHydratorTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 class MockJsonHydratorTraitClass
@@ -19,14 +20,14 @@ class MockJsonHydratorTraitClass
         return $this->foo;
     }
 
-    public function setBar($bar) : void
-    {
-        $this->bar = $bar;
-    }
-
     public function getBar() : ?string
     {
         return $this->bar;
+    }
+
+    public function setBar($bar) : void
+    {
+        $this->bar = $bar;
     }
 
     public function getFiz() : ?string
@@ -34,17 +35,18 @@ class MockJsonHydratorTraitClass
         return $this->fiz;
     }
 
-    public function setBuzz($buzz) : void
-    {
-        $this->buzz = $buzz;
-    }
-
     public function getBuzz() : ?string
     {
         return $this->buzz;
     }
+
+    public function setBuzz($buzz) : void
+    {
+        $this->buzz = $buzz;
+    }
 }
 
+#[CoversClass(JsonHydratorTrait::class)]
 class JsonHydratorTraitTest extends TestCase
 {
     public function testHydrateFromJson()
