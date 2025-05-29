@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPAlchemist\Services;
+namespace PHPAlchemist\Service;
 
 use PHPAlchemist\Exception\BadJsonException;
 
