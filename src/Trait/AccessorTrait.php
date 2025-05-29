@@ -2,7 +2,8 @@
 
 namespace PHPAlchemist\Trait;
 
-use Exception;
+use PHPAlchemist\Exception\MethodNotFoundException;
+use PHPAlchemist\Exception\VariableNotFoundException;
 
 /**
  * Trait that adds get($fieldName), set($fieldName, $values), is($boolFieldName).
@@ -33,7 +34,7 @@ trait AccessorTrait
             $position = self::STRING_POSITION_TWO;
             $verb     = $this->getMethodVerb($method, $position);
             if (!in_array($verb, ['is'])) {
-                throw new Exception("No Method ($method) exists on ".get_class($this));
+                throw new MethodNotFoundException("No Method ($method) exists on ".get_class($this));
             }
         }
 
@@ -43,7 +44,7 @@ trait AccessorTrait
             if (property_exists($this, lcfirst($name))) {
                 return call_user_func_array([$this, $verb], array_merge([lcfirst($name)], $arguments));
             } else {
-                throw new Exception("Variable ($name) Not Found");
+                throw new VariableNotFoundException("Variable ($name) Not Found");
             }
         }
     }
