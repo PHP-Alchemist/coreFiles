@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPAlchemist\Services;
+namespace PHPAlchemist\Service;
 
-use PHPAlchemist\Exceptions\BadJsonException;
+use PHPAlchemist\Exception\BadJsonException;
 
 class JsonMapper
 {
