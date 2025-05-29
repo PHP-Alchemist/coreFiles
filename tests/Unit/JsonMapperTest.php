@@ -2,6 +2,7 @@
 
 namespace Unit;
 
+use PHPAlchemist\Exceptions\BadJsonException;
 use PHPAlchemist\Services\JsonMapper;
 use PHPAlchemist\Traits\JsonHydratorTrait;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +17,7 @@ trait FizSetter
 
 abstract class AbstractHydratorClass
 {
-    public ?string $foo    = null;
+    public ?string $foo = null;
     protected ?string $bar = null;
     protected ?string $fiz = null;
 
@@ -49,6 +50,7 @@ abstract class AbstractHydratorClass
 class MockJsonBadHydratorClass extends AbstractHydratorClass
 {
     use JsonHydratorTrait;
+
     private ?string $buzz = null;
 
     // buzz
@@ -67,6 +69,7 @@ class MockJsonHydratorClass extends AbstractHydratorClass
 {
     use JsonHydratorTrait;
     use FizSetter;
+
     private ?string $buzz = null;
 
     // buzz
@@ -84,6 +87,7 @@ class MockJsonHydratorClass extends AbstractHydratorClass
 class MockBoringClass extends AbstractHydratorClass
 {
     use FizSetter;
+
     private ?string $buzz = null;
 
     // buzz
@@ -127,5 +131,23 @@ class JsonMapperTest extends TestCase
         $this->assertEquals('beta', $obj->getBar());
         $this->assertEquals('charlie', $obj->getFiz());
         $this->assertEquals('delta', $obj->getBuzz());
+    }
+
+    public function testBadJsonMapperWithBoringClass()
+    {
+        $this->expectException(BadJsonException::class);
+        $badJson    = '"foo":"alpha","bar":"beta","fiz":"charlie","buzz"=>"delta"';
+        $jsonMapper = new JsonMapper();
+
+        $jsonMapper->map($badJson, MockBoringClass::class);
+    }
+
+    public function testBadJsonMapperWithHydrator()
+    {
+        $this->expectException(BadJsonException::class);
+        $badJson    = '{foo:alpha,bar:beta,fiz:charlie,buzz:delta}';
+        $jsonMapper = new JsonMapper();
+
+        $jsonMapper->map($badJson, MockJsonHydratorClass::class);
     }
 }

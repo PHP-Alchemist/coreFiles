@@ -2,12 +2,14 @@
 
 namespace PHPAlchemist\Services;
 
+use PHPAlchemist\Exceptions\BadJsonException;
+
 class JsonMapper
 {
     public function map(string $json, string $class) : object
     {
         if (!$this->validateJson($json)) {
-            throw new \Exception('Invalid JSON');
+            throw new BadJsonException();
         }
 
         $newObject = new $class();
