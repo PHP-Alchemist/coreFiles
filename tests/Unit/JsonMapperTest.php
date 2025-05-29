@@ -62,7 +62,6 @@ class MockJsonBadHydrationClass extends AbstractHydratorClass
     {
         return $this->buzz;
     }
-
 }
 
 class MockJsonHydratorClass extends AbstractHydratorClass
