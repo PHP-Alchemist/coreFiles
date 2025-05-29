@@ -48,22 +48,21 @@ abstract class AbstractHydratorClass
     }
 }
 
-class MockJsonBadHydratorClass extends AbstractHydratorClass
+class MockJsonBadHydrationClass extends AbstractHydratorClass
 {
-    use JsonHydratorTrait;
-
     private ?string $buzz = null;
 
     // buzz
+    public function setBuzz(string $buzz) : void
+    {
+        $this->buzz = $buzz;
+    }
+
     public function getBuzz() : ?string
     {
         return $this->buzz;
     }
 
-    public function setBuzz(string $buzz) : void
-    {
-        $this->buzz = $buzz;
-    }
 }
 
 class MockJsonHydratorClass extends AbstractHydratorClass
@@ -119,11 +118,11 @@ class JsonMapperTest extends TestCase
         $this->assertEquals('delta', $obj->getBuzz());
     }
 
-    public function testJsonMapperWithBadHydrator()
+    public function testJsonMapperWithBadHydration()
     {
         $this->expectException(\Error::class);
         $jsonMapper = new JsonMapper();
-        $jsonMapper->map($this->json, MockJsonBadHydratorClass::class);
+        $jsonMapper->map($this->json, MockJsonBadHydrationClass::class);
     }
 
     public function testJsonMapperWithBoringClass()
@@ -141,7 +140,7 @@ class JsonMapperTest extends TestCase
         $oldJson    = json_decode($this->json, true);
         $newJson    = json_encode(array_merge($oldJson, ['stuff' => 'thangs']));
         $jsonMapper = new JsonMapper();
-        $obj        = $jsonMapper->map($newJson, MockJsonHydratorClass::class);
+        $obj        = $jsonMapper->map($newJson, MockBoringClass::class);
         $this->assertEquals('alpha', $obj->foo);
         $this->assertEquals('beta', $obj->getBar());
         $this->assertEquals('charlie', $obj->getFiz());

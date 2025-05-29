@@ -13,7 +13,7 @@ class JsonMapper
         }
 
         $newObject = new $class();
-        if (is_callable([$newObject, 'hydrate'])) {
+        if (is_callable([$newObject, 'hydrateFromJson'])) {
             $newObject->hydrateFromJson($json);
 
             return $newObject;
