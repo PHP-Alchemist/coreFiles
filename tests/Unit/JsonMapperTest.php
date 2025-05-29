@@ -120,7 +120,7 @@ class JsonMapperTest extends TestCase
     {
         $this->expectException(\Error::class);
         $jsonMapper = new JsonMapper();
-        $obj        = $jsonMapper->map($this->json, MockJsonBadHydratorClass::class);
+        $jsonMapper->map($this->json, MockJsonBadHydratorClass::class);
     }
 
     public function testJsonMapperWithBoringClass()
