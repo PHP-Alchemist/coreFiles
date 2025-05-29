@@ -39,11 +39,11 @@ class ArrayUtility
      */
     public static function sumByKey(array $array, mixed $index = null) : int
     {
-        if (!is_array($array) || sizeof($array) < 1) {
+        if (!is_array($array) || empty($array)) {
             return 0;
         }
         $ret = 0;
-        foreach ($array as $key => $value) {
+        foreach ($array as $value) {
             if (isset($index)) {
                 $ret += (isset($value[$index])) ? $value[$index] : 0;
             } else {
