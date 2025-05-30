@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractNumber::class)]
 class EmailTest extends TestCase
 {
-
     const string VALID_EMAIL_VALUE = 'stuff@things.net';
 
     public function testInvalidEmail() : void
