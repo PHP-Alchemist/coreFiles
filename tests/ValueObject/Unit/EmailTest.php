@@ -63,8 +63,8 @@ class EmailTest extends TestCase
     public function testGetTLD() : void
     {
         $emailObject = new Email(self::VALID_EMAIL_VALUE);
-        $tld = $emailObject->getTld();
-        $this->assertEquals('net', $tld );
+        $tld         = $emailObject->getTld();
+        $this->assertEquals('net', $tld);
         $this->assertInstanceOf(Twine::class, $tld);
     }
 }
