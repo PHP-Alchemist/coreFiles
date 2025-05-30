@@ -17,7 +17,5 @@ class HashTableFullException extends \Exception
         if (empty($message)) {
             $this->message = self::ERROR_UNMATCHED_CLASS;
         }
-
-        parent::__construct($message, $code, $previous);
     }
 }
