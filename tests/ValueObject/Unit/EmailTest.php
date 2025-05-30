@@ -2,6 +2,7 @@
 
 namespace ValueObject\Unit;
 
+use PHPAlchemist\Types\Twine;
 use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
 use PHPAlchemist\ValueObject\Abstract\AbstractString;
 use PHPAlchemist\ValueObject\Model\Email;
@@ -45,5 +46,25 @@ class EmailTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $emailObject->length());
         $this->assertequals($expectedLength, $emailObject->length()->getValue());
+    }
+
+    public function testGetUser() : void
+    {
+        $emailObject = new Email(self::VALID_EMAIL_VALUE);
+        $this->assertEquals('stuff', $emailObject->getUser());
+    }
+
+    public function testGetDomain() : void
+    {
+        $emailObject = new Email(self::VALID_EMAIL_VALUE);
+        $this->assertEquals('things.net', $emailObject->getDomain());
+    }
+
+    public function testGetTLD() : void
+    {
+        $emailObject = new Email(self::VALID_EMAIL_VALUE);
+        $tld = $emailObject->getTld();
+        $this->assertEquals('net', $tld );
+        $this->assertInstanceOf(Twine::class, $tld);
     }
 }
