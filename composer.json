@@ -22,7 +22,7 @@
         "phpunit/phpunit": "^11.4@dev",
         "squizlabs/php_codesniffer": "4.0.x-dev",
         "phpmd/phpmd": "dev-master",
-        "vimeo/psalm": "6.x-dev",
+        "psalm/phar": "6.x-dev",
         "povils/phpmnd": "dev-master"
     },
     "scripts": {
