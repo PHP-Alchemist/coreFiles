@@ -4,8 +4,8 @@ namespace ValueObject\Unit;
 
 use PHPAlchemist\ValueObject\Abstract\AbstractVONumber;
 use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
-use PHPAlchemist\ValueObject\Model\VONumber;
 use PHPAlchemist\ValueObject\Model\USState;
+use PHPAlchemist\ValueObject\Model\VONumber;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
