@@ -3,9 +3,9 @@
 namespace PHPAlchemist\ValueObject\Model;
 
 use InvalidArgumentException;
-use PHPAlchemist\ValueObject\Abstract\AbstractString;
+use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 
-final class USState extends AbstractString
+final class USState extends AbstractVOString
 {
     const int CODE_LENGTH = 2;
 

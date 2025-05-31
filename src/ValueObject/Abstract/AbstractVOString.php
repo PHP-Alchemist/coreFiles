@@ -5,9 +5,9 @@ namespace PHPAlchemist\ValueObject\Abstract;
 use PHPAlchemist\Types\Twine;
 use PHPAlchemist\ValueObject\Contract\VONumberInterface;
 use PHPAlchemist\ValueObject\Contract\VOStringInterface;
-use PHPAlchemist\ValueObject\Model\Number;
+use PHPAlchemist\ValueObject\Model\VONumber;
 
-abstract class AbstractString implements VOStringInterface
+abstract class AbstractVOString implements VOStringInterface
 {
     protected readonly string $value;
 
@@ -68,7 +68,7 @@ abstract class AbstractString implements VOStringInterface
     {
         $length = strlen($this->value);
 
-        return new Number($length);
+        return new VONumber($length);
     }
 
     /**

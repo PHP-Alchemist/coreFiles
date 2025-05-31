@@ -4,9 +4,9 @@ namespace PHPAlchemist\ValueObject\Model;
 
 use InvalidArgumentException;
 use PHPAlchemist\Types\Twine;
-use PHPAlchemist\ValueObject\Abstract\AbstractString;
+use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 
-final class Email extends AbstractString
+final class Email extends AbstractVOString
 {
     public function __construct(string $value)
     {

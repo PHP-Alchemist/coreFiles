@@ -2,17 +2,19 @@
 
 namespace ValueObject\Unit;
 
+use PHPAlchemist\Abstracts\AbstractString;
 use PHPAlchemist\Types\Twine;
-use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
-use PHPAlchemist\ValueObject\Abstract\AbstractString;
+use PHPAlchemist\ValueObject\Abstract\AbstractVONumber;
+use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 use PHPAlchemist\ValueObject\Model\Email;
-use PHPAlchemist\ValueObject\Model\Number;
+use PHPAlchemist\ValueObject\Model\VONumber;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Email::class)]
 #[CoversClass(AbstractString::class)]
-#[CoversClass(AbstractNumber::class)]
+#[CoversClass(AbstractVOString::class)]
+#[CoversClass(AbstractVONumber::class)]
 class EmailTest extends TestCase
 {
     const string VALID_EMAIL_VALUE = 'stuff@things.net';
@@ -44,7 +46,7 @@ class EmailTest extends TestCase
         $expectedLength = 16;
         $emailObject    = new Email(self::VALID_EMAIL_VALUE);
 
-        $this->assertInstanceOf(Number::class, $emailObject->length());
+        $this->assertInstanceOf(VONumber::class, $emailObject->length());
         $this->assertequals($expectedLength, $emailObject->length()->getValue());
     }
 

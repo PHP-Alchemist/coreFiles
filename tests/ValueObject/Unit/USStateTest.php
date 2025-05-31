@@ -2,16 +2,16 @@
 
 namespace ValueObject\Unit;
 
-use PHPAlchemist\ValueObject\Abstract\AbstractNumber;
-use PHPAlchemist\ValueObject\Abstract\AbstractString;
-use PHPAlchemist\ValueObject\Model\Number;
+use PHPAlchemist\ValueObject\Abstract\AbstractVONumber;
+use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
+use PHPAlchemist\ValueObject\Model\VONumber;
 use PHPAlchemist\ValueObject\Model\USState;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(USState::class)]
-#[CoversClass(AbstractString::class)]
-#[CoversClass(AbstractNumber::class)]
+#[CoversClass(AbstractVOString::class)]
+#[CoversClass(AbstractVONumber::class)]
 class USStateTest extends TestCase
 {
     public function testInvalidState() : void
@@ -46,7 +46,7 @@ class USStateTest extends TestCase
         $expectedLength = 9;
         $state          = new USState($validStateCode);
 
-        $this->assertInstanceOf(Number::class, $state->length());
+        $this->assertInstanceOf(VONumber::class, $state->length());
         $this->assertequals($expectedLength, $state->length()->getValue());
     }
 }
