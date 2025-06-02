@@ -16,27 +16,27 @@ use PHPUnit\Framework\TestCase;
 class DictionaryTest extends TestCase
 {
     // Core-Files Types
-    const TWINE_TYPE      = '\PHPAlchemist\Type\Twine';
+    const TWINE_TYPE = '\PHPAlchemist\Type\Twine';
     const DICTIONARY_TYPE = 'PHPAlchemist\Type\Dictionary';
 
     // Interfaces
     const ARRAYACCESS_TYPE = '\ArrayAccess';
-    const ITERATOR_TYPE    = '\Iterator';
+    const ITERATOR_TYPE = '\Iterator';
     const TRAVERSABLE_TYPE = '\Traversable';
 
     // Exception
-    const EXCEPTION_TYPE        = '\Exception';
+    const EXCEPTION_TYPE = '\Exception';
     const INVALID_KEY_EXCEPTION = '\PHPAlchemist\Exception\InvalidKeyTypeException';
-    const READONLY_EXCEPTION    = 'PHPAlchemist\Exception\ReadOnlyDataException';
+    const READONLY_EXCEPTION = 'PHPAlchemist\Exception\ReadOnlyDataException';
     const HTABLE_FULL_EXCEPTION = 'PHPAlchemist\Exception\HashTableFullException';
 
     public function testCount()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $this->assertEquals('4', $dictionary->count());
@@ -57,10 +57,10 @@ class DictionaryTest extends TestCase
     public function testSerializable()
     {
         $arrayTest = new Dictionary([
-            'alpha'   => 'abc',
-            'bravo'   => 'bcd',
-            'charlie' => 'cde',
-            'delta'   => 'def',
+          'alpha'   => 'abc',
+          'bravo'   => 'bcd',
+          'charlie' => 'cde',
+          'delta'   => 'def',
         ]);
 
         $serializedObject = serialize($arrayTest);
@@ -94,10 +94,10 @@ class DictionaryTest extends TestCase
     public function testGetSet()
     {
         $testData = [
-            'z' => 'abc',
-            'y' => 'bcd',
-            'x' => 'cde',
-            'w' => 'def',
+          'z' => 'abc',
+          'y' => 'bcd',
+          'x' => 'cde',
+          'w' => 'def',
         ];
 
         $dictionary = new Dictionary($testData);
@@ -120,10 +120,10 @@ class DictionaryTest extends TestCase
     public function testNext()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $this->assertEquals('abc', $dictionary->current());
@@ -134,10 +134,10 @@ class DictionaryTest extends TestCase
     public function testPrev()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $this->assertEquals('abc', $dictionary->current());
@@ -151,10 +151,10 @@ class DictionaryTest extends TestCase
     public function testCurrent()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $this->assertEquals('abc', $dictionary->current());
@@ -163,10 +163,10 @@ class DictionaryTest extends TestCase
     public function testKey()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $dictionary->next();
@@ -176,10 +176,10 @@ class DictionaryTest extends TestCase
     public function testsetData()
     {
         $arrayData = [
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ];
 
         $dictionary = new Dictionary();
@@ -191,10 +191,10 @@ class DictionaryTest extends TestCase
     public function testRewind()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $dictionary->next();
@@ -208,10 +208,10 @@ class DictionaryTest extends TestCase
     public function testOffsets()
     {
         $dictionary = new Dictionary([
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ]);
 
         $stuffAndThangs = 'stuff and thangs';
@@ -244,10 +244,10 @@ class DictionaryTest extends TestCase
     public function testArrayAccess()
     {
         $data       = [
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ];
         $dictionary = new Dictionary($data);
 
@@ -257,10 +257,10 @@ class DictionaryTest extends TestCase
     public function testTraversable()
     {
         $data       = [
-            'abc',
-            'bcd',
-            'cde',
-            'def',
+          'abc',
+          'bcd',
+          'cde',
+          'def',
         ];
         $dictionary = new Dictionary($data);
 

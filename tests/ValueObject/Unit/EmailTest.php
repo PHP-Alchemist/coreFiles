@@ -2,8 +2,8 @@
 
 namespace ValueObject\Unit;
 
-use PHPAlchemist\Abstracts\AbstractString;
-use PHPAlchemist\Types\Twine;
+use PHPAlchemist\Abstract\AbstractString;
+use PHPAlchemist\Type\Twine;
 use PHPAlchemist\ValueObject\Abstract\AbstractVONumber;
 use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 use PHPAlchemist\ValueObject\Model\Email;
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AbstractVONumber::class)]
 class EmailTest extends TestCase
 {
-    const VALID_EMAIL_VALUE = 'stuff@things.net';
+    const string VALID_EMAIL_VALUE = 'stuff@things.net';
 
     public function testInvalidEmail() : void
     {

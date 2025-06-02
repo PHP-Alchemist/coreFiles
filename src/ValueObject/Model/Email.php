@@ -3,12 +3,12 @@
 namespace PHPAlchemist\ValueObject\Model;
 
 use InvalidArgumentException;
-use PHPAlchemist\Types\Twine;
+use PHPAlchemist\Type\Twine;
 use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 
 final class Email extends AbstractVOString
 {
-    private const INVALID_EMAIL_MESSAGE = 'Invalid email address: %s';
+    private const string INVALID_EMAIL_MESSAGE = 'Invalid email address: %s';
 
     public function __construct(string $value)
     {
@@ -16,11 +16,11 @@ final class Email extends AbstractVOString
         $this->value = $value;
     }
 
-    private function validateEmail(string $email): void
+    private function validateEmail(string $email) : void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(
-                sprintf(self::INVALID_EMAIL_MESSAGE, $email)
+              sprintf(self::INVALID_EMAIL_MESSAGE, $email)
             );
         }
     }

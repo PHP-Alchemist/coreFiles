@@ -7,11 +7,7 @@ use PHPAlchemist\ValueObject\Abstract\AbstractVOString;
 
 final class USState extends AbstractVOString
 {
-    /**
-     * v3 will use:
-     * const int CODE_LENGTH = 2;
-     */
-    const CODE_LENGTH = 2;
+    const int CODE_LENGTH = 2;
 
     protected string $code;
 

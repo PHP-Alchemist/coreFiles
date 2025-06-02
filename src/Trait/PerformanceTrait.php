@@ -9,15 +9,8 @@ namespace PHPAlchemist\Trait;
  */
 trait PerformanceTrait
 {
-    /**
-     * in v3 when only supporting PHP 8.4+ this will be switched out for
-     * the following:
-     *
-     * const int ONE_KILOBYTE_IN_BYTES = 1024;
-     * const int ONE_MEGABYTE_IN_BYTES = 1048576;
-     */
-    const ONE_KILOBYTE_IN_BYTES = 1024;
-    const ONE_MEGABYTE_IN_BYTES = 1048576;
+    const int ONE_KILOBYTE_IN_BYTES = 1024;
+    const int ONE_MEGABYTE_IN_BYTES = 1048576;
 
     /**
      * get the performance data (Peak Memory Usage) for a given script or
