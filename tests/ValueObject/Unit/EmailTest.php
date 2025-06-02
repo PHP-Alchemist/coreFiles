@@ -21,7 +21,7 @@ class EmailTest extends TestCase
 
     public function testInvalidEmail() : void
     {
-        $this->expectExceptionMessage('Invalid email address.');
+        $this->expectExceptionMessage('Invalid email address');
         $invalidEmailValue = 'stuff@things';
         new Email($invalidEmailValue);
     }

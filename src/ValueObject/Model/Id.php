@@ -2,8 +2,8 @@
 
 namespace PHPAlchemist\ValueObject\Model;
 
-use PHPAlchemist\ValueObjects\Abstract\AbstractNumber;
+use PHPAlchemist\ValueObject\Abstract\AbstractVONumber;
 
-final class Id extends AbstractNumber
+final class Id extends AbstractVONumber
 {
 }
