@@ -13,7 +13,7 @@ abstract class AbstractVOString implements VOStringInterface
      * Below is the value store for the VO String object. In v3.0 this will be protected readonly.
      * Currently, this is only set to maintain compatibility for v2.x.
      *
-     * @var string $value the value store for the VO String object
+     * @var string the value store for the VO String object
      */
     // PHP 8.4 ONLY -> protected readonly string $value;
     protected string $value;

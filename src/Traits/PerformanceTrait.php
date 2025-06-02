@@ -13,7 +13,6 @@ trait PerformanceTrait
      *
      * const int ONE_KILOBYTE_IN_BYTES = 1024;
      * const int ONE_MEGABYTE_IN_BYTES = 1048576;
-     *
      */
     const ONE_KILOBYTE_IN_BYTES = 1024;
     const ONE_MEGABYTE_IN_BYTES = 1048576;
