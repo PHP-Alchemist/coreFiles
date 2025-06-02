@@ -3,8 +3,8 @@
 namespace PHPAlchemist\Trait;
 
 /**
- * @package PHPAlchemist\Trait
  * @deprecated  Will be removed in v4.0.0
+ *
  * @author Micah Breedlove <druid628@gmail.com>
  */
 trait PerformanceTrait
@@ -25,12 +25,12 @@ trait PerformanceTrait
             // These two are ignored as the nature of phpUnit testing will not allow me to come in under a meg
             // and run coverage
             // @codeCoverageIgnoreStart
-            $displayData = $memUsage . ' bytes';
+            $displayData = $memUsage.' bytes';
         } elseif ($memUsage < self::ONE_MEGABYTE_IN_BYTES) {
-            $displayData = round($memUsage / self::ONE_KILOBYTE_IN_BYTES, 2) . ' kilobytes';
+            $displayData = round($memUsage / self::ONE_KILOBYTE_IN_BYTES, 2).' kilobytes';
             // @codeCoverageIgnoreEnd
         } else {
-            $displayData = round($memUsage / self::ONE_MEGABYTE_IN_BYTES, 2) . ' megabytes';
+            $displayData = round($memUsage / self::ONE_MEGABYTE_IN_BYTES, 2).' megabytes';
         }
 
         return $displayData;

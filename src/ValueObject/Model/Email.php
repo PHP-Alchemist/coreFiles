@@ -20,7 +20,7 @@ final class Email extends AbstractVOString
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(
-              sprintf(self::INVALID_EMAIL_MESSAGE, $email)
+                sprintf(self::INVALID_EMAIL_MESSAGE, $email)
             );
         }
     }

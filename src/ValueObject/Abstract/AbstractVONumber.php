@@ -16,8 +16,8 @@ abstract class AbstractVONumber implements VONumberInterface
     public function equals(VONumberInterface $number) : bool
     {
         if (
-          $number === $this
-          && $number->getValue() === $this->getValue()
+            $number === $this
+            && $number->getValue() === $this->getValue()
         ) {
             return true;
         }
