@@ -55,7 +55,7 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
         $this->position = 0;
     }
 
-   /**
+    /**
      * @param string $glue default: ' '
      *
      * @return StringInterface
@@ -273,7 +273,6 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
     {
         return $this->offsetGet($key);
     }
-
 
     /**
      * Convert AbstractCollection to a AbstractList (Roll).

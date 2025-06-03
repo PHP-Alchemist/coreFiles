@@ -126,6 +126,7 @@ abstract class NaturalArray
     {
         $returnValue = $this->data[$key];
         $this->delete($key);
+
         return $returnValue;
     }
 
@@ -135,5 +136,4 @@ abstract class NaturalArray
             $this->offsetUnset($key);
         }
     }
-
 }
