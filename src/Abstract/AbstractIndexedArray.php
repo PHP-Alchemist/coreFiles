@@ -76,9 +76,9 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
     {
         // Check version and if mismatch call conversion method
         return [
-          'version' => static::$serializeVersion,
-          'model'   => get_class($this),
-          'data'    => $this->data,
+            'version' => static::$serializeVersion,
+            'model'   => get_class($this),
+            'data'    => $this->data,
         ];
     }
 
@@ -87,10 +87,10 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
      *
      * @param array $data
      *
-     * @return void
      * @throws UnmatchedVersionException
-     *
      * @throws UnmatchedClassException
+     *
+     * @return void
      */
     public function __unserialize(array $data) : void
     {
@@ -203,16 +203,16 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
      *
      * @param Collection $secondCollection
      *
-     * @return Collection
      * @throws InvalidKeyTypeException
      *
+     * @return Collection
      */
     public function intersection(Collection $secondCollection) : Collection
     {
         return new Collection(
-          array_values(
-            array_intersect($this->data, $secondCollection->getData())
-          )
+            array_values(
+                array_intersect($this->data, $secondCollection->getData())
+            )
         );
     }
 
@@ -248,9 +248,9 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
      * @param Collection $indexes
      * @param            $rollClass Default: \PHPAlchemist\Type\Roll
      *
-     * @return AbstractList
      * @throws \Exception
      *
+     * @return AbstractList
      */
     public function toRoll(Collection $indexes = new Collection(), $rollClass = Roll::class) : AbstractList
     {

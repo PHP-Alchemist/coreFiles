@@ -67,9 +67,9 @@ abstract class AbstractAssociativeArray extends NaturalArray implements Associat
     public function __serialize() : array
     {
         return [
-          'version' => static::$serializeVersion,
-          'model'   => get_class($this),
-          'data'    => $this->data,
+            'version' => static::$serializeVersion,
+            'model'   => get_class($this),
+            'data'    => $this->data,
         ];
     }
 
@@ -89,7 +89,7 @@ abstract class AbstractAssociativeArray extends NaturalArray implements Associat
     /**
      * Add.
      *
-     * @param mixed $key key to add to array
+     * @param mixed $key   key to add to array
      * @param mixed $value value to add to array
      *
      * @return $this
@@ -129,7 +129,7 @@ abstract class AbstractAssociativeArray extends NaturalArray implements Associat
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
      * @throws HashTableFullException
      * @throws InvalidKeyTypeException
@@ -142,14 +142,14 @@ abstract class AbstractAssociativeArray extends NaturalArray implements Associat
     public function offsetSet(mixed $offset, mixed $value) : void
     {
         if ($this->isReadOnly()) {
-            throw new ReadOnlyDataException('Invalid call to offsetSet on read-only ' . __CLASS__ . '.');
+            throw new ReadOnlyDataException('Invalid call to offsetSet on read-only '.__CLASS__.'.');
         }
 
         if (!$this->offsetExists($offset)
           && $this->isFixedSize()
           && $this->count() == $this->fixedSize
         ) {
-            throw new HashTableFullException('Invalid call to offsetSet on ' . __CLASS__ . 'where Size is Fixed and HashTable full.');
+            throw new HashTableFullException('Invalid call to offsetSet on '.__CLASS__.'where Size is Fixed and HashTable full.');
         }
 
         if (!$this->validateKey($offset)) {
@@ -159,8 +159,8 @@ abstract class AbstractAssociativeArray extends NaturalArray implements Associat
         if (isset($this->onInsert) && is_callable($this->onInsert)) {
             $onInsert = $this->onInsert;
             [
-              $offset,
-              $value,
+                $offset,
+                $value,
             ] = $onInsert($offset, $value);
         }
 
