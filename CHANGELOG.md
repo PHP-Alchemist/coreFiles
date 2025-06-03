@@ -5,6 +5,29 @@ All notable changes after v2.0.0 to this project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-06-03
+
+### Added
+
+* Adds ValueObjects (namespace: `PHPAlchemist\ValueObject\`)
+includes interfaces and abstract classes. Models included listed below:
+  * Email
+  * ID
+  * USState
+  * VONumber
+* Adds `JsonMapper` - service which will cast json string to a specified class
+* Adds `JsonHydratorTrait` - trait which allows a class to hydrate data from json string
+* Adds `BadJsonException`
+
+### Changed
+
+* (DEV) moved to `psalm/phar`
+
+### Removed
+
+* No removals
+
+
 ## [2.1.1] - 2025-01-10
 
 ### Added

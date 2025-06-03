@@ -157,7 +157,6 @@ class AccessorTraitTest extends TestCase
         }
     }
 
-    #[CoversMethod([AccessorTrait::class, 'getMethodVerb'])]
     public function testIsAndCatchAll()
     {
         $example = new MagicAccessorExample();
