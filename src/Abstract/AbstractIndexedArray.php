@@ -107,24 +107,34 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
     }
 
     /**
-     * Offset to unset.
+     * Offset to set.
      *
-     * @param mixed $offset The offset to unset.
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value  The value to set.
      *
      * @return void
+     *
+     * @since  5.0.0
      */
-    public function offsetUnset(mixed $offset) : void
+    public function offsetSet(mixed $offset, mixed $value) : void
     {
-        if (isset($this->onRemove) && is_callable($this->onRemove)) {
-            $onRemove = $this->onRemove;
-            $onRemove($offset, $this->data[$offset]);
+        if ($this->isStrict() && !$this->validateKey($offset)) {
+            throw new InvalidKeyTypeException(sprintf('Invalid Key type (%s) for Array', gettype($offset)));
         }
 
-        unset($this->data[$offset]);
+        if (isset($this->onInsert) && is_callable($this->onInsert)) {
+            $onInsert = $this->onInsert; // may overload __call to check if member exists && is_callable()
+            [
+              $offset,
+              $value,
+            ] = $onInsert($offset, $value);
+        }
 
-        if (isset($this->onRemoveComplete) && is_callable($this->onRemoveComplete)) {
-            $onRemoveComplete = $this->onRemoveComplete;
-            $onRemoveComplete($this->data);
+        $this->data[$offset] = $value;
+
+        if (isset($this->onInsertComplete) && is_callable($this->onInsertComplete)) {
+            $onInsertComplete = $this->onInsertComplete;
+            $onInsertComplete($this->data);
         }
     }
     // endregion
