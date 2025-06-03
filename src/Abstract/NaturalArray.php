@@ -51,6 +51,21 @@ abstract class NaturalArray
         return null;
     }
 
+    public function offsetUnset(mixed $offset) : void
+    {
+        if (isset($this->onRemove) && is_callable($this->onRemove)) {
+            $onRemove = $this->onRemove;
+            $onRemove($offset, $this->data[$offset]);
+        }
+
+        unset($this->data[$offset]);
+
+        if (isset($this->onRemoveComplete) && is_callable($this->onRemoveComplete)) {
+            $onRemoveComplete = $this->onRemoveComplete;
+            $onRemoveComplete($this->data);
+        }
+    }
+
     public function count() : int
     {
         return count($this->data);
