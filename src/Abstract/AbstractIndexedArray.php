@@ -21,13 +21,9 @@ use PHPAlchemist\Type\Twine;
 /**
  * Abstract class Collection (Objectified Array Class).
  */
-abstract class AbstractIndexedArray implements IndexedArrayInterface
+abstract class AbstractIndexedArray extends NaturalArray implements IndexedArrayInterface
 {
     use ArrayTrait;
-    use OnInsertTrait;
-    use OnRemoveTrait;
-    use OnClearTrait;
-    use OnSetTrait;
 
     public static $serializeVersion = 1;
 
@@ -63,23 +59,7 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
         $this->position = 0;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function count() : int
-    {
-        return count($this->data);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function prev() : void
-    {
-        $this->position--;
-    }
-
-    /**
+   /**
      * @param string $glue default: ' '
      *
      * @return StringInterface
@@ -128,39 +108,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
         }
 
         $this->data = $data['data'];
-    }
-
-    /**
-     * Whether a offset exists.
-     *
-     * @link   https://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @param mixed $offset <p>
-     *                      An offset to check for.
-     *                      </p>
-     *
-     * @return bool true on success or false on failure.
-     *              </p>
-     *              <p>
-     *              The return value will be casted to boolean if non-boolean was returned.
-     *
-     * @since  5.0.0
-     */
-    public function offsetExists(mixed $offset) : bool
-    {
-        return isset($this->data[$offset]);
-    }
-
-    /**
-     * Offset to retrieve.
-     *
-     * @param mixed $offset The offset to retrieve.
-     *
-     * @return mixed Can return all value types.
-     */
-    public function offsetGet(mixed $offset) : mixed
-    {
-        return $this->data[$offset];
     }
 
     /**
@@ -216,83 +163,9 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
             $onRemoveComplete($this->data);
         }
     }
-
-    /**
-     * Return the current element.
-     *
-     * @link   https://php.net/manual/en/iterator.current.php
-     *
-     * @return mixed Can return any type.
-     *
-     * @since  5.0.0
-     */
-    public function current() : mixed
-    {
-        return ($this->valid()) ? array_values($this->data)[$this->position] : false;
-    }
-
-    /**
-     * Move forward to next element.
-     *
-     * @link   https://php.net/manual/en/iterator.next.php
-     *
-     * @return void Any returned value is ignored.
-     *
-     * @since  5.0.0
-     */
-    public function next() : void
-    {
-        $this->position++;
-    }
-
-    /**
-     * Return the key of the current element.
-     *
-     * @link   https://php.net/manual/en/iterator.key.php
-     *
-     * @return mixed scalar on success, or null on failure.
-     *
-     * @since  5.0.0
-     */
-    public function key() : mixed
-    {
-        return array_keys($this->data)[$this->position];
-    }
-
-    /**
-     * Checks if current position is valid.
-     *
-     * @link   https://php.net/manual/en/iterator.valid.php
-     *
-     * @return bool The return value will be casted to boolean and then evaluated.
-     *              Returns true on success or false on failure.
-     *
-     * @since  5.0.0
-     */
-    public function valid() : bool
-    {
-        return isset(array_values($this->data)[$this->position]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function rewind() : void
-    {
-        $this->position = 0;
-    }
-
     // endregion
 
     // region Public Methods
-
-    /**
-     * @return array
-     */
-    public function getData() : array
-    {
-        return $this->data;
-    }
 
     /**
      * @inheritDoc
@@ -405,13 +278,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
         return $this->offsetGet($key);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function first() : mixed
-    {
-        return $this->data[array_key_first($this->data)];
-    }
 
     /**
      * Convert AbstractCollection to a AbstractList (Roll).
@@ -437,29 +303,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     }
 
     /**
-     * Get the value of a specified key and remove from
-     * array.
-     *
-     * @param mixed $key The key for the element desired
-     *
-     * @return mixed
-     */
-    public function extract(mixed $key) : mixed
-    {
-        $returnValue = $this->data[$key];
-        $this->delete($key);
-
-        return $returnValue;
-    }
-
-    public function delete(mixed $key) : void
-    {
-        if (array_key_exists($key, $this->data)) {
-            $this->offsetUnset($key);
-        }
-    }
-
-    /**
      * Find the key for $value.
      *
      * @param mixed $value the value to search the array for
@@ -470,28 +313,6 @@ abstract class AbstractIndexedArray implements IndexedArrayInterface
     {
         return array_search($value, $this->data);
     }
-
-    public function clear() : void
-    {
-        if (isset($this->onClear) && is_callable($this->onClear)) {
-            $onClear = $this->onClear;
-            $onClear($this->data);
-        }
-
-        $this->data = [];
-        $this->rewind();
-
-        if (isset($this->onClearComplete) && is_callable($this->onClearComplete)) {
-            $onClearComplete = $this->onClearComplete;
-            $onClearComplete($this->data);
-        }
-    }
-
-    public function isEmpty() : bool
-    {
-        return empty($this->data);
-    }
-
     // endregion
 
     // region Protected Methods
