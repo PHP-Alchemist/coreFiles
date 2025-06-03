@@ -14,18 +14,18 @@ use PHPAlchemist\Exception\VariableNotFoundException;
 trait AccessorTrait
 {
     const int STRING_POSITION_BEGINNING = 0;
-    const int STRING_POSITION_TWO = 2;
-    const int STRING_POSITION_THREE = 3;
+    const int STRING_POSITION_TWO       = 2;
+    const int STRING_POSITION_THREE     = 3;
 
     /**
      * Magic.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
-     * @return mixed
      * @throws \Exception
      *
+     * @return mixed
      */
     public function __call($method, $arguments)
     {
@@ -35,7 +35,7 @@ trait AccessorTrait
             $position = self::STRING_POSITION_TWO;
             $verb     = $this->getMethodVerb($method, $position);
             if (!in_array($verb, ['is'])) {
-                throw new MethodNotFoundException("No Method ($method) exists on " . get_class($this));
+                throw new MethodNotFoundException("No Method ($method) exists on ".get_class($this));
             }
         }
 
@@ -97,10 +97,9 @@ trait AccessorTrait
     public function is(string $fieldName) : bool
     {
         if (!is_bool($this->$fieldName)) {
-            throw new IsMethodCalledOnNonBooleanException('Cannot call is() on non-boolean variable (' . $fieldName . ').');
+            throw new IsMethodCalledOnNonBooleanException('Cannot call is() on non-boolean variable ('.$fieldName.').');
         }
 
         return $this->get($fieldName);
     }
-
 }

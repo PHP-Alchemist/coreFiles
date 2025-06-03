@@ -77,7 +77,7 @@ trait ArrayInteratorFunctions
 
     /**
      * Move back to previous element.
-     * not part of Iterator
+     * not part of Iterator.
      *
      * @return void Any returned value is ignored.
      */
@@ -85,5 +85,4 @@ trait ArrayInteratorFunctions
     {
         $this->position--;
     }
-
 }
