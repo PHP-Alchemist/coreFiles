@@ -21,7 +21,7 @@ abstract class AbstractList extends AbstractIndexedArray
     /**
      * @inheritDoc
      */
-    public function offsetset(mixed $offset, mixed $value) : void
+    public function offsetSet(mixed $offset, mixed $value) : void
     {
         parent::offsetSet($offset, $value);
         if (!$this->isList()) {
