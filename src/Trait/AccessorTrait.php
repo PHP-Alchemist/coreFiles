@@ -2,6 +2,7 @@
 
 namespace PHPAlchemist\Trait;
 
+use PHPAlchemist\Exception\IsMethodCalledOnNonBooleanException;
 use PHPAlchemist\Exception\MethodNotFoundException;
 use PHPAlchemist\Exception\VariableNotFoundException;
 
@@ -12,19 +13,19 @@ use PHPAlchemist\Exception\VariableNotFoundException;
  */
 trait AccessorTrait
 {
-    const STRING_POSITION_BEGINNING = 0;
-    const STRING_POSITION_TWO       = 2;
-    const STRING_POSITION_THREE     = 3;
+    const int STRING_POSITION_BEGINNING = 0;
+    const int STRING_POSITION_TWO = 2;
+    const int STRING_POSITION_THREE = 3;
 
     /**
      * Magic.
      *
      * @param string $method
-     * @param array  $arguments
-     *
-     * @throws \Exception
+     * @param array $arguments
      *
      * @return mixed
+     * @throws \Exception
+     *
      */
     public function __call($method, $arguments)
     {
@@ -34,7 +35,7 @@ trait AccessorTrait
             $position = self::STRING_POSITION_TWO;
             $verb     = $this->getMethodVerb($method, $position);
             if (!in_array($verb, ['is'])) {
-                throw new MethodNotFoundException("No Method ($method) exists on ".get_class($this));
+                throw new MethodNotFoundException("No Method ($method) exists on " . get_class($this));
             }
         }
 
@@ -52,13 +53,8 @@ trait AccessorTrait
     /**
      * Get the verb from the method name being called.
      * e.g. [get]Data(), [set]Name(), [is]Active().
-     *
-     * @param $method
-     * @param $position
-     *
-     * @return string
      */
-    protected function getMethodVerb($method, $position = self::STRING_POSITION_THREE) : string
+    protected function getMethodVerb(mixed $method, int $position = self::STRING_POSITION_THREE) : string
     {
         return substr($method, self::STRING_POSITION_BEGINNING, $position);
     }
@@ -66,16 +62,12 @@ trait AccessorTrait
     /**
      * Standard (simple) getter.
      *
-     * @param string $fieldName
-     *
-     * @throws \Exception
-     *
-     * @return mixed
+     * @throws VariableNotFoundException
      */
-    public function get($fieldName) : mixed
+    public function get(string $fieldName) : mixed
     {
         if (!property_exists($this, $fieldName)) {
-            throw new \Exception("Variable ($fieldName) Not Found");
+            throw new VariableNotFoundException("Variable ($fieldName) Not Found");
         }
 
         return $this->$fieldName;
@@ -84,17 +76,12 @@ trait AccessorTrait
     /**
      * Standard (simple) Setter.
      *
-     * @param string $fieldName
-     * @param mixed  $value
-     *
-     * @throws \Exception
-     *
-     * @return bool
+     * @throws VariableNotFoundException
      */
-    public function set($fieldName, $value) : bool
+    public function set(string $fieldName, mixed $value) : bool
     {
         if (!property_exists($this, $fieldName)) {
-            throw new \Exception("Variable ($fieldName) Not Found");
+            throw new VariableNotFoundException("Variable ($fieldName) Not Found");
         }
 
         $this->$fieldName = $value;
@@ -105,18 +92,15 @@ trait AccessorTrait
     /**
      * Boolean Getter.
      *
-     * @param string $fieldName
-     *
      * @throws \Exception
-     *
-     * @return bool
      */
-    public function is($fieldName) : bool
+    public function is(string $fieldName) : bool
     {
         if (!is_bool($this->$fieldName)) {
-            throw new \Exception('Cannot call is() on non-boolean variable ('.$fieldName.').');
+            throw new IsMethodCalledOnNonBooleanException('Cannot call is() on non-boolean variable (' . $fieldName . ').');
         }
 
         return $this->get($fieldName);
     }
+
 }
