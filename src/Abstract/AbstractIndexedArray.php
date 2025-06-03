@@ -125,8 +125,8 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
         if (isset($this->onInsert) && is_callable($this->onInsert)) {
             $onInsert = $this->onInsert; // may overload __call to check if member exists && is_callable()
             [
-              $offset,
-              $value,
+                $offset,
+                $value,
             ] = $onInsert($offset, $value);
         }
 
