@@ -23,11 +23,11 @@ use PHPAlchemist\Type\Twine;
  */
 abstract class AbstractIndexedArray implements IndexedArrayInterface
 {
+    use ArrayTrait;
     use OnInsertTrait;
     use OnRemoveTrait;
     use OnClearTrait;
     use OnSetTrait;
-    use ArrayTrait;
 
     public static $serializeVersion = 1;
 

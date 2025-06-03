@@ -292,11 +292,11 @@ class HashTableTest extends TestCase
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
 
-        $this->assertFalse($hashTable['seven']);
+        $this->assertNull($hashTable['seven']);
 
         // hashtable2
         $this->assertEquals(4, $hashTable2->count());
-        $this->assertFalse($hashTable[4]);
+        $this->assertNull($hashTable[4]);
 
         try {
             $hashTable->add('seven', 'YOU KEELING ME');
@@ -304,7 +304,7 @@ class HashTableTest extends TestCase
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
 
-        $this->assertFalse($hashTable['seven']);
+        $this->assertNull($hashTable['seven']);
     }
 
     public function testFixedSizeTooBig()
@@ -346,7 +346,7 @@ class HashTableTest extends TestCase
             $this->assertInstanceOf(HashTableFullException::class, $e);
         }
 
-        $this->assertFalse($hashTable['seven']);
+        $this->assertNull($hashTable['seven']);
     }
 
     public function testTraversable()
@@ -373,7 +373,7 @@ class HashTableTest extends TestCase
         $ht->add('DELTA', 'd');
         $ht->delete('DELTA');
 
-        $this->assertFalse($ht->get('DELETA'));
+        $this->assertNull($ht->get('DELTA'));
     }
 
     public function testAdd()
