@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
-use PHPAlchemist\Traits\MagicGetSetTrait;
+use PHPAlchemist\Trait\MagicGetSetTrait;
 
 /**
  * @method setActive(bool $active)
