@@ -1,0 +1,21 @@
+<?php
+
+namespace PHPAlchemist\Trait;
+
+/**
+ * Collection of usable CLI functions.
+ *
+ * @author Micah Breedlove <druid628@gmail.com>
+ */
+trait CLITrait
+{
+    /**
+     * tests to see if class is being executed from command line.
+     *
+     * @return bool
+     */
+    public function isCli() : bool
+    {
+        return php_sapi_name() === 'cli';
+    }
+}

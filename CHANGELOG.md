@@ -5,6 +5,29 @@ All notable changes after v2.0.0 to this project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-XX-YY
+
+### BC Break
+
+Namespace changes pluralized name space resources have been renamed to be singular, e.g. Contracts is now Contract, Types is now Type.  
+
+Drops 8.2 and 8.3 support. 8.4+ is just way better for this project
+
+Removes Json functionality as it has moved to [`php-alchemist/json`](https://github.com/PHP-Alchemist/json)
+
+### Dev Functionality.
+ * Moved from vimeo/psalm to psalm/phar
+ * Re-required phpstan
+
+### Added
+
+### Changed
+
+### Removed
+
+ * PHPAlchemist\Trait\PerformanceTrait
+
+
 ## [2.2.0] - 2025-06-03
 
 ### Added
