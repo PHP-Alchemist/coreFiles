@@ -8,7 +8,6 @@ use PHPAlchemist\Exception\InvalidKeyTypeException;
 use PHPAlchemist\Exception\UnmatchedClassException;
 use PHPAlchemist\Exception\UnmatchedVersionException;
 use PHPAlchemist\Trait\ArrayTrait;
-use PHPAlchemist\Type\Base\Default;
 use PHPAlchemist\Type\Collection;
 use PHPAlchemist\Type\Number;
 use PHPAlchemist\Type\Roll;
@@ -186,7 +185,8 @@ abstract class AbstractIndexedArray extends NaturalArray implements IndexedArray
 
     public function merge(IndexedArrayInterface|array $collection) : void
     {
-        $this->data = array_merge($this->data, $collection);
+        $incoming   = ($collection instanceof IndexedArrayInterface) ? $collection->getData() : $collection;
+        $this->data = array_merge($this->data, $incoming);
     }
 
     public function push(mixed $data) : IndexedArrayInterface

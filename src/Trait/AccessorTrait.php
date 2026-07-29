@@ -96,6 +96,10 @@ trait AccessorTrait
      */
     public function is(string $fieldName) : bool
     {
+        if (!property_exists($this, $fieldName)) {
+            throw new VariableNotFoundException("Variable ($fieldName) Not Found");
+        }
+
         if (!is_bool($this->$fieldName)) {
             throw new IsMethodCalledOnNonBooleanException('Cannot call is() on non-boolean variable ('.$fieldName.').');
         }

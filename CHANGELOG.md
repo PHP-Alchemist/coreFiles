@@ -23,6 +23,11 @@ Removes Json functionality as it has moved to [`php-alchemist/json`](https://git
 
 ### Changed
 
+ * [AbstractIndexedArray] - `merge()` now accepts an `IndexedArrayInterface` as documented (previously threw a `TypeError` when passed an object)
+ * [AbstractString] - null-valued strings no longer emit deprecations when calling `contains()`, `startsWith()`, `endsWith()`, `indexOf()`, `lastIndexOf()`, or `length()`
+ * [AccessorTrait] - `is()` now throws `VariableNotFoundException` for unknown fields, consistent with `get()`/`set()`
+ * [AbstractIndexedArray] - Removed a dead/broken `use` import (`PHPAlchemist\Type\Base\Default`)
+
 ### Removed
 
  * PHPAlchemist\Trait\PerformanceTrait

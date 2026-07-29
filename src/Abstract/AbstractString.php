@@ -38,16 +38,16 @@ abstract class AbstractString implements StringInterface
     public function contains(mixed $needle, bool $caseInsensitive = false) : bool
     {
         if ($caseInsensitive) {
-            return str_contains(mb_strtolower($this->value), mb_strtolower($needle));
+            return str_contains(mb_strtolower($this->value ?? ''), mb_strtolower($needle));
         }
 
-        return str_contains($this->value, $needle);
+        return str_contains($this->value ?? '', $needle);
     }
 
     /** @inheritDoc */
     public function endsWith(mixed $needle) : bool
     {
-        return str_ends_with($this->value, $needle);
+        return str_ends_with($this->value ?? '', $needle);
     }
 
     /** @inheritDoc */
@@ -67,7 +67,7 @@ abstract class AbstractString implements StringInterface
     /** @inheritDoc */
     public function indexOf(string $needle, int $startIndex = 0) : int|false
     {
-        return strpos($this->value, $needle, $startIndex);
+        return strpos($this->value ?? '', $needle, $startIndex);
     }
 
     /** @inheritDoc */
@@ -89,7 +89,7 @@ abstract class AbstractString implements StringInterface
     /** @inheritDoc */
     public function lastIndexOf(string $needle, int $startIndex = 0) : int|false
     {
-        return strrpos($this->value, $needle, $startIndex);
+        return strrpos($this->value ?? '', $needle, $startIndex);
     }
 
     /**
@@ -97,7 +97,7 @@ abstract class AbstractString implements StringInterface
      */
     public function length() : int
     {
-        return strlen($this->value);
+        return strlen($this->value ?? '');
     }
 
     /**
@@ -169,7 +169,7 @@ abstract class AbstractString implements StringInterface
     /** @inheritDoc */
     public function startsWith(mixed $needle) : bool
     {
-        return str_starts_with($this->value, $needle);
+        return str_starts_with($this->value ?? '', $needle);
     }
 
     /** @inheritDoc */

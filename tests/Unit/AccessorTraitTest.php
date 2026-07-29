@@ -2,6 +2,7 @@
 
 namespace tests\Unit;
 
+use PHPAlchemist\Exception\VariableNotFoundException;
 use PHPAlchemist\Trait\AccessorTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -182,5 +183,15 @@ class AccessorTraitTest extends TestCase
         } catch (\Exception $e) {
             $this->assertEquals('No Method (asIf) exists on tests\Unit\MagicAccessorExample', $e->getMessage());
         }
+    }
+
+    public function testIsOnUnknownField()
+    {
+        $example = new MagicAccessorExample();
+
+        $this->expectException(VariableNotFoundException::class);
+        $this->expectExceptionMessage('Variable (nope) Not Found');
+
+        $example->is('nope');
     }
 }
