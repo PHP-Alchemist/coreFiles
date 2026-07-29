@@ -380,6 +380,14 @@ class CollectionTest extends TestCase
         $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], $collection->getData());
     }
 
+    public function testMergeWithIndexedArrayObject()
+    {
+        $collection = new Collection(['a', 'b', 'c', 'd']);
+        $collection->merge(new Collection(['e', 'f', 'g']));
+
+        $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g'], $collection->getData());
+    }
+
     public function testToRoll()
     {
         $collection = new Collection(['a', 'b', 'c', 'd']);

@@ -210,4 +210,16 @@ class TwineTest extends TestCase
         $newTestTwine = new Twine();
         $this->assertTrue($newTestTwine->isEmpty());
     }
+
+    public function testNullValueQueriesDoNotError() : void
+    {
+        $twine = new Twine();
+
+        $this->assertSame(0, $twine->length());
+        $this->assertFalse($twine->contains('anything'));
+        $this->assertFalse($twine->startsWith('a'));
+        $this->assertFalse($twine->endsWith('z'));
+        $this->assertFalse($twine->indexOf('x'));
+        $this->assertFalse($twine->lastIndexOf('x'));
+    }
 }
